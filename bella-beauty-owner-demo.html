@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bella Beauty — Owner Demo · Revenue Recovery System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF8F4;--bone:#F0EBE3;--sage:#8A9E8B;--sage-dark:#5A7059;
+  --sage-light:#C8D8C9;--ink:#1A1814;--ink-soft:#3D3830;--dust:#A09890;
+  --gold:#C4A882;--gold-light:#F0E4CE;--white:#FFFFFF;
+  --red:#C0392B;--red-light:#FDECEA;--green:#2E7D52;--green-light:#E8F5EE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--white);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:64px;
+  background:rgba(26,24,20,0.95);border-bottom:0.5px solid rgba(255,255,255,0.08);
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);
+}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream)}
+.nav-logo em{font-style:italic;color:var(--gold)}
+.nav-tabs{display:flex;gap:0}
+.nav-tab{
+  padding:0 1.25rem;height:64px;display:flex;align-items:center;
+  font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.4);cursor:pointer;border-bottom:2px solid transparent;
+  transition:all 0.2s;text-decoration:none;
+}
+.nav-tab:hover{color:rgba(255,255,255,0.75)}
+.nav-tab.active{color:var(--cream);border-bottom-color:var(--gold)}
+.nav-badge{
+  background:var(--gold);color:var(--ink);
+  padding:0.45rem 1.1rem;font-size:0.7rem;letter-spacing:0.1em;
+  text-transform:uppercase;font-weight:500;cursor:pointer;
+  border:none;font-family:'DM Sans',sans-serif;transition:background 0.2s;
+}
+.nav-badge:hover{background:var(--cream)}
+
+/* ── SECTIONS ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ════════════════════════════════
+   SECTION 1 — PAIN / HOOK
+════════════════════════════════ */
+.pain-hero{
+  min-height:90vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:4rem 3rem;position:relative;overflow:hidden;
+}
+.pain-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 60%,rgba(90,112,89,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.pain-eyebrow{
+  font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2rem;display:flex;align-items:center;gap:0.75rem;
+}
+.pain-eyebrow::before,.pain-eyebrow::after{content:'';width:2rem;height:0.5px;background:var(--gold);opacity:0.5}
+.pain-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,5vw,5rem);font-weight:300;line-height:1.05;
+  max-width:800px;margin-bottom:1.5rem;
+}
+.pain-headline em{font-style:italic;color:var(--gold)}
+.pain-sub{font-size:1rem;color:rgba(255,255,255,0.5);max-width:520px;line-height:1.85;font-weight:300;margin-bottom:4rem}
+.pain-stats{display:flex;gap:1px;background:rgba(255,255,255,0.06);max-width:700px;width:100%}
+.pain-stat{
+  flex:1;background:rgba(26,24,20,0.8);padding:2rem 1.5rem;text-align:center;
+}
+.pain-stat-num{
+  font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;
+  color:var(--gold);line-height:1;margin-bottom:0.4rem;
+}
+.pain-stat-label{font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.1em;text-transform:uppercase;line-height:1.5}
+.pain-cta{margin-top:3rem}
+.btn-gold{
+  background:var(--gold);color:var(--ink);padding:0.9rem 2.5rem;
+  font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;
+  border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;
+  transition:background 0.2s;
+}
+.btn-gold:hover{background:var(--cream)}
+/* ── HAMBURGER ── */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+  width:36px;height:36px;flex-shrink:0;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--text2);border-radius:2px;
+  transition:all 0.25s;transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-menu{
+  display:none;
+  position:fixed;top:60px;left:0;right:0;
+  background:rgba(7,9,13,0.98);
+  border-bottom:0.5px solid var(--border);
+  backdrop-filter:blur(20px);
+  z-index:99;
+  padding:1.25rem 1.5rem 1.5rem;
+  flex-direction:column;gap:0;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  display:block;font-size:1rem;font-weight:500;
+  color:var(--text2);text-decoration:none;
+  padding:0.85rem 0;
+  border-bottom:0.5px solid var(--border);
+  transition:color 0.18s;
+}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu .mob-cta{
+  display:block;margin-top:1rem;
+  background:#4A9EFF;color:#000 !important;
+  text-align:center;padding:0.85rem;
+  font-size:0.88rem;font-weight:700;
+  border-radius:5px;font-family:'Inter',sans-serif;
+  border-bottom:none !important;
+}
+.scroll-hint{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  font-size:0.65rem;color:rgba(255,255,255,0.25);letter-spacing:0.15em;
+  text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+}
+.scroll-hint::after{content:'↓';font-size:0.9rem;animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ════════════════════════════════
+   SECTION 2 — DASHBOARD
+════════════════════════════════ */
+.dash-page{background:#111009;min-height:100vh;padding:3rem}
+.dash-page-header{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;
+}
+.dash-page-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--cream);
+}
+.dash-page-title span{font-size:0.72rem;font-family:'DM Sans',sans-serif;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;margin-left:1rem;vertical-align:middle}
+.live-dot{
+  display:flex;align-items:center;gap:0.5rem;
+  font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;
+}
+.live-dot::before{
+  content:'';width:7px;height:7px;border-radius:50%;background:#4CAF50;
+  animation:livepulse 2s infinite;
+}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* Metric row */
+.metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.05);margin-bottom:1px}
+.metric-card{background:#1A1814;padding:1.5rem}
+.metric-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.5rem}
+.metric-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--cream);line-height:1}
+.metric-num.gold{color:var(--gold)}
+.metric-num.green{color:#6FCF97}
+.metric-num.red{color:#EB5757}
+.metric-delta{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:0.4rem}
+.metric-delta.up{color:#6FCF97}
+.metric-delta.down{color:#EB5757}
+
+/* Charts row */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:1px;background:rgba(255,255,255,0.05);margin-bottom:1px}
+.chart-card{background:#1A1814;padding:1.5rem}
+.chart-title{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.25rem}
+
+/* Bar chart */
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:120px}
+.bar-group{display:flex;flex-direction:column;align-items:center;flex:1;gap:5px}
+.bar-wrap{flex:1;display:flex;align-items:flex-end;width:100%}
+.bar{width:100%;transition:height 0.4s ease;min-height:2px;position:relative}
+.bar-label-day{font-size:0.6rem;color:rgba(255,255,255,0.3);letter-spacing:0.05em}
+.bar-label-val{font-size:0.65rem;color:rgba(255,255,255,0.4)}
+
+/* Donut chart */
+.donut-wrap{display:flex;align-items:center;gap:1.5rem}
+.donut-svg{flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:0.75rem}
+.donut-legend-item{display:flex;align-items:center;gap:0.6rem;font-size:0.75rem;color:rgba(255,255,255,0.6)}
+.donut-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Activity feed */
+.activity-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.05)}
+.activity-card{background:#1A1814;padding:1.5rem}
+.activity-feed{display:flex;flex-direction:column;gap:0}
+.activity-item{
+  display:flex;align-items:center;gap:0.75rem;padding:0.75rem 0;
+  border-bottom:0.5px solid rgba(255,255,255,0.05);font-size:0.8rem;
+}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{
+  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:0.75rem;flex-shrink:0;
+}
+.ai-confirm{background:rgba(111,207,151,0.15);color:#6FCF97}
+.ai-reminder{background:rgba(196,168,130,0.15);color:var(--gold)}
+.ai-review{background:rgba(138,158,139,0.2);color:var(--sage)}
+.ai-noshow{background:rgba(235,87,87,0.1);color:#EB5757}
+.activity-text{flex:1;color:rgba(255,255,255,0.7);line-height:1.4}
+.activity-text strong{color:var(--cream);font-weight:500}
+.activity-time{font-size:0.65rem;color:rgba(255,255,255,0.25);white-space:nowrap}
+
+/* Revenue card */
+.revenue-big{
+  background:#1A1814;padding:1.5rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.revenue-amount{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;
+  margin:0.5rem 0;
+}
+.revenue-breakdown{display:flex;flex-direction:column;gap:0.6rem;margin-top:1rem}
+.rev-row{display:flex;justify-content:space-between;font-size:0.75rem;padding:0.5rem 0;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.rev-row:last-child{border-bottom:none}
+.rev-label{color:rgba(255,255,255,0.4)}
+.rev-val{color:var(--cream);font-weight:500}
+.rev-val.gold{color:var(--gold)}
+
+/* ════════════════════════════════
+   SECTION 3 — SMS FLOW
+════════════════════════════════ */
+.sms-page{background:#0F0E0C;min-height:100vh;padding:3rem}
+.sms-page-header{text-align:center;margin-bottom:3rem}
+.sms-page-header h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--cream)}
+.sms-page-header h2 em{font-style:italic;color:var(--gold)}
+.sms-page-header p{font-size:0.88rem;color:rgba(255,255,255,0.4);margin-top:0.5rem;max-width:500px;margin-left:auto;margin-right:auto}
+
+.sms-timeline{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;max-width:900px;margin:0 auto}
+
+/* Center spine */
+.sms-spine{display:flex;flex-direction:column;align-items:center;position:relative}
+.spine-dot{
+  width:14px;height:14px;border-radius:50%;background:var(--gold);
+  border:2px solid var(--ink);flex-shrink:0;z-index:1;margin-top:1.25rem;
+}
+.spine-dot.inactive{background:#2A2820;border-color:#2A2820}
+.spine-line{width:0.5px;flex:1;background:rgba(255,255,255,0.08);min-height:30px}
+
+/* SMS bubbles */
+.sms-left{display:flex;flex-direction:column;align-items:flex-end;padding-right:1.5rem;padding-top:1rem;padding-bottom:1.5rem}
+.sms-right{display:flex;flex-direction:column;align-items:flex-start;padding-left:1.5rem;padding-top:1rem;padding-bottom:1.5rem}
+.sms-empty{padding-top:1rem;padding-bottom:1.5rem}
+
+.sms-step-label{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:0.6rem}
+.sms-step-title{font-size:0.88rem;font-weight:500;color:var(--cream);margin-bottom:0.4rem}
+.sms-step-body{font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.7;max-width:280px}
+.sms-step-body.right{text-align:left}
+.sms-step-body.left{text-align:right}
+
+.bubble{
+  border-radius:16px;padding:0.75rem 1rem;
+  max-width:260px;font-size:0.8rem;line-height:1.55;
+  position:relative;margin-top:0.75rem;
+}
+.bubble.outbound{
+  background:#1A6B42;color:#fff;border-bottom-right-radius:4px;
+  align-self:flex-end;
+}
+.bubble.inbound{
+  background:#2A2820;color:rgba(255,255,255,0.85);border-bottom-left-radius:4px;
+  align-self:flex-start;
+}
+.bubble.system{
+  background:rgba(196,168,130,0.12);color:var(--gold);
+  border:0.5px solid rgba(196,168,130,0.25);border-radius:8px;
+  font-size:0.73rem;
+}
+.bubble-meta{font-size:0.62rem;color:rgba(255,255,255,0.25);margin-top:0.3rem}
+.status-update{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:rgba(111,207,151,0.1);border:0.5px solid rgba(111,207,151,0.2);
+  color:#6FCF97;padding:0.4rem 0.75rem;border-radius:4px;
+  font-size:0.7rem;margin-top:0.75rem;
+}
+.status-update::before{content:'✓ '}
+
+/* Play controls */
+.sms-controls{
+  display:flex;justify-content:center;gap:1rem;margin-top:2.5rem;
+}
+.ctrl-btn{
+  background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);
+  border:0.5px solid rgba(255,255,255,0.1);padding:0.6rem 1.5rem;
+  font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.18s;
+}
+.ctrl-btn:hover{background:rgba(255,255,255,0.1);color:var(--cream)}
+.ctrl-btn.primary{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:500}
+.ctrl-btn.primary:hover{background:var(--cream)}
+
+/* ════════════════════════════════
+   SECTION 4 — ROI CALCULATOR
+════════════════════════════════ */
+.calc-page{background:#0D0C0A;min-height:100vh;padding:3rem;display:flex;flex-direction:column;align-items:center}
+.calc-page h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--cream);text-align:center;margin-bottom:0.5rem}
+.calc-page h2 em{font-style:italic;color:var(--gold)}
+.calc-page .sub{font-size:0.88rem;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:3rem}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.05);width:100%;max-width:860px}
+.calc-inputs{background:#1A1814;padding:2rem}
+.calc-outputs{background:#141210;padding:2rem}
+.calc-section-label{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:1.5rem}
+
+.input-row{margin-bottom:1.5rem}
+.input-row label{display:block;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem}
+.input-row .val-display{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;
+  color:var(--cream);margin-bottom:0.4rem;
+}
+.input-row .val-display span{font-size:1rem;color:rgba(255,255,255,0.3);font-family:'DM Sans',sans-serif}
+input[type=range]{
+  width:100%;-webkit-appearance:none;height:3px;
+  background:rgba(255,255,255,0.12);outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--gold);cursor:pointer;
+}
+
+.output-row{margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.output-row:last-child{border-bottom:none;margin-bottom:0}
+.output-label{font-size:0.7rem;color:rgba(255,255,255,0.35);letter-spacing:0.06em;margin-bottom:0.3rem}
+.output-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--cream);line-height:1}
+.output-val.gold{color:var(--gold)}
+.output-val.green{color:#6FCF97}
+.output-sub{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:0.2rem}
+.roi-highlight{
+  background:rgba(196,168,130,0.08);border:0.5px solid rgba(196,168,130,0.2);
+  padding:1.25rem;margin-top:1.5rem;
+}
+.roi-highlight-label{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);opacity:0.7;margin-bottom:0.25rem}
+.roi-highlight-val{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--gold);line-height:1}
+.roi-highlight-sub{font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.4rem}
+
+/* ════════════════════════════════
+   SECTION 5 — CLOSE / PRICING
+════════════════════════════════ */
+.close-page{background:#0F0E0C;min-height:100vh;padding:3rem}
+.close-header{text-align:center;padding:3rem 0 4rem}
+.close-header h2{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--cream)}
+.close-header h2 em{font-style:italic;color:var(--gold)}
+.close-header p{font-size:0.9rem;color:rgba(255,255,255,0.4);max-width:480px;margin:0.75rem auto 0;line-height:1.8}
+
+.pricing-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.05);max-width:860px;margin:0 auto}
+.price-card{background:#1A1814;padding:2rem;display:flex;flex-direction:column}
+.price-card.featured{background:#1F1D17;border-top:2px solid var(--gold)}
+.price-tier{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.75rem}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--cream);line-height:1;margin-bottom:0.25rem}
+.price-amount span{font-size:1rem;color:rgba(255,255,255,0.3);font-family:'DM Sans',sans-serif}
+.price-desc{font-size:0.78rem;color:rgba(255,255,255,0.35);line-height:1.7;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(255,255,255,0.07)}
+.price-features{list-style:none;flex:1;margin-bottom:2rem}
+.price-features li{font-size:0.78rem;color:rgba(255,255,255,0.55);padding:0.4rem 0;display:flex;align-items:center;gap:0.6rem;border-bottom:0.5px solid rgba(255,255,255,0.04)}
+.price-features li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--sage);flex-shrink:0}
+.price-features li.highlight{color:var(--gold)}
+.price-features li.highlight::before{background:var(--gold)}
+.price-btn{
+  width:100%;padding:0.8rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;
+  background:transparent;color:rgba(255,255,255,0.5);
+  border:0.5px solid rgba(255,255,255,0.15);transition:all 0.2s;margin-top:auto;
+}
+.price-btn:hover{border-color:rgba(255,255,255,0.4);color:var(--cream)}
+.price-card.featured .price-btn{background:var(--gold);color:#000000 !important;border-color:var(--gold);font-weight:700}
+.price-card.featured .price-btn:hover{background:var(--cream)}
+
+.guarantee{
+  max-width:860px;margin:1.5rem auto 0;
+  background:rgba(111,207,151,0.06);border:0.5px solid rgba(111,207,151,0.15);
+  padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;
+}
+.guarantee-icon{font-size:2rem;flex-shrink:0}
+.guarantee-text h4{font-size:0.88rem;font-weight:500;color:#6FCF97;margin-bottom:0.25rem}
+.guarantee-text p{font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.7}
+
+.close-footer{text-align:center;padding:4rem 0 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem}
+.close-footer p{font-size:0.75rem;color:rgba(255,255,255,0.25);letter-spacing:0.08em}
+
+
+.price-section-label{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-top:0.75rem;margin-bottom:0.4rem}
+.price-features li.dimmed{color:rgba(255,255,255,0.3)}
+.price-features li.locked{color:rgba(255,255,255,0.2);text-decoration:line-through}
+.price-features li.highlight-purple{color:#C8C4F0}
+.price-features li.highlight-purple::before{background:#AFA9EC}
+.starter-badge{color:var(--sage) !important}
+.growth-badge{color:var(--gold) !important}
+.enterprise-badge{color:#AFA9EC !important}
+/* ── RESPONSIVE ── */
+@media(max-width:800px){
+  nav{padding:0 1rem}
+  .nav-tabs{display:none}
+  .pain-stats{flex-direction:column}
+  .metrics-row{grid-template-columns:1fr 1fr}
+  .charts-row,.activity-row{grid-template-columns:1fr}
+  .sms-timeline{grid-template-columns:1fr}
+  .sms-spine{display:none}
+  .calc-grid,.pricing-row{grid-template-columns:1fr}
+  .dash-page,.sms-page,.calc-page,.close-page{padding:1.5rem}
+}
+
+/* ── SMS ANIMATION ── */
+
+/* ── SCENARIO TABS ── */
+.scenario-tabs{
+  display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0;
+  max-width:900px;margin-left:auto;margin-right:auto;
+  justify-content:center;
+}
+.scen-tab{
+  display:flex;align-items:center;gap:0.5rem;
+  background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);
+  padding:0.5rem 0.9rem;cursor:pointer;font-family:"DM Sans",sans-serif;
+  font-size:0.72rem;color:rgba(255,255,255,0.45);transition:all 0.18s;
+  white-space:nowrap;
+}
+.scen-tab:hover{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75)}
+.scen-tab.active{background:rgba(196,168,130,0.12);border-color:var(--gold);color:var(--cream)}
+.scen-icon{font-size:0.85rem}
+.scen-label{font-size:0.7rem;letter-spacing:0.04em}
+.scen-tier{font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500}
+.scen-tier.starter{background:rgba(138,158,139,0.2);color:var(--sage)}
+.scen-tier.growth{background:rgba(196,168,130,0.2);color:var(--gold)}
+.scen-tier.enterprise{background:rgba(127,119,221,0.2);color:#AFA9EC}
+.scenario-desc{
+  max-width:900px;margin:0.75rem auto 1.5rem;
+  background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);
+  padding:0.9rem 1.25rem;
+}
+.scen-desc-inner{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+.scen-desc-name{font-size:0.82rem;font-weight:500;color:var(--cream)}
+.scen-desc-text{font-size:0.78rem;color:rgba(255,255,255,0.4);flex:1}
+.scen-desc-value{font-size:0.72rem;color:var(--gold);white-space:nowrap}
+.sms-step{opacity:0.25;transition:opacity 0.4s}
+.sms-step.revealed{opacity:1}
+
+@media(max-width:900px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+}
+
+/* ── SMS Trigger Panel ── */
+.sms-trigger-panel{
+  position:fixed;bottom:1rem;left:1rem;z-index:9998;
+  background:#0D1118;border:1px solid rgba(74,158,255,0.25);
+  border-radius:10px;padding:0.75rem;width:220px;
+  font-family:'DM Sans',sans-serif;
+  box-shadow:0 8px 32px rgba(0,0,0,0.6);
+  transition:all 0.3s;
+}
+.sms-trigger-panel.collapsed{width:auto}
+.sms-trigger-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:0.6rem;cursor:pointer;
+}
+.sms-trigger-title{
+  font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:#4A9EFF;font-weight:600;display:flex;align-items:center;gap:0.4rem;
+}
+.sms-trigger-dot{
+  width:7px;height:7px;border-radius:50%;background:#4CAF72;
+  animation:cs-blink 2s infinite;flex-shrink:0;
+}
+.sms-trigger-toggle{
+  background:none;border:none;color:rgba(240,237,232,0.3);
+  font-size:0.8rem;cursor:pointer;padding:0;line-height:1;
+}
+.sms-trigger-phone{
+  width:100%;padding:0.5rem 0.65rem;margin-bottom:0.6rem;
+  background:#070910;border:0.5px solid rgba(255,255,255,0.12);
+  color:#F0EDE8;font-family:'DM Sans',sans-serif;font-size:0.78rem;
+  border-radius:5px;outline:none;box-sizing:border-box;
+}
+.sms-trigger-phone::placeholder{color:rgba(240,237,232,0.25)}
+.sms-trigger-phone:focus{border-color:#4A9EFF}
+.sms-trigger-btns{display:flex;flex-direction:column;gap:0.4rem}
+.sms-trigger-btn{
+  width:100%;padding:0.5rem 0.75rem;
+  background:#111820;border:0.5px solid rgba(255,255,255,0.08);
+  border-radius:5px;color:rgba(240,237,232,0.7);
+  font-family:'DM Sans',sans-serif;font-size:0.75rem;
+  cursor:pointer;text-align:left;transition:all 0.18s;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.sms-trigger-btn:hover{background:#1a2030;border-color:rgba(74,158,255,0.3);color:#F0EDE8}
+.sms-trigger-btn:active{transform:scale(0.97)}
+.sms-trigger-btn .btn-icon{font-size:0.9rem;flex-shrink:0}
+.sms-trigger-btn .btn-label{line-height:1.3}
+.sms-trigger-btn .btn-sub{font-size:0.65rem;color:rgba(240,237,232,0.35);display:block}
+.sms-trigger-status{
+  margin-top:0.6rem;font-size:0.68rem;color:rgba(240,237,232,0.3);
+  text-align:center;min-height:1rem;
+}
+.sms-trigger-status.success{color:#4CAF72}
+.sms-trigger-status.error{color:#B91C1C}
+.sms-panel-body{transition:all 0.3s}
+.sms-trigger-panel.collapsed .sms-panel-body{display:none}
+
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-48BKH9YFZB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-48BKH9YFZB');
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzVBNzA1OSIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjEzIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5CQjwvdGV4dD4KPC9zdmc+">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bella <em>Beauty</em> · <span style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase">Owner Portal</span></div>
+  <div class="nav-tabs">
+    <a class="nav-tab active" onclick="showPage('pain',this)">The Problem</a>
+    <a class="nav-tab" onclick="showPage('dashboard',this)">Live Dashboard</a>
+    <a class="nav-tab" onclick="showPage('smsflow',this)">Automation Flow</a>
+    <a class="nav-tab" onclick="showPage('roi',this)">ROI Calculator</a>
+    <a class="nav-tab" onclick="showPage('close',this)">Pricing</a>
+  </div>
+  <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge" style="text-decoration:none">Get Started →</a>
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#automations" onclick="closeMenu()">Automations</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#demo" onclick="closeMenu()">Demo</a>
+  <a href="#" class="mob-cta" onclick="closeMenu();openModal(event)">Book a Demo →</a>
+</div>
+
+<!-- ══ PAGE 1: PAIN ══ -->
+<div class="page active" id="page-pain">
+  <div class="pain-hero">
+    <p class="pain-eyebrow">The Hidden Revenue Problem</p>
+    <h1 class="pain-headline">Your med spa is leaving<br><em>thousands</em> on the table<br>every single week.</h1>
+    <p class="pain-sub">Not because your services aren't great. Because no-shows, forgotten appointments, and missed follow-ups are silently draining your schedule — and nobody's catching them.</p>
+    <div class="pain-stats">
+      <div class="pain-stat">
+        <div class="pain-stat-num">18%</div>
+        <div class="pain-stat-label">Average no-show rate for med spas without automated reminders</div>
+      </div>
+      <div class="pain-stat">
+        <div class="pain-stat-num">$285</div>
+        <div class="pain-stat-label">Average revenue lost per no-show at a typical med spa</div>
+      </div>
+      <div class="pain-stat">
+        <div class="pain-stat-num">67%</div>
+        <div class="pain-stat-label">Of happy clients who never leave a Google review unless asked</div>
+      </div>
+      <div class="pain-stat">
+        <div class="pain-stat-num">3×</div>
+        <div class="pain-stat-label">More likely to rebook when followed up within 2 hours of a visit</div>
+      </div>
+    </div>
+    <div class="pain-cta">
+      <button class="btn-gold" onclick="showPage('dashboard', document.querySelectorAll('.nav-tab')[1])">See What You're Recovering →</button>
+    </div>
+    <div class="scroll-hint">or scroll</div>
+  </div>
+
+  <!-- Pain detail cards -->
+  <div style="background:#111009;padding:4rem 3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background-color:rgba(255,255,255,0.04)">
+    <div style="background:#111009;padding:2rem">
+      <div style="font-size:1.5rem;margin-bottom:1rem">📅</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--cream);margin-bottom:0.5rem">No confirmation system</h3>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.8">Clients book and forget. Without a confirmation touchpoint, 1 in 5 simply don't show up — and your slot sits empty.</p>
+    </div>
+    <div style="background:#111009;padding:2rem;border-left:0.5px solid rgba(255,255,255,0.05);border-right:0.5px solid rgba(255,255,255,0.05)">
+      <div style="font-size:1.5rem;margin-bottom:1rem">⭐</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--cream);margin-bottom:0.5rem">Reviews left uncollected</h3>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.8">Happy clients walk out and life takes over. Without an automated ask at exactly the right moment, most reviews never happen.</p>
+    </div>
+    <div style="background:#111009;padding:2rem">
+      <div style="font-size:1.5rem;margin-bottom:1rem">📊</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:300;color:var(--cream);margin-bottom:0.5rem">No visibility into recovery</h3>
+      <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);line-height:1.8">Most owners have no idea how much revenue they're recovering — or losing — week to week. What gets measured gets managed.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2: DASHBOARD ══ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-page">
+    <div class="dash-page-header">
+      <div>
+        <div class="dash-page-title">Weekly Overview <span>June 9 – 15, 2026</span></div>
+      </div>
+      <div class="live-dot">Live · Updating now</div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-label">Total Appointments</div>
+        <div class="metric-num">127</div>
+        <div class="metric-delta up">↑ 12 from last week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Confirmed</div>
+        <div class="metric-num green">108</div>
+        <div class="metric-delta up">85% confirm rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">No-Shows</div>
+        <div class="metric-num red">6</div>
+        <div class="metric-delta up">↓ 4 from last week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">New Google Reviews</div>
+        <div class="metric-num gold">23</div>
+        <div class="metric-delta up">4.9★ avg this month</div>
+      </div>
+    </div>
+
+    <!-- Charts + Revenue -->
+    <div class="charts-row" style="margin-top:1px">
+      <div class="chart-card">
+        <div class="chart-title">Daily Bookings — This Week</div>
+        <div class="bar-chart" id="barChart"></div>
+        <div style="display:flex;gap:1rem;margin-top:1rem">
+          <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.65rem;color:rgba(255,255,255,0.3)"><div style="width:10px;height:10px;background:#5A7059"></div> Confirmed</div>
+          <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.65rem;color:rgba(255,255,255,0.3)"><div style="width:10px;height:10px;background:#C4A882"></div> Recovered</div>
+          <div style="display:flex;align-items:center;gap:0.4rem;font-size:0.65rem;color:rgba(255,255,255,0.3)"><div style="width:10px;height:10px;background:rgba(235,87,87,0.6)"></div> No-show</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Appointment Outcomes</div>
+        <div class="donut-wrap">
+          <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="18"/>
+            <!-- confirmed 85% -->
+            <circle cx="55" cy="55" r="40" fill="none" stroke="#5A7059" stroke-width="18"
+              stroke-dasharray="213.6 251.3" stroke-dashoffset="62.8" transform="rotate(-90 55 55)"/>
+            <!-- recovered 9% -->
+            <circle cx="55" cy="55" r="40" fill="none" stroke="#C4A882" stroke-width="18"
+              stroke-dasharray="22.6 251.3" stroke-dashoffset="-150.8" transform="rotate(-90 55 55)"/>
+            <!-- noshow 6% -->
+            <circle cx="55" cy="55" r="40" fill="none" stroke="rgba(235,87,87,0.7)" stroke-width="18"
+              stroke-dasharray="15.1 251.3" stroke-dashoffset="-173.4" transform="rotate(-90 55 55)"/>
+            <text x="55" y="50" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="14" font-family="Cormorant Garamond,serif" font-weight="300">85%</text>
+            <text x="55" y="65" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="8" font-family="DM Sans,sans-serif">confirmed</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="donut-legend-item"><div class="donut-dot" style="background:#5A7059"></div>Confirmed — 85%</div>
+            <div class="donut-legend-item"><div class="donut-dot" style="background:#C4A882"></div>Recovered — 9%</div>
+            <div class="donut-legend-item"><div class="donut-dot" style="background:rgba(235,87,87,0.7)"></div>No-show — 6%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity + Revenue -->
+    <div class="activity-row" style="margin-top:1px">
+      <div class="activity-card">
+        <div class="chart-title">Automation Activity — Today</div>
+        <div class="activity-feed" id="activityFeed">
+          <div class="activity-item">
+            <div class="activity-icon ai-confirm">✓</div>
+            <div class="activity-text"><strong>Sarah M.</strong> confirmed via SMS · Hydrafacial @ 2pm</div>
+            <div class="activity-time">2 min ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon ai-review">⭐</div>
+            <div class="activity-text"><strong>Jessica T.</strong> left a 5★ Google review after follow-up</div>
+            <div class="activity-time">14 min ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon ai-reminder">📱</div>
+            <div class="activity-text">Reminder sent to <strong>4 clients</strong> for tomorrow's appointments</div>
+            <div class="activity-time">1 hr ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon ai-confirm">✓</div>
+            <div class="activity-text"><strong>Priya K.</strong> rescheduled after cancellation — recovered $320</div>
+            <div class="activity-time">2 hrs ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon ai-noshow">!</div>
+            <div class="activity-text"><strong>1 no-show</strong> flagged · Rebooking SMS sent automatically</div>
+            <div class="activity-time">3 hrs ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon ai-review">⭐</div>
+            <div class="activity-text"><strong>Monica R.</strong> left a 5★ Google review after follow-up</div>
+            <div class="activity-time">4 hrs ago</div>
+          </div>
+        </div>
+      </div>
+      <div class="revenue-big">
+        <div>
+          <div class="chart-title">Revenue Recovered This Week</div>
+          <div class="revenue-amount">$2,840</div>
+          <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);margin-top:0.25rem">from reschedules, follow-ups & recovered no-shows</div>
+        </div>
+        <div class="revenue-breakdown">
+          <div class="rev-row"><span class="rev-label">Rescued no-shows</span><span class="rev-val gold">$1,140</span></div>
+          <div class="rev-row"><span class="rev-label">Cancellation reschedules</span><span class="rev-val">$960</span></div>
+          <div class="rev-row"><span class="rev-label">Post-visit rebookings</span><span class="rev-val">$740</span></div>
+          <div class="rev-row"><span class="rev-label">Subscription cost</span><span class="rev-val" style="color:rgba(235,87,87,0.8)">−$399</span></div>
+          <div class="rev-row" style="border-top:0.5px solid rgba(196,168,130,0.2);margin-top:0.5rem;padding-top:0.75rem">
+            <span class="rev-label" style="color:rgba(255,255,255,0.6)">Net gain this week</span>
+            <span class="rev-val gold" style="font-size:1rem">$2,441</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 3: SMS FLOW ══ -->
+<div class="page" id="page-smsflow">
+  <div class="sms-page">
+    <div class="sms-page-header">
+      <h2>Every Automation, <em>in Action</em></h2>
+      <p>Choose a scenario. Hit play. See exactly what fires — zero manual work required.</p>
+    </div>
+    <div class="scenario-tabs" id="scenarioTabs">
+      <button class="scen-tab active" onclick="selectScenario(0,this)"><span class="scen-icon">📅</span><span class="scen-label">Booking &amp; Confirmation</span><span class="scen-tier starter">Starter</span></button>
+      <button class="scen-tab" onclick="selectScenario(1,this)"><span class="scen-icon">❌</span><span class="scen-label">Cancellation Rebook</span><span class="scen-tier growth">Growth</span></button>
+      <button class="scen-tab" onclick="selectScenario(2,this)"><span class="scen-icon">👻</span><span class="scen-label">No-Show Recovery</span><span class="scen-tier growth">Growth</span></button>
+      <button class="scen-tab" onclick="selectScenario(3,this)"><span class="scen-icon">⏳</span><span class="scen-label">Waitlist Fill</span><span class="scen-tier growth">Growth</span></button>
+      <button class="scen-tab" onclick="selectScenario(4,this)"><span class="scen-icon">💅</span><span class="scen-label">Pre-Appt Upsell</span><span class="scen-tier growth">Growth</span></button>
+      <button class="scen-tab" onclick="selectScenario(5,this)"><span class="scen-icon">🔄</span><span class="scen-label">Post-Visit Rebook</span><span class="scen-tier growth">Growth</span></button>
+      <button class="scen-tab" onclick="selectScenario(6,this)"><span class="scen-icon">💤</span><span class="scen-label">Win-Back</span><span class="scen-tier enterprise">Enterprise</span></button>
+      <button class="scen-tab" onclick="selectScenario(7,this)"><span class="scen-icon">🎂</span><span class="scen-label">Birthday Offer</span><span class="scen-tier enterprise">Enterprise</span></button>
+      <button class="scen-tab" onclick="selectScenario(8,this)"><span class="scen-icon">👯</span><span class="scen-label">Referral Trigger</span><span class="scen-tier enterprise">Enterprise</span></button>
+      <button class="scen-tab" onclick="selectScenario(9,this)"><span class="scen-icon">📢</span><span class="scen-label">Slow Day Fill</span><span class="scen-tier enterprise">Enterprise</span></button>
+    </div>
+    <div class="scenario-desc" id="scenarioDesc">
+      <div class="scen-desc-inner">
+        <span class="scen-desc-name" id="sdName">Booking &amp; Confirmation</span>
+        <span class="scen-desc-text" id="sdText">Fires the moment a client books. Confirms the appointment, collects a reply, and sets up the reminder chain.</span>
+        <span class="scen-desc-value" id="sdValue">Protects existing revenue · avg 18% no-show reduction</span>
+      </div>
+    </div>
+    <div class="sms-controls">
+      <button class="ctrl-btn primary" id="playBtn" onclick="replayFlow()">&#9654; Play Flow</button>
+      <button class="ctrl-btn" onclick="resetFlow()">&#8635; Reset</button>
+    </div>
+    <div class="sms-timeline" id="smsTimeline"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 4: ROI CALCULATOR ══ -->
+<div class="page" id="page-roi">
+  <div class="calc-page">
+    <h2>Your <em>Revenue Recovery</em> Estimate</h2>
+    <p class="sub">Plug in your numbers. See exactly what the system would recover for your practice.</p>
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <div class="calc-section-label">Your Practice Numbers</div>
+        <div class="input-row">
+          <label>Monthly Appointments</label>
+          <div class="val-display" id="disp-appts">120 <span>appts/mo</span></div>
+          <input type="range" min="20" max="400" value="120" step="5" oninput="calcROI()" id="inp-appts">
+        </div>
+        <div class="input-row">
+          <label>Average Service Value</label>
+          <div class="val-display" id="disp-avg">$<span id="disp-avg-val">250</span></div>
+          <input type="range" min="80" max="800" value="250" step="10" oninput="calcROI()" id="inp-avg">
+        </div>
+        <div class="input-row">
+          <label>Current No-Show Rate</label>
+          <div class="val-display" id="disp-noshow">15<span>%</span></div>
+          <input type="range" min="5" max="35" value="15" step="1" oninput="calcROI()" id="inp-noshow">
+        </div>
+        <div class="input-row">
+          <label>Review Request Rate (manual)</label>
+          <div class="val-display" id="disp-review">10<span>%</span></div>
+          <input type="range" min="0" max="50" value="10" step="1" oninput="calcROI()" id="inp-review">
+        </div>
+      </div>
+      <div class="calc-outputs">
+        <div class="calc-section-label">Projected Monthly Impact</div>
+        <div class="output-row">
+          <div class="output-label">No-shows currently costing you</div>
+          <div class="output-val red" id="out-loss">$4,500</div>
+          <div class="output-sub" id="out-loss-sub">18 no-shows × $250 avg</div>
+        </div>
+        <div class="output-row">
+          <div class="output-label">Estimated revenue recovered (70%)</div>
+          <div class="output-val green" id="out-recovered">$3,150</div>
+          <div class="output-sub" id="out-recovered-sub">from all recovery automations</div>
+        </div>
+        <div class="output-row">
+          <div class="output-label">New reviews generated per month</div>
+          <div class="output-val" id="out-reviews">18</div>
+          <div class="output-sub">vs. ~2 with manual asks</div>
+        </div>
+        <div class="roi-highlight">
+          <div class="roi-highlight-label">Net monthly gain (after subscription)</div>
+          <div class="roi-highlight-val" id="out-roi">$2,751</div>
+          <div class="roi-highlight-sub">Based on Growth plan at $399/mo · Results vary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 5: CLOSE ══ -->
+<div class="page" id="page-close">
+  <div class="close-page">
+    <div class="close-header">
+      <h2>Simple pricing,<br><em>serious</em> returns.</h2>
+      <p>Most clients cover their subscription cost before Wednesday. No contracts. Cancel anytime.</p>
+    </div>
+    <div class="pricing-row">
+      <div class="price-card">
+        <div class="price-tier starter-badge">Starter</div>
+        <div class="price-amount">$199<span>/mo</span></div>
+        <p class="price-desc">Stop no-shows. Start collecting reviews. The essential automation layer for any med spa.</p>
+        <div class="price-section-label">Included automations</div>
+        <ul class="price-features">
+          <li>📅 Booking confirmation SMS</li>
+          <li>⏰ 24-hour reminder</li>
+          <li>⭐ Google review request</li>
+          <li>📊 Weekly owner report</li>
+          <li class="dimmed">Up to 80 appointments/mo</li>
+        </ul>
+        <div class="price-section-label" style="margin-top:1rem">Not included</div>
+        <ul class="price-features">
+          <li class="locked">❌ Cancellation rebook</li>
+          <li class="locked">👻 No-show recovery</li>
+          <li class="locked">💅 Pre-appointment upsell</li>
+        </ul>
+        <a href="https://clientsteady.com/#pricing" target="_blank" class="price-btn" style="display:block;text-align:center;text-decoration:none">Get Started Free →</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier growth-badge">Growth — Most Popular</div>
+        <div class="price-amount">$399<span>/mo</span></div>
+        <p class="price-desc">The full revenue recovery engine. Every automation that turns cancellations and no-shows into booked revenue.</p>
+        <div class="price-section-label">Everything in Starter, plus</div>
+        <ul class="price-features">
+          <li class="highlight">❌ Cancellation rebook flow</li>
+          <li class="highlight">👻 No-show reactivation</li>
+          <li class="highlight">⏳ Waitlist auto-fill</li>
+          <li class="highlight">💅 Pre-appointment upsell</li>
+          <li class="highlight">🔄 Post-visit rebooking</li>
+          <li class="highlight">🤖 AI-personalized messaging</li>
+          <li class="highlight">📈 Live owner dashboard</li>
+          <li class="dimmed">Unlimited appointments/mo</li>
+          <li class="dimmed">Monthly strategy call</li>
+        </ul>
+        <a href="https://clientsteady.com/#pricing" target="_blank" class="price-btn" style="display:block;text-align:center;text-decoration:none">Get Started Free →</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier enterprise-badge">Enterprise</div>
+        <div class="price-amount">$599<span>/mo</span></div>
+        <p class="price-desc">Relationship automations that turn one-time clients into loyal regulars — and regulars into referral machines.</p>
+        <div class="price-section-label">Everything in Growth, plus</div>
+        <ul class="price-features">
+          <li class="highlight-purple">💤 Win-back sequences (60/90/120 day)</li>
+          <li class="highlight-purple">🎂 Birthday offer automation</li>
+          <li class="highlight-purple">👯 Referral trigger flow</li>
+          <li class="highlight-purple">📢 Slow-day fill broadcast</li>
+          <li class="highlight-purple">📦 Package expiry reminders</li>
+          <li class="dimmed">Multi-location support</li>
+          <li class="dimmed">Custom message flows</li>
+          <li class="dimmed">Dedicated account manager</li>
+        </ul>
+        <a href="https://clientsteady.com/#pricing" target="_blank" class="price-btn" style="display:block;text-align:center;text-decoration:none">Get Started Free →</a>
+      </div>
+    </div>
+    <div class="guarantee">
+      <div class="guarantee-icon">🛡️</div>
+      <div class="guarantee-text">
+        <h4>30-day money-back guarantee</h4>
+        <p>If the system doesn't recover more than its subscription cost in your first 30 days, we'll refund you in full. No questions, no hoops.</p>
+      </div>
+    </div>
+    <div class="close-footer">
+      <p>Questions? Email us at <a href="mailto:hello@clientsteady.com" style="color:rgba(255,255,255,0.45);text-decoration:none">hello@clientsteady.com</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Page navigation ──
+function showPage(id, tabEl) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-'+id).classList.add('active');
+  if(tabEl){
+    document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+    tabEl.classList.add('active');
+  }
+  if(id==='dashboard') buildBarChart();
+  if(id==='roi') calcROI();
+  if(id==='smsflow'){ currentScenario=0; renderScenario(0); }
+}
+
+// ── Bar chart ──
+function buildBarChart(){
+  var data=[
+    {day:'Mon',confirmed:18,recovered:2,noshow:1},
+    {day:'Tue',confirmed:22,recovered:3,noshow:2},
+    {day:'Wed',confirmed:15,recovered:2,noshow:1},
+    {day:'Thu',confirmed:26,recovered:3,noshow:1},
+    {day:'Fri',confirmed:27,recovered:4,noshow:1},
+    {day:'Sat',confirmed:0,recovered:0,noshow:0}
+  ];
+  var max=34;
+  var chart=document.getElementById('barChart');
+  chart.innerHTML='';
+  data.forEach(function(d){
+    var total=d.confirmed+d.recovered+d.noshow;
+    var grp=document.createElement('div'); grp.className='bar-group';
+    // Single stacked bar container
+    var wrap=document.createElement('div');
+    wrap.style.cssText='display:flex;flex-direction:column;justify-content:flex-end;width:100%;height:110px;';
+    if(total>0){
+      var totalH=Math.round((total/max)*100);
+      var stack=document.createElement('div');
+      stack.style.cssText='width:100%;height:'+totalH+'%;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:2px 2px 0 0;';
+      // noshow on top (smallest, most visible as accent)
+      var nsH=Math.max(Math.round((d.noshow/total)*100),8);
+      var recH=Math.max(Math.round((d.recovered/total)*100),8);
+      var confH=100-nsH-recH;
+      var bns=document.createElement('div');
+      bns.style.cssText='background:rgba(235,87,87,0.75);height:'+nsH+'%;min-height:4px;';
+      var brec=document.createElement('div');
+      brec.style.cssText='background:#C4A882;height:'+recH+'%;min-height:4px;';
+      var bc=document.createElement('div');
+      bc.style.cssText='background:#5A7059;height:'+confH+'%;';
+      stack.appendChild(bns); stack.appendChild(brec); stack.appendChild(bc);
+      wrap.appendChild(stack);
+    }
+    var lv=document.createElement('div'); lv.className='bar-label-val';
+    lv.style.cssText='font-size:0.65rem;color:rgba(255,255,255,0.4);text-align:center;margin-top:4px;';
+    lv.textContent=total>0?total:'';
+    var ld=document.createElement('div'); ld.className='bar-label-day';
+    ld.style.cssText='font-size:0.6rem;color:rgba(255,255,255,0.3);text-align:center;letter-spacing:0.05em;margin-top:2px;';
+    ld.textContent=d.day;
+    grp.appendChild(wrap); grp.appendChild(lv); grp.appendChild(ld);
+    chart.appendChild(grp);
+  });
+}
+
+// ── Scenario definitions ──
+var scenarios = [
+  {
+    name:'Booking & Confirmation',
+    text:'Fires the moment a client books. Confirms the appointment and sets up the full reminder chain.',
+    value:'Avg 18% reduction in no-shows from day one',
+    steps:[
+      {left:{label:'Trigger · Instant',title:'Sarah books online',body:'She selects Hydrafacial, picks June 24 at 2:00 PM, and submits the booking form.'},
+       right:{label:'Automation fires',bubble:'outbound',msg:'Hi Sarah! Thanks for booking with Bella Beauty Med Spa. We are excited to see you for your Hydrafacial on June 24 at 2:00 PM. Reply C to confirm your spot.',meta:'Sent instantly · Automated'}},
+      {left:{inbound:'C',meta:'Sarah replies · 4 min later',status:'Status updated: Confirmed'},
+       right:{label:'Dashboard update',system:'Appointment confirmed\nSarah M. · June 24 2:00 PM · Hydrafacial\n\nDashboard updated. No action needed.'}},
+      {left:{label:'24 hrs before · June 23',title:'Reminder sent',body:'Automated reminder fires the day before. No manual work, no forgotten clients.'},
+       right:{bubble:'outbound',msg:'Hi Sarah! Just a reminder about your Hydrafacial tomorrow at 2:00 PM at Bella Beauty. Reply YES to confirm or CANCEL to reschedule.',meta:'Sent 24 hrs before · Automated',inbound2:'YES!'}},
+      {left:{label:'2 hrs after visit',title:'Follow-up and review ask',body:'Sent automatically after the appointment. Timed while the experience is still fresh.'},
+       right:{bubble:'outbound',msg:'Sarah, thank you for visiting Bella Beauty today! If you loved your experience, a quick Google review means everything to us: [link]\n\nSee you next time!',meta:'Sent 2 hrs after visit · AI-personalized'}},
+      {left:{system:'New Google Review\n\n"Best facial I have ever had. Already booked my next appointment!" — Sarah M.',status2:'Review generated · 4.9 avg maintained'},
+       right:{label:'Monday morning',title:'Owner receives weekly report',system:'Bella Beauty Weekly Report\nJune 9-15\n\nAppointments: 127 · Confirmed: 108\nNo-shows: 6 · Reviews: 23\n\nRevenue recovered: $2,840\nNet after subscription: +$2,441'}}
+    ]
+  },
+  {
+    name:'Cancellation Rebook',
+    text:'When a client cancels, an SMS fires within 60 seconds offering 3 alternate times. Catches them while intent is still high.',
+    value:'Recovers ~35% of cancellations · avg $285 per rebook',
+    steps:[
+      {left:{label:'Trigger · Client cancels',title:'Jessica cancels her Botox',body:'She texts CANCEL to the reminder. The cancellation is logged instantly.'},
+       right:{system:'Cancellation received\nJessica T. · June 20 11:00 AM · Botox\n\nRebook flow triggered automatically.'}},
+      {left:{label:'60 seconds later',title:'Rebook offer sent',body:'Three specific alternate slots are offered. Specificity drives replies.'},
+       right:{bubble:'outbound',msg:'Hi Jessica! We saw your cancellation for tomorrow. Life happens! We have these openings this week:\n\n1. Wed June 19 @ 10am\n2. Thu June 20 @ 2pm\n3. Fri June 21 @ 11am\n\nReply 1, 2, or 3 to grab a spot!',meta:'Sent 60 sec after cancel · Automated'}},
+      {left:{inbound:'2',meta:'Jessica replies · 8 min later'},
+       right:{bubble:'outbound',msg:'Perfect! You are booked for Thursday June 20 at 2:00 PM. We will send a reminder the day before. See you then!',meta:'Rebook confirmed · Automated'}},
+      {left:{status:'Slot filled · Revenue recovered: $250'},
+       right:{system:'Rebook confirmed\nJessica T. · Jun 20 2:00 PM · Botox\n\nOriginal slot re-opened for waitlist. Dashboard updated.'}}
+    ]
+  },
+  {
+    name:'No-Show Recovery',
+    text:'Client misses their appointment without canceling. A gentle re-engagement fires 2 hours later.',
+    value:'Recovers ~20% of no-shows · keeps client relationship intact',
+    steps:[
+      {left:{label:'Appointment time passes',title:'Marcus does not show',body:'No call, no text. The appointment window closes. The system flags it as a no-show automatically.'},
+       right:{system:'No-show flagged\nMarcus W. · Jun 18 3:00 PM · Chemical Peel\n\nNo-show reactivation flow triggered.'}},
+      {left:{label:'2 hrs after appointment',title:'Gentle reactivation sent',body:'Not accusatory — just a warm open door. Sent at exactly the right moment.'},
+       right:{bubble:'outbound',msg:'Hi Marcus! We missed you today. We know things come up — no worries at all. We would love to get you rescheduled whenever you are ready:\n\n[Book a new time]\n\nYour Chemical Peel is waiting for you!',meta:'Sent 2 hrs after no-show · Automated'}},
+      {left:{inbound:'Can I book for next Tuesday?',meta:'Marcus replies · next day'},
+       right:{bubble:'outbound',msg:'Of course! We have Tuesday June 25 open at 1:00 PM or 3:30 PM. Which works better for you?',meta:'Automated response'}},
+      {left:{inbound:'1pm works!'},
+       right:{bubble:'outbound',msg:'Done! You are booked for Tuesday June 25 at 1:00 PM. We will remind you the day before.',meta:'Rebook confirmed',status:'Revenue recovered: $160'}}
+    ]
+  },
+  {
+    name:'Waitlist Auto-Fill',
+    text:'A cancellation comes in and the waitlist for that slot is texted automatically. First reply gets it.',
+    value:'Fills ~60% of cancelled slots · zero manual effort',
+    steps:[
+      {left:{label:'Cancellation received',title:'3pm slot opens up',body:'A client cancels their 3pm Microneedling. The slot would normally sit empty.'},
+       right:{system:'Waitlist check\nJun 21 3:00 PM slot opened\n\n3 clients on waitlist for this time. Notifying now.'}},
+      {left:{label:'Instant broadcast to waitlist',title:'3 clients notified simultaneously',body:'Each person gets a personalized message. The slot goes to whoever replies first.'},
+       right:{bubble:'outbound',msg:'Hi Aisha! Great news — a 3:00 PM slot just opened up this Saturday for Microneedling at Bella Beauty. Interested? Reply YES to claim it — first reply gets it!',meta:'Sent to 3 waitlist clients · Automated'}},
+      {left:{inbound:'YES!!',meta:'Aisha replies · 3 min later',status:'Slot claimed · Other waitlist clients notified'},
+       right:{bubble:'outbound',msg:'You got it Aisha! You are booked for Saturday June 21 at 3:00 PM. We will send a reminder Friday. See you then!',meta:'Booking confirmed · Automated'}},
+      {left:{status:'Slot filled · Revenue saved: $295'},
+       right:{system:'Waitlist fill complete\nAisha K. · Jun 21 3:00 PM · Microneedling\n\nCancellation converted to new booking. Net revenue impact: $295'}}
+    ]
+  },
+  {
+    name:'Pre-Appointment Upsell',
+    text:'48 hours before an appointment, the client receives a relevant add-on suggestion.',
+    value:'~22% accept rate · avg $75-$120 additional revenue per upsell',
+    steps:[
+      {left:{label:'Trigger · 48 hrs before',title:'Emma has a Hydrafacial booked',body:'The system identifies her service and selects a relevant paired add-on.'},
+       right:{system:'AI upsell trigger\nEmma S. · Jun 22 Hydrafacial\n\nSuggested add-on: Lip Plump Treatment ($85)\nCompatibility: High'}},
+      {left:{label:'48 hrs before appointment',title:'Add-on offer sent',body:'Specific, priced, and easy to accept with one reply. No link, no app, no friction.'},
+       right:{bubble:'outbound',msg:'Hi Emma! Your Hydrafacial is this Sunday at 11am! We have one thing that pairs perfectly with it — our Lip Plump Treatment adds just 20 min and is $85.\n\nReply YES to add it and we will have everything ready for you!',meta:'Sent 48 hrs before · AI-personalized'}},
+      {left:{inbound:'Yes please!',meta:'Emma replies · 20 min later'},
+       right:{bubble:'outbound',msg:'Amazing! Lip Plump is added to your Sunday appointment. Total time is 80 min. See you soon!',meta:'Upsell confirmed · Automated'}},
+      {left:{status:'Revenue added: +$85 · Zero staff time'},
+       right:{system:'Upsell confirmed\nEmma S. · Jun 22\n\nHydrafacial + Lip Plump Treatment\nUpdated total: $270\nDashboard updated.'}}
+    ]
+  },
+  {
+    name:'Post-Visit Rebooking',
+    text:'Sent 2 weeks after a Botox or filler appointment when results are peaking. Builds a recurring revenue cycle.',
+    value:'Increases rebooking rate by ~40% · builds recurring revenue base',
+    steps:[
+      {left:{label:'Trigger · 14 days after visit',title:'Rachel had Botox 2 weeks ago',body:'The system knows her service type and times the message perfectly.'},
+       right:{system:'Rebooking trigger\nRachel M. · Had Botox Jun 5\n\nDay 14 — results at peak. Rebooking message queued.'}},
+      {left:{label:'14 days post-visit',title:'Rebooking nudge sent',body:'Educational and warm. Frames rebooking as care, not a transaction.'},
+       right:{bubble:'outbound',msg:'Hi Rachel! Your Botox results are at their absolute peak right now! Most clients find the sweet spot is rebooking around 10-12 weeks.\n\nWant to lock in your next appointment?\n\n[Grab your spot]',meta:'Sent Day 14 post-visit · Automated'}},
+      {left:{inbound:'Yes! Book me for Aug 14 please',meta:'Rachel replies'},
+       right:{bubble:'outbound',msg:'Done! You are booked for Thursday August 14. We will remind you a week before. See you then!',meta:'Rebook confirmed · Automated'}},
+      {left:{status:'Recurring revenue secured · $250 · 10 weeks out'},
+       right:{system:'Rebooking confirmed\nRachel M. · Aug 14\n\nClient on recurring cycle. Next rebooking trigger set for Oct 2.'}}
+    ]
+  },
+  {
+    name:'Win-Back',
+    text:'Clients who have not booked in 60, 90, or 120 days receive a tiered reactivation sequence.',
+    value:'Reactivates ~15% of dormant clients · avg $220 per recovered visit',
+    steps:[
+      {left:{label:'Trigger · 60 days no booking',title:'Olivia has not been in since April',body:'The system detects inactivity and enters her into the win-back sequence.'},
+       right:{system:'Win-back trigger\nOlivia P.\n\nLast visit: April 12 (62 days ago)\nSequence: Day 60 message queued'}},
+      {left:{label:'Day 60 message',title:'Warm check-in',body:'Tone is casual — like a friend checking in, not a business chasing a sale.'},
+       right:{bubble:'outbound',msg:'Hi Olivia! It has been a little while since we have seen you at Bella Beauty and we miss you! Your skin is always our priority — is there anything we can help with?\n\n[Book a visit]',meta:'Day 60 · Automated'}},
+      {left:{label:'No reply · Day 90',title:'Light incentive added',body:'Still no booking. A small reason to return without devaluing the service.'},
+       right:{bubble:'outbound',msg:'Olivia, we would love to welcome you back! As a returning client, we would like to offer you $30 off your next visit this month only.\n\n[Claim your offer]',meta:'Day 90 · Automated'}},
+      {left:{inbound:'Omg I have been meaning to come back! Booking now',meta:'Olivia replies after Day 90 message'},
+       right:{bubble:'outbound',msg:'So glad to have you back Olivia! Your $30 credit is applied. We cannot wait to see you!',meta:'Win-back successful · Automated',status:'Dormant client reactivated · Revenue: $220'}}
+    ]
+  },
+  {
+    name:'Birthday Offer',
+    text:'Pulls the client birth month from their intake form and sends a personalized offer the week of their birthday.',
+    value:'Highest open and conversion rate of any campaign · avg 38% acceptance',
+    steps:[
+      {left:{label:'Trigger · Birth month detected',title:'It is Maya birthday week',body:'The system automatically identifies clients whose birthday falls in the current week.'},
+       right:{system:'Birthday trigger\nMaya K.\n\nBirthday: June 19\nBirthday message queued for June 17'}},
+      {left:{label:'Monday of birthday week',title:'Birthday message sent',body:'Personal, warm, and specific to her visit history.'},
+       right:{bubble:'outbound',msg:'Happy Birthday Maya!! We hope this week is everything you deserve. As a birthday gift from all of us at Bella Beauty, enjoy 20% off any service this week.\n\nYou have been such a wonderful client — treat yourself!\n\n[Book your birthday treatment]',meta:'Birthday week · AI-personalized'}},
+      {left:{inbound:'Thank you so much!! Booking a lip filler',meta:'Maya replies same day'},
+       right:{bubble:'outbound',msg:'Yay! Happy birthday again Maya! You are booked for Saturday June 22 at 1:00 PM. 20% off applied — cannot wait to celebrate with you!',meta:'Birthday booking confirmed'}},
+      {left:{status:'Revenue: $360 after discount · Relationship strengthened'},
+       right:{system:'Birthday booking\nMaya K. · Jun 22\n\nLip Filler · $360 after discount\nClient LTV increased. Referral probability: High'}}
+    ]
+  },
+  {
+    name:'Referral Trigger',
+    text:'After a 5-star review or confirmed rebook, the client receives a referral offer.',
+    value:'Referred clients have 37% higher LTV · avg 1.8 referrals per triggered client',
+    steps:[
+      {left:{label:'Trigger · 5-star review detected',title:'Zoe left a glowing Google review',body:'The system detects the new review and queues a referral message within the hour.'},
+       right:{system:'Referral trigger\nZoe B.\n\nNew 5-star review detected\nReferral message queued'}},
+      {left:{label:'1 hour after review',title:'Referral offer sent',body:'Framed as sharing something great with a friend — not as a sales ask.'},
+       right:{bubble:'outbound',msg:'Zoe, thank you so much for your kind review — it made our whole team day! If you have a friend who would love Bella Beauty, send them our way and you BOTH get $25 off your next visit.\n\nJust share this link: [referral link]',meta:'Sent 1 hr after review · Automated'}},
+      {left:{inbound:'Sending to my sister right now!!',meta:'Zoe replies · 15 min later'},
+       right:{bubble:'outbound',msg:'You are the best! Your $25 credit is in your account — it will apply automatically at your next booking. Thank you for sharing us!',meta:'Referral link activated · Automated'}},
+      {left:{status:'Referral sent · Sister books 3 days later'},
+       right:{system:'Referral converted\nNew client: Amanda B.\n\nFirst booking: Jun 28 · Hydrafacial · $185\nZoe $25 credit applied to next visit.\nNew client LTV projection: $1,200/yr'}}
+    ]
+  },
+  {
+    name:'Slow Day Fill',
+    text:'Owner manually triggers a targeted broadcast to clients who have not booked recently.',
+    value:'Fills avg 3-5 slots per broadcast · on-demand revenue when you need it',
+    steps:[
+      {left:{label:'Owner action · Monday morning',title:'Thursday is looking empty',body:'Owner sees 8 open slots on Thursday and triggers the fill broadcast from the dashboard.'},
+       right:{system:'Slow Day Fill triggered by owner\n\nTarget: Thursday June 20\nSlots available: 8\nTarget audience: Clients inactive 30+ days\nEligible: 47 clients'}},
+      {left:{label:'Broadcast sent to 47 clients',title:'Urgency and light offer',body:'Short, punchy, time-limited. Sent only to clients who have not been in recently.'},
+       right:{bubble:'outbound',msg:'Hi! We have a few surprise openings THIS Thursday at Bella Beauty! First 5 clients to book get 15% off any service.\n\n[Grab a spot before they are gone]\n\nThursday only — slots are going fast!',meta:'Sent to 47 inactive clients · Owner-triggered'}},
+      {left:{label:'Within 2 hours',title:'6 clients book',body:'12.7% conversion on 47 recipients. 6 slots filled, 2 slots still open.'},
+       right:{system:'Broadcast results\n\nSent: 47 · Opened: 41 · Booked: 6\nConversion: 12.7%\nRevenue generated: $1,140\nCost of 15% discount: $171\nNet revenue: $969'}},
+      {left:{status:'6 slots filled · Net $969 from a slow Thursday'},
+       right:{bubble:'outbound',msg:'Your Thursday is now 87% booked! 6 new appointments added. 2 slots still open if you would like to run another push.',meta:'Owner notification · Automated'}}
+    ]
+  }
+];
+
+var currentScenario = 0;
+var flowTimer = null;
+var currentStepCount = 0;
+
+function selectScenario(idx, btn) {
+  currentScenario = idx;
+  resetFlow();
+  document.querySelectorAll('.scen-tab').forEach(function(t){ t.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('sdName').textContent = scenarios[idx].name;
+  document.getElementById('sdText').textContent = scenarios[idx].text;
+  document.getElementById('sdValue').textContent = scenarios[idx].value;
+  renderScenario(idx);
+}
+
+function renderScenario(idx) {
+  var sc = scenarios[idx];
+  var tl = document.getElementById('smsTimeline');
+  tl.innerHTML = '';
+  currentStepCount = sc.steps.length;
+  sc.steps.forEach(function(step, si) {
+    var leftDiv = document.createElement('div');
+    leftDiv.className = 'sms-left sms-step';
+    leftDiv.id = 'ss'+(si+1);
+    leftDiv.innerHTML = buildSide(step.left, 'left');
+
+    var spineDiv = document.createElement('div');
+    spineDiv.className = 'sms-spine';
+    spineDiv.innerHTML = '<div class="spine-dot inactive" id="sd'+(si+1)+'"></div>' +
+      (si < sc.steps.length-1 ? '<div class="spine-line"></div>' : '');
+
+    var rightDiv = document.createElement('div');
+    rightDiv.className = 'sms-right sms-step';
+    rightDiv.id = 'ss'+(si+1)+'r';
+    rightDiv.innerHTML = buildSide(step.right, 'right');
+
+    tl.appendChild(leftDiv);
+    tl.appendChild(spineDiv);
+    tl.appendChild(rightDiv);
+  });
+}
+
+function buildSide(data, side) {
+  if(!data) return '';
+  var h = '';
+  if(data.label) h += '<div class="sms-step-label">'+data.label+'</div>';
+  if(data.title) h += '<div class="sms-step-title">'+data.title+'</div>';
+  if(data.body) h += '<p class="sms-step-body '+side+'">'+data.body+'</p>';
+  if(data.inbound) h += '<div class="bubble inbound">'+data.inbound+'</div>';
+  if(data.meta) h += '<div class="bubble-meta">'+data.meta+'</div>';
+  if(data.status) h += '<div class="status-update">'+data.status+'</div>';
+  if(data.status2) h += '<div class="status-update" style="color:#6FCF97;border-color:rgba(111,207,151,0.2);background:rgba(111,207,151,0.08)">'+data.status2+'</div>';
+  if(data.bubble) {
+    h += '<div class="bubble '+data.bubble+'">'+data.msg.replace(/\n/g,'<br>')+'</div>';
+    if(data.meta) h += '<div class="bubble-meta">'+data.meta+'</div>';
+    if(data.inbound2) h += '<div class="bubble inbound" style="margin-top:0.75rem">'+data.inbound2+'</div>';
+  }
+  if(data.system) h += '<div class="bubble system">'+data.system.replace(/\n/g,'<br>')+'</div>';
+  return h;
+}
+
+function replayFlow() {
+  resetFlow();
+  var steps = [];
+  var dots = [];
+  for(var i=1; i<=currentStepCount; i++){
+    steps.push('ss'+i, 'ss'+i+'r');
+    dots.push('sd'+i, 'sd'+i);
+  }
+  var idx = 0;
+  function next(){
+    if(idx >= steps.length) return;
+    var el = document.getElementById(steps[idx]);
+    if(el) el.classList.add('revealed');
+    var dot = document.getElementById(dots[idx]);
+    if(dot){ dot.classList.remove('inactive'); dot.style.background='var(--gold)'; }
+    idx++;
+    flowTimer = setTimeout(next, idx%2===0 ? 900 : 1400);
+  }
+  next();
+}
+
+function resetFlow(){
+  if(flowTimer) clearTimeout(flowTimer);
+  for(var i=1; i<=10; i++){
+    var el = document.getElementById('ss'+i); if(el) el.classList.remove('revealed');
+    var elr = document.getElementById('ss'+i+'r'); if(elr) elr.classList.remove('revealed');
+    var dot = document.getElementById('sd'+i);
+    if(dot){ dot.classList.add('inactive'); dot.style.background=''; }
+  }
+}
+
+// ── ROI Calculator ──
+function calcROI(){
+  var appts=parseInt(document.getElementById('inp-appts').value);
+  var avg=parseInt(document.getElementById('inp-avg').value);
+  var nsPct=parseInt(document.getElementById('inp-noshow').value)/100;
+  var revPct=parseInt(document.getElementById('inp-review').value)/100;
+
+  document.getElementById('disp-appts').innerHTML=appts+' <span>appts/mo</span>';
+  document.getElementById('disp-avg').innerHTML='$'+avg;
+  document.getElementById('disp-noshow').innerHTML=nsPct*100+'<span>%</span>';
+  document.getElementById('disp-review').innerHTML=(revPct*100).toFixed(0)+'<span>%</span>';
+
+  var noShows=Math.round(appts*nsPct);
+  var loss=noShows*avg;
+  var cancelRate=0.12; var cancels=Math.round(appts*cancelRate);
+  var cancelRecovered=Math.round(cancels*avg*0.35);
+  var noShowRecovered=Math.round(loss*0.20);
+  var upsellRevenue=Math.round(appts*0.22*85);
+  var reactivation=Math.round(appts*0.06*avg);
+  var totalRecovered=cancelRecovered+noShowRecovered+upsellRevenue+reactivation;
+  var newRevs=Math.round(appts*0.15);
+  var roi=totalRecovered-399;
+
+  document.getElementById('out-loss').textContent='$'+loss.toLocaleString();
+  document.getElementById('out-loss-sub').textContent=noShows+' no-shows + '+cancels+' cancellations × $'+avg+' avg';
+  document.getElementById('out-recovered').textContent='$'+totalRecovered.toLocaleString();
+  document.getElementById('out-recovered-sub').textContent='Cancellations $'+cancelRecovered.toLocaleString()+' · No-shows $'+noShowRecovered.toLocaleString()+' · Upsells $'+upsellRevenue.toLocaleString()+' · Reactivations $'+reactivation.toLocaleString();
+  document.getElementById('out-reviews').textContent=newRevs;
+  document.getElementById('out-roi').textContent=(roi>0?'$'+roi.toLocaleString():'-$'+Math.abs(roi).toLocaleString());
+  document.getElementById('out-roi').style.color=roi>0?'var(--gold)':'#EB5757';
+}
+
+// Init
+buildBarChart();
+calcROI();
+renderScenario(0);
+
+// ── Mobile menu ──
+function toggleMenu(){
+  var btn=document.getElementById('hamburger');
+  var menu=document.getElementById('mobileMenu');
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
+}
+// Close menu on outside click
+document.addEventListener('click',function(e){
+  var menu=document.getElementById('mobileMenu');
+  var btn=document.getElementById('hamburger');
+  if(menu&&menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){
+    closeMenu();
+  }
+});
+
+// ══════════════════════════════════════════════════
+// ClientSteady Demo — Live Booking Listener
+// Polls localStorage every 3 seconds for new bookings
+// from the client booking site
+// ══════════════════════════════════════════════════
+(function() {
+
+  var POLL_INTERVAL = 3000; // 3 seconds
+  var lastBookingId = null;
+
+  // Status indicator
+  var indicator = document.createElement('div');
+  indicator.id = 'cs-live-indicator';
+  indicator.innerHTML = '<span class="cs-dot"></span><span class="cs-label">Listening for bookings…</span>';
+  indicator.style.cssText = [
+    'position:fixed','bottom:1rem','right:1rem','z-index:9999',
+    'background:#0D1118','border:1px solid rgba(74,158,255,0.3)','border-radius:8px',
+    'padding:0.6rem 1rem','font-family:Inter,sans-serif','font-size:0.72rem',
+    'color:rgba(74,158,255,0.7)','display:flex','align-items:center','gap:0.5rem',
+    'box-shadow:0 4px 20px rgba(0,0,0,0.5)','transition:all 0.3s'
+  ].join(';');
+
+  var style = document.createElement('style');
+  style.textContent = [
+    '.cs-dot{width:7px;height:7px;border-radius:50%;background:#4A9EFF;flex-shrink:0;animation:cs-blink 2s infinite}',
+    '@keyframes cs-blink{0%,100%{opacity:0.3}50%{opacity:1}}',
+    '#cs-live-indicator.cs-active{border-color:#4CAF72;color:#4CAF72}',
+    '#cs-live-indicator.cs-active .cs-dot{background:#4CAF72;animation:none;opacity:1}',
+    '.cs-toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);',
+    'background:#0D1118;border:1px solid #4CAF72;border-radius:8px;padding:0.85rem 1.5rem;',
+    'font-family:Inter,sans-serif;font-size:0.82rem;color:#4CAF72;z-index:10000;',
+    'box-shadow:0 8px 32px rgba(0,0,0,0.6);opacity:0;transition:all 0.4s;pointer-events:none;white-space:nowrap}',
+    '.cs-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}'
+  ].join('');
+  document.head.appendChild(style);
+
+  function showToast(msg) {
+    var t = document.createElement('div');
+    t.className = 'cs-toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.classList.add('show'); }, 10);
+    setTimeout(function(){ t.classList.remove('show'); }, 4000);
+    setTimeout(function(){ t.parentNode && t.parentNode.removeChild(t); }, 4500);
+  }
+
+  function setActive(msg) {
+    indicator.classList.add('cs-active');
+    indicator.querySelector('.cs-label').textContent = msg;
+    setTimeout(function(){
+      indicator.classList.remove('cs-active');
+      indicator.querySelector('.cs-label').textContent = 'Listening for bookings…';
+    }, 6000);
+  }
+
+  // Map service names to scenario indices
+  var scenarioMap = {
+    // Med spa services
+    'Precision Cut': 0, 'Botox': 0, 'Balayage': 0, 'Booking Confirmation': 0,
+    'Cancellation': 1, 'No-Show': 2, 'Waitlist': 3,
+    'Color': 4, 'Keratin': 4, 'Lip': 4, 'Upsell': 4,
+    'Rebooking': 5
+  };
+
+  function getScenarioIndex(service) {
+    if (!service) return 0;
+    var svc = service.toLowerCase();
+    if (svc.indexOf('cancel') > -1) return 1;
+    if (svc.indexOf('no-show') > -1 || svc.indexOf('noshow') > -1) return 2;
+    if (svc.indexOf('waitlist') > -1) return 3;
+    if (svc.indexOf('upsell') > -1 || svc.indexOf('color') > -1 || 
+        svc.indexOf('keratin') > -1 || svc.indexOf('lip') > -1) return 4;
+    return 0; // Default: Booking Confirmation
+  }
+
+  function handleNewBooking(booking) {
+    console.log('[ClientSteady Demo] New booking detected:', booking);
+
+    // Update dashboard stats
+    updateDashboardWithBooking(booking);
+
+    // Show toast
+    showToast('\u2728 New booking: ' + booking.firstName + ' — ' + booking.service + ' at ' + booking.time);
+    setActive('Live booking received!');
+
+    // Auto-play matching scenario
+    var scenarioIdx = getScenarioIndex(booking.service);
+    var tabs = document.querySelectorAll('.nav-tab');
+    if (tabs.length >= 3) {
+      // Switch to automation flow tab (index 2)
+      setTimeout(function() {
+        if (typeof showPage === 'function') {
+          showPage('smsflow', tabs[2]);
+        }
+        // Select scenario and play
+        setTimeout(function() {
+          if (typeof selectScenario === 'function') {
+            selectScenario(scenarioIdx);
+          }
+          setTimeout(function() {
+            if (typeof replayFlow === 'function') {
+              replayFlow();
+            }
+          }, 800);
+        }, 400);
+      }, 1500);
+    }
+  }
+
+  function updateDashboardWithBooking(booking) {
+    // Update activity feed if it exists
+    var feed = document.getElementById('activityFeed') || document.querySelector('.activity-feed');
+    if (feed) {
+      var item = document.createElement('div');
+      item.style.cssText = 'padding:0.6rem 0;border-bottom:0.5px solid rgba(255,255,255,0.06);animation:fadeIn 0.4s ease';
+      item.innerHTML = '<span style="color:#4CAF72;font-size:0.75rem;font-weight:600">LIVE</span>' +
+        '<span style="font-size:0.78rem;color:#F0EDE8;margin-left:0.5rem">' + 
+        booking.firstName + ' booked ' + booking.service + ' for ' + booking.date + ' at ' + booking.time + '</span>';
+      feed.insertBefore(item, feed.firstChild);
+    }
+
+    // Increment any visible booking counters
+    var counters = document.querySelectorAll('.stat-val, .kpi-val, [data-stat="bookings"]');
+    counters.forEach(function(el) {
+      var val = parseInt(el.textContent);
+      if (!isNaN(val) && val < 999) el.textContent = val + 1;
+    });
+  }
+
+  function poll() {
+    try {
+      var latest = localStorage.getItem('cs_demo_latest');
+      if (!latest) return;
+      var booking = JSON.parse(latest);
+      if (!booking || booking.read) return;
+      if (booking.id === lastBookingId) return;
+
+      // New unread booking
+      lastBookingId = booking.id;
+      booking.read = true;
+      localStorage.setItem('cs_demo_latest', JSON.stringify(booking));
+
+      handleNewBooking(booking);
+    } catch(e) {
+      console.warn('[ClientSteady Demo] Poll error:', e);
+    }
+  }
+
+  // Add reset button to indicator
+  var resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Reset';
+  resetBtn.style.cssText = [
+    'background:none','border:1px solid rgba(74,158,255,0.3)','border-radius:4px',
+    'color:rgba(74,158,255,0.5)','font-size:0.65rem','padding:2px 6px',
+    'cursor:pointer','font-family:Inter,sans-serif','margin-left:4px'
+  ].join(';');
+  resetBtn.onclick = function() {
+    localStorage.removeItem('cs_demo_bookings');
+    localStorage.removeItem('cs_demo_latest');
+    lastBookingId = null;
+    showToast('Demo reset — ready for next booking');
+    console.log('[ClientSteady Demo] Reset complete');
+  };
+  indicator.appendChild(resetBtn);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.appendChild(indicator);
+    setInterval(poll, POLL_INTERVAL);
+    console.log('[ClientSteady Demo] Live listener started — polling every 3s');
+  });
+
+})();
+
+</script>
+
+<!-- SMS TRIGGER PANEL -->
+<div class="sms-trigger-panel" id="smsTriggerPanel">
+  <div class="sms-trigger-header" onclick="toggleSmsPanel()">
+    <div class="sms-trigger-title">
+      <span class="sms-trigger-dot"></span>
+      SMS Triggers
+    </div>
+    <button class="sms-trigger-toggle" id="smsPanelToggle">▼</button>
+  </div>
+  <div class="sms-panel-body" id="smsPanelBody">
+    <input
+      type="tel"
+      class="sms-trigger-phone"
+      id="triggerPhone"
+      placeholder="Prospect phone (+1...)"
+    />
+    <div class="sms-trigger-btns">
+      <button class="sms-trigger-btn" onclick="fireSMS('confirmation')">
+        <span class="btn-icon">📅</span>
+        <span class="btn-label">Booking Confirmation<span class="btn-sub">Fires on new booking</span></span>
+      </button>
+      <button class="sms-trigger-btn" onclick="fireSMS('reminder')">
+        <span class="btn-icon">⏰</span>
+        <span class="btn-label">24-Hour Reminder<span class="btn-sub">Day-before alert</span></span>
+      </button>
+      <button class="sms-trigger-btn" onclick="fireSMS('cancellation_rebook')">
+        <span class="btn-icon">❌</span>
+        <span class="btn-label">Cancellation Rebook<span class="btn-sub">3 alternate times</span></span>
+      </button>
+      <button class="sms-trigger-btn" onclick="fireSMS('no_show')">
+        <span class="btn-icon">👻</span>
+        <span class="btn-label">No-Show Recovery<span class="btn-sub">Gentle re-engagement</span></span>
+      </button>
+      <button class="sms-trigger-btn" onclick="fireSMS('review')">
+        <span class="btn-icon">⭐</span>
+        <span class="btn-label">Review Request<span class="btn-sub">Post-visit follow-up</span></span>
+      </button>
+      <button class="sms-trigger-btn" onclick="fireSMS('winback')">
+        <span class="btn-icon">💤</span>
+        <span class="btn-label">Win-Back<span class="btn-sub">60-day reactivation</span></span>
+      </button>
+    </div>
+    <div class="sms-trigger-status" id="smsStatus"></div>
+  </div>
+</div>
+
+</body>
+</html>

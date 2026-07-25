@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClientSteady — Add-On Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090D;--bg2:#0D1118;--bg3:#0A0D12;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#F0EDE8;--text2:rgba(240,237,232,0.72);--text3:rgba(240,237,232,0.62);
+  --blue:#4A9EFF;--blue-lt:rgba(74,158,255,0.1);--blue-border:rgba(74,158,255,0.2);
+  --gold:#C4922A;--gold-lt:rgba(196,146,42,0.1);--gold-border:rgba(196,146,42,0.2);
+  --green:#4CAF72;--green-lt:rgba(76,175,114,0.08);--green-border:rgba(76,175,114,0.2);
+  --purple:#AFA9EC;--purple-lt:rgba(175,169,236,0.08);--purple-border:rgba(175,169,236,0.2);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:60px;background:rgba(7,9,13,0.95);border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{display:flex;gap:3px;align-items:flex-end}
+.logo-bar{width:4px;border-radius:2px;background:var(--blue)}
+.logo-word{font-size:1.05rem;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
+.logo-word span{color:var(--blue)}
+.nav-back{font-size:0.78rem;color:var(--text2);text-decoration:none;transition:color 0.18s}
+.nav-back:hover{color:var(--text)}
+/* ── HAMBURGER ── */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:none;cursor:pointer;padding:4px;
+  width:36px;height:36px;flex-shrink:0;
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--text2);border-radius:2px;
+  transition:all 0.25s;transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── MOBILE DRAWER ── */
+.mobile-menu{
+  display:none;
+  position:fixed;top:60px;left:0;right:0;
+  background:rgba(7,9,13,0.98);
+  border-bottom:0.5px solid var(--border);
+  backdrop-filter:blur(20px);
+  z-index:99;
+  padding:1.25rem 1.5rem 1.5rem;
+  flex-direction:column;gap:0;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  display:block;font-size:1rem;font-weight:500;
+  color:var(--text2);text-decoration:none;
+  padding:0.85rem 0;
+  border-bottom:0.5px solid var(--border);
+  transition:color 0.18s;
+}
+.mobile-menu a:hover{color:var(--text)}
+.mobile-menu .mob-cta{
+  display:block;margin-top:1rem;
+  background:#4A9EFF;color:#000 !important;
+  text-align:center;padding:0.85rem;
+  font-size:0.88rem;font-weight:700;
+  border-radius:5px;font-family:'Inter',sans-serif;
+  border-bottom:none !important;
+}
+
+/* HERO */
+.hero{padding:5rem 3rem 4rem;text-align:center;border-bottom:0.5px solid var(--border)}
+.hero-eye{font-size:0.67rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.75rem}
+.hero h1{font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;letter-spacing:-0.04em;line-height:1.08;margin-bottom:1rem}
+.hero h1 span{color:var(--blue)}
+.hero p{font-size:0.95rem;color:var(--text2);max-width:520px;margin:0 auto;line-height:1.8}
+
+/* BUNDLES */
+.bundles{padding:4rem 3rem;background:var(--bg3)}
+.bundles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:8px;overflow:hidden;max-width:960px;margin:2.5rem auto 0}
+.bundle-card{background:var(--bg2);padding:2rem;display:flex;flex-direction:column}
+.bundle-card.featured{background:#111820;border-top:2px solid var(--gold)}
+.bundle-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem}
+.bundle-name{font-size:1.1rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.25rem}
+.bundle-price{font-size:2rem;font-weight:800;letter-spacing:-0.03em;line-height:1;margin-bottom:0.25rem}
+.bundle-price span{font-size:0.85rem;font-weight:400;color:var(--text3)}
+.bundle-desc{font-size:0.78rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:0.5px solid var(--border);min-height:auto}
+.bundle-feats{list-style:none;flex:1;margin-bottom:1.5rem}
+.bundle-feats li{font-size:0.78rem;color:var(--text2);padding:0.38rem 0;display:flex;align-items:flex-start;gap:0.5rem;border-bottom:0.5px solid var(--border);line-height:1.5}
+.bundle-feats li::before{content:'→';color:var(--text3);flex-shrink:0;font-size:0.65rem;margin-top:2px}
+.bundle-feats li.hi{color:var(--text)}
+.bundle-feats li.hi::before{color:var(--gold)}
+.bundle-btn{display:block;width:100%;padding:0.75rem;font-size:0.72rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;border-radius:4px;background:transparent;color:var(--text2);border:0.5px solid var(--border2);text-align:center;text-decoration:none;transition:all 0.18s;margin-top:auto}
+.bundle-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--text)}
+.bundle-card.featured .bundle-btn{background:var(--gold);color:#000;border-color:var(--gold);font-weight:700}
+.bundle-card.featured .bundle-btn:hover{background:#D4A847}
+
+/* INDIVIDUAL ADD-ONS */
+.addons{padding:4rem 3rem}
+.addons-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.25rem;
+  max-width:960px;
+  margin:2.5rem auto 0;
+}
+.addon-card{
+  background:var(--bg2);
+  border:0.5px solid var(--border);
+  border-radius:10px;
+  padding:1.75rem;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  box-sizing:border-box;
+  width:100%;
+  overflow:hidden;
+  transition:border-color 0.18s;
+}
+.addon-card:hover{border-color:var(--border2)}
+.addon-icon{
+  font-size:1.4rem;
+  margin-bottom:0.6rem;
+  display:block;
+  text-align:left;
+  width:100%;
+}
+.addon-tag{
+  font-size:0.58rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  margin-bottom:0.15rem;
+  display:block;
+  width:100%;
+  text-align:left;
+}
+.addon-name{
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  color:var(--text);
+  margin-bottom:0.2rem;
+  width:100%;
+  text-align:left;
+}
+.addon-price{
+  font-size:1.5rem;
+  font-weight:800;
+  letter-spacing:-0.02em;
+  line-height:1;
+  margin-bottom:0.85rem;
+  width:100%;
+  text-align:left;
+}
+.addon-price span{
+  font-size:0.8rem;
+  font-weight:400;
+  color:var(--text3);
+}
+.addon-desc{
+  font-size:0.82rem;
+  color:var(--text2);
+  line-height:1.75;
+  margin-bottom:1rem;
+  padding-bottom:1rem;
+  border-bottom:0.5px solid var(--border);
+  width:100%;
+  text-align:left;
+  flex-shrink:0;
+}
+.addon-includes{
+  list-style:none;
+  flex:1;
+  width:100%;
+  margin:0;
+  padding:0;
+}
+.addon-includes li{
+  font-size:0.78rem;
+  color:var(--text2);
+  padding:0.3rem 0;
+  display:flex;
+  align-items:flex-start;
+  gap:0.5rem;
+  line-height:1.5;
+  width:100%;
+  border-bottom:0.5px solid rgba(255,255,255,0.04);
+}
+.addon-includes li:last-child{border-bottom:none}
+.addon-includes li::before{
+  content:'✓';
+  color:var(--green);
+  flex-shrink:0;
+  font-size:0.65rem;
+  margin-top:2px;
+  font-weight:700;
+}
+/* Card accent colors */
+.addon-card.booking .addon-tag{color:var(--blue)}
+.addon-card.booking{border-color:rgba(74,158,255,0.25)}
+.addon-card.booking:hover{border-color:rgba(74,158,255,0.6)}
+.addon-card.website .addon-tag{color:var(--gold)}
+.addon-card.website{border-color:rgba(196,146,42,0.25)}
+.addon-card.website:hover{border-color:rgba(196,146,42,0.6)}
+.addon-card.gbp .addon-tag{color:var(--green)}
+.addon-card.gbp{border-color:rgba(76,175,114,0.25)}
+.addon-card.gbp:hover{border-color:rgba(76,175,114,0.6)}
+.addon-card.brand .addon-tag{color:var(--purple)}
+.addon-card.brand{border-color:rgba(175,169,236,0.25)}
+.addon-card.brand:hover{border-color:rgba(175,169,236,0.6)}
+
+/* UPSELL SCRIPT */
+.script{padding:4rem 3rem;background:var(--bg3)}
+.script-inner{max-width:720px;margin:0 auto}
+.script-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:8px;padding:2rem;margin-top:1.5rem}
+.script-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;margin-bottom:0.5rem}
+.script-text{font-size:0.88rem;color:var(--text2);line-height:1.8;font-style:italic}
+.script-note{font-size:0.75rem;color:var(--text3);margin-top:0.75rem;padding-top:0.75rem;border-top:0.5px solid var(--border)}
+
+/* SECTION HEADERS */
+.section-header{text-align:center;margin-bottom:0}
+.section-eye{font-size:0.67rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:0.6rem}
+h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.6rem}
+h2 span{color:var(--blue)}
+.section-sub{font-size:0.88rem;color:var(--text2);max-width:500px;margin:0 auto;line-height:1.8}
+
+/* GUARANTEE */
+.guarantee{max-width:720px;margin:2rem auto 0;background:var(--green-lt);border:0.5px solid var(--green-border);border-radius:6px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.25rem}
+.guarantee h4{font-size:0.85rem;font-weight:600;color:var(--green);margin-bottom:0.2rem}
+.guarantee p{font-size:0.78rem;color:var(--text2);line-height:1.7}
+
+/* FOOTER */
+footer{border-top:0.5px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font-size:0.9rem;font-weight:800;letter-spacing:-0.02em}
+.footer-logo span{color:var(--blue)}
+footer p{font-size:0.75rem;color:var(--text3)}
+footer a{color:var(--text3);text-decoration:none}
+footer a:hover{color:var(--text2)}
+
+
+@media(max-width:1024px){
+  .addons-grid{grid-template-columns:1fr !important}
+  .bundles-grid{grid-template-columns:1fr !important}
+}
+
+@media(max-width:900px){
+  nav{padding:0 1.25rem}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+
+  /* Add-on cards */
+  .addon-card{padding:1.25rem}
+  .addon-name{font-size:0.95rem}
+  .addon-price{font-size:1.25rem}
+  .addon-includes li{font-size:0.8rem}
+
+  /* Script cards */
+  .script-inner{padding:0}
+
+  /* Section text */
+  .section-sub{font-size:0.82rem}
+  h2{font-size:1.5rem}
+
+  /* Hero */
+  .hero{padding:3rem 1.25rem 2.5rem}
+
+  /* General padding */
+  .bundles,.addons,.script{padding:3rem 1.25rem}
+  .guarantee{margin:0 0 1rem;padding:1rem}
+  footer{flex-direction:column;gap:0.5rem;text-align:center;padding:1.5rem 1.25rem}
+}
+</style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzI1NjNBOCIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjEzIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5DUzwvdGV4dD48L3N2Zz4=">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-48BKH9YFZB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-48BKH9YFZB');
+</script>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">
+    <div class="logo-mark">
+      <div class="logo-bar" style="height:10px;opacity:0.35"></div>
+      <div class="logo-bar" style="height:14px;opacity:0.6"></div>
+      <div class="logo-bar" style="height:18px"></div>
+      <div class="logo-bar" style="height:14px;opacity:0.6"></div>
+      <div class="logo-bar" style="height:10px;opacity:0.35"></div>
+    </div>
+    <div class="logo-word">Client<span>Steady</span></div>
+  </a>
+  <a href="index.html" class="nav-back">← Back to main site</a>
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#automations" onclick="closeMenu()">Automations</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#demo" onclick="closeMenu()">Demo</a>
+  <a href="#" class="mob-cta" onclick="closeMenu();openModal(event)">Book a Demo →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eye">Add-On Services</div>
+  <h1>Everything your business<br>needs to <span>get started right.</span></h1>
+  <p>No booking system? No website? No problem. We can set up the infrastructure your business needs — then layer ClientSteady on top so everything runs automatically from day one.</p>
+</section>
+
+<!-- BUNDLES -->
+<section class="bundles">
+  <div class="section-header">
+    <div class="section-eye" style="color:var(--gold)">Starter Bundles</div>
+    <h2>Get everything set up <span>at once.</span></h2>
+    <p class="section-sub">Bundle your add-ons with a ClientSteady subscription and save. All bundles include a 5 business day setup guarantee.</p>
+  </div>
+
+  <div class="bundles-grid">
+    <!-- Essential -->
+    <div class="bundle-card">
+      <div class="bundle-badge" style="color:var(--green)">Essential</div>
+      <div class="bundle-name">Booking Ready</div>
+      <div class="bundle-price">$299<span> one-time</span></div>
+      <p class="bundle-desc">For businesses taking appointments by phone or form. Get a real booking system set up and connected to ClientSteady within 5 business days.</p>
+      <ul class="bundle-feats">
+        <li class="hi">Online booking system setup (Vagaro or Square)</li>
+        <li class="hi">Service menu configured</li>
+        <li class="hi">ClientSteady integration included</li>
+        <li>Up to 10 services configured</li>
+        <li>Client-facing booking link</li>
+        <li>30-day support for booking questions</li>
+      </ul>
+      <a href="index.html#demo" class="bundle-btn">Get Started</a>
+    </div>
+
+    <!-- Most Popular -->
+    <div class="bundle-card featured">
+      <div class="bundle-badge" style="color:var(--gold)">Most Popular</div>
+      <div class="bundle-name">Launch Package</div>
+      <div class="bundle-price">$699<span> one-time</span></div>
+      <p class="bundle-desc">The complete digital presence — booking system, professional landing page, and Google Business Profile — all set up and connected.</p>
+      <ul class="bundle-feats">
+        <li class="hi">Online booking system setup</li>
+        <li class="hi">Custom landing page (like our demos)</li>
+        <li class="hi">Google Business Profile setup & optimization</li>
+        <li class="hi">ClientSteady integration included</li>
+        <li class="hi">Google review link configured</li>
+        <li>Service menu + pricing page</li>
+        <li>Mobile-optimized</li>
+        <li>30-day support</li>
+      </ul>
+      <a href="index.html#demo" class="bundle-btn">Get Started →</a>
+    </div>
+
+    <!-- Full Setup -->
+    <div class="bundle-card">
+      <div class="bundle-badge" style="color:var(--blue)">Complete</div>
+      <div class="bundle-name">Full Setup</div>
+      <div class="bundle-price">$999<span> one-time</span></div>
+      <p class="bundle-desc">Everything in Launch Package plus a custom logo, brand colors, and a full brand kit you can use everywhere.</p>
+      <ul class="bundle-feats">
+        <li class="hi">Everything in Launch Package</li>
+        <li class="hi">Custom logo design (3 concepts)</li>
+        <li class="hi">Brand color palette + typography</li>
+        <li class="hi">Business card design (print-ready)</li>
+        <li>Social media profile setup</li>
+        <li>60-day priority support</li>
+      </ul>
+      <a href="index.html#demo" class="bundle-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- INDIVIDUAL ADD-ONS -->
+<section class="addons">
+  <div class="section-header">
+    <div class="section-eye" style="color:var(--blue)">Individual Add-Ons</div>
+    <h2>Only need <span>one thing?</span></h2>
+    <p class="section-sub">Add any of these to your ClientSteady subscription. Each is a flat one-time fee — no recurring charges.</p>
+  </div>
+
+  <div class="addons-grid">
+    <!-- Booking System -->
+    <div class="addon-card booking">
+      <div class="addon-icon">📅</div>
+      <span class="addon-tag">Booking System</span>
+      <div class="addon-name">Online Booking Setup</div>
+      <div class="addon-price">$299<span> one-time</span></div>
+      <p class="addon-desc">We set up Vagaro or Square Appointments for your business — fully configured, connected to ClientSteady, and ready for clients to book online within 5 business days.</p>
+      <ul class="addon-includes">
+        <li>Platform account creation & configuration</li>
+        <li>Full service menu with pricing & duration</li>
+        <li>Staff profiles configured</li>
+        <li>Business hours & buffer times set</li>
+        <li>ClientSteady webhook connected</li>
+        <li>Client-facing booking link provided</li>
+        <li>Test booking walkthrough with you</li>
+      </ul>
+    </div>
+
+    <!-- Landing Page -->
+    <div class="addon-card website">
+      <div class="addon-icon">🌐</div>
+      <span class="addon-tag">Landing Page</span>
+      <div class="addon-name">Professional Booking Site</div>
+      <div class="addon-price">$499<span> one-time</span></div>
+      <p class="addon-desc">A clean, mobile-optimized one-page site built around your brand — services, pricing, reviews, booking, and a contact form. Deployed to your domain within 5 business days.</p>
+      <ul class="addon-includes">
+        <li>Custom design matching your brand colors</li>
+        <li>Services section with pricing</li>
+        <li>Photo gallery (you provide photos)</li>
+        <li>Google review showcase</li>
+        <li>Integrated online booking button</li>
+        <li>Contact form with email notifications</li>
+        <li>Google Analytics setup</li>
+        <li>Deployed to your domain (Netlify)</li>
+      </ul>
+    </div>
+
+    <!-- GBP -->
+    <div class="addon-card gbp">
+      <div class="addon-icon">📍</div>
+      <span class="addon-tag">Local SEO</span>
+      <div class="addon-name">Google Business Profile</div>
+      <div class="addon-price">$199<span> one-time</span></div>
+      <p class="addon-desc">Your Google Business Profile is how local customers find you. We claim, verify, and fully optimize it — so you show up when people search for your services nearby.</p>
+      <ul class="addon-includes">
+        <li>Claim & verify your listing</li>
+        <li>Business info fully populated</li>
+        <li>Service menu added to Google</li>
+        <li>10+ photos uploaded & categorized</li>
+        <li>Custom review request link generated</li>
+        <li>Connected to ClientSteady review flow</li>
+        <li>Monthly insights report included</li>
+      </ul>
+    </div>
+
+    <!-- Logo & Brand -->
+    <div class="addon-card brand">
+      <div class="addon-icon">✨</div>
+      <span class="addon-tag">Brand Identity</span>
+      <div class="addon-name">Logo & Brand Kit</div>
+      <div class="addon-price">$399<span> one-time</span></div>
+      <p class="addon-desc">A professional logo and brand identity designed for your business. Delivered as a full brand kit you can use on your website, social media, signage, and print materials.</p>
+      <ul class="addon-includes">
+        <li>3 logo concepts to choose from</li>
+        <li>2 rounds of revisions</li>
+        <li>Final files: PNG, SVG, PDF</li>
+        <li>Color palette (hex, RGB, CMYK)</li>
+        <li>Typography selections</li>
+        <li>Business card design (print-ready)</li>
+        <li>Social media profile graphics</li>
+        <li>Brand style guide (1 page)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- GUARANTEE -->
+<div style="padding:0 3rem 4rem">
+  <div class="guarantee">
+    <span style="font-size:1.5rem;flex-shrink:0">🛡️</span>
+    <div>
+      <h4>5 business day setup guarantee</h4>
+      <p>Every add-on is delivered within 5 business days of payment and receipt of required info. If we miss the window, we'll refund the add-on fee — no questions asked.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Client<span>Steady</span></div>
+  <p>Questions? <a href="mailto:hello@clientsteady.com">hello@clientsteady.com</a></p>
+</footer>
+
+</body>
+</html>
+// ── Mobile menu ──
+function toggleMenu(){
+  var btn=document.getElementById('hamburger');
+  var menu=document.getElementById('mobileMenu');
+  btn.classList.toggle('open');
+  menu.classList.toggle('open');
+  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow='';
+}
+// Close menu on outside click
+document.addEventListener('click',function(e){
+  var menu=document.getElementById('mobileMenu');
+  var btn=document.getElementById('hamburger');
+  if(menu&&menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){
+    closeMenu();
+  }
+});
+
