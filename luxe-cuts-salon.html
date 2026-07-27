@@ -788,7 +788,7 @@ footer{
         </div>
       </div>
       <div class="form-row">
-        <label for="phone">Mobile Number</label>
+        <label for="phone">Mobile Number <span style="font-size:0.68rem;color:#8A9E8B;font-weight:400">(enter yours to receive a live demo SMS)</span></label>
         <input type="tel" id="phone" placeholder="(817) 555-0000" />
       </div>
       <div class="form-row">
@@ -801,6 +801,16 @@ footer{
       </div>
       <div class="step-btn-row">
         <button class="btn-back" onclick="goStep(2)">← Back</button>
+        
+        <!-- Demo SMS Field -->
+        <div style="background:rgba(74,158,255,0.06);border:1px solid rgba(74,158,255,0.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#4A9EFF;font-weight:600;margin-bottom:0.5rem">✨ Live SMS Demo (Optional)</div>
+          <p style="font-size:0.78rem;color:rgba(240,237,232,0.6);margin-bottom:0.75rem;line-height:1.6">Enter your phone number to receive real SMS automations as they fire.</p>
+          <input type="tel" id="demo-phone" placeholder="(817) 555-0000"
+            oninput="demoPhone=this.value"
+            style="width:100%;padding:0.65rem 0.85rem;background:#0D1118;border:0.5px solid rgba(255,255,255,0.15);color:#F0EDE8;font-family:Inter,sans-serif;font-size:0.88rem;border-radius:5px;outline:none;box-sizing:border-box;" />
+          <p style="font-size:0.68rem;color:rgba(240,237,232,0.3);margin-top:0.5rem">US numbers only. You'll receive a confirmation SMS within seconds.</p>
+        </div>
         <button class="btn-next" onclick="submitBooking()">Confirm Appointment →</button>
       </div>
       <p class="form-note">No payment required. You'll receive a confirmation text immediately after booking.</p>
@@ -1047,6 +1057,10 @@ function submitBooking() {
     business: 'luxe-cuts',
     read: false
   };
+  // ── Read phone from form field ──
+  var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : '';
+  if (phoneVal) demoPhone = phoneVal;
+
   try {
     var existing = JSON.parse(localStorage.getItem('cs_demo_bookings') || '[]');
     existing.push(booking);
@@ -1054,6 +1068,14 @@ function submitBooking() {
     localStorage.setItem('cs_demo_latest', JSON.stringify(booking));
     console.log('[ClientSteady Demo] Booking saved:', booking.id);
   } catch(e) { console.warn('localStorage not available'); }
+
+  // ── Send real SMS confirmation ──
+  sendRealSMS('confirmation', {
+    firstName: fname2,
+    service: state.service,
+    date: dateStr2,
+    time: state.time
+  });
 
   document.getElementById('successModal').classList.add('active');
 }
