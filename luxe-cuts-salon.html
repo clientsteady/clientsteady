@@ -802,8 +802,8 @@ footer{
       <div class="step-btn-row">
         <button class="btn-back" onclick="goStep(2)">← Back</button>
         
-        <!-- Demo SMS Field -->
-        <div style="background:rgba(74,158,255,0.06);border:1px solid rgba(74,158,255,0.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;">
+        <!-- Demo SMS Field (only shown in ?demo=true mode) -->
+        <div id="sms-demo-field" style="display:none;background:rgba(74,158,255,0.06);border:1px solid rgba(74,158,255,0.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;">
           <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#4A9EFF;font-weight:600;margin-bottom:0.5rem">✨ Live SMS Demo (Optional)</div>
           <p style="font-size:0.78rem;color:rgba(240,237,232,0.6);margin-bottom:0.75rem;line-height:1.6">Enter your phone number to receive real SMS automations as they fire.</p>
           <input type="tel" id="demo-phone" placeholder="(817) 555-0000"
@@ -1114,6 +1114,8 @@ var SMS_ENDPOINT = '/api/send-sms';
 var demoPhone = '';
 
 function sendRealSMS(type, data) {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('demo') !== 'true') return; // Only fire in demo mode
   if (!demoPhone) return; // No phone number entered — skip
   var phone = demoPhone.replace(/\D/g,'');
   if (phone.length < 10) return;
@@ -1165,9 +1167,27 @@ function showSMSToast(msg, isError) {
   setTimeout(function(){ t.parentNode && t.parentNode.removeChild(t); }, 4400);
 }
 
+
+// ── Demo mode — only activate if ?demo=true in URL ──
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var isDemoMode = params.get('demo') === 'true';
+  if (isDemoMode) {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show SMS field
+      var smsField = document.getElementById('sms-demo-field');
+      if (smsField) smsField.style.display = 'block';
+      // Show demo banner
+      var banner = document.getElementById('cs-demo-banner');
+      if (banner) banner.style.removeProperty('display');
+      console.log('[ClientSteady] Demo mode active');
+    });
+  }
+})();
+
 </script>
 
-<div id="cs-demo-banner" style="
+<div id="cs-demo-banner" style="display:none!important" style="
   position:fixed;bottom:1rem;right:1rem;z-index:9999;
   background:#1A3A5C;border:1px solid #4A9EFF;border-radius:8px;
   padding:0.6rem 1rem;font-family:Inter,sans-serif;font-size:0.72rem;
