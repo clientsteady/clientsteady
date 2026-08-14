@@ -457,7 +457,9 @@ footer{
 </head>
 <body>
 <!-- Demo Disclosure Banner -->
-<div style="background:#1A3A5C;color:rgba(255,255,255,0.75);text-align:center;padding:0.5rem 1rem;font-family:Inter,sans-serif;font-size:0.72rem;letter-spacing:0.08em;position:relative;z-index:999">Interactive ClientSteady Demo &nbsp;·&nbsp; Sample business and sample data</div>
+<div style="background:#1A3A5C;color:rgba(255,255,255,0.75);text-align:center;padding:0.5rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;position:relative;z-index:999">
+  Interactive ClientSteady Demo &nbsp;·&nbsp; Sample business and sample data
+</div>
 
 <!-- NAV -->
 <nav>
@@ -605,7 +607,7 @@ footer{
     </div>
     <div class="credential">
       <span class="cred-title">Allergan Diamond Provider</span>
-      <span class="cred-detail">Top 1% nationally</span>
+      <span class="cred-detail">Allergan Diamond Provider</span>
     </div>
     <div class="credential">
       <span class="cred-title">3,000+ procedures performed</span>
@@ -805,16 +807,8 @@ footer{
       <div class="step-btn-row">
         <button class="btn-back" onclick="goStep(2)">← Back</button>
         
-        <!-- Demo SMS Field (only shown in ?demo=true mode) -->
-        <div id="sms-demo-field" style="display:none;background:rgba(74,158,255,0.06);border:1px solid rgba(74,158,255,0.2);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.25rem;">
-          <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:#4A9EFF;font-weight:600;margin-bottom:0.5rem">✨ Live SMS Demo (Optional)</div>
-          <p style="font-size:0.78rem;color:rgba(240,237,232,0.6);margin-bottom:0.75rem;line-height:1.6">Enter your phone number to receive real SMS automations as they fire.</p>
-          <input type="tel" id="demo-phone" placeholder="(817) 555-0000"
-            oninput="demoPhone=this.value"
-            style="width:100%;padding:0.65rem 0.85rem;background:#0D1118;border:0.5px solid rgba(255,255,255,0.15);color:#F0EDE8;font-family:Inter,sans-serif;font-size:0.88rem;border-radius:5px;outline:none;box-sizing:border-box;" />
-          <p style="font-size:0.68rem;color:rgba(240,237,232,0.4);margin-top:0.5rem;line-height:1.6">By entering your number you agree to receive automated demo text messages from ClientSteady. Msg &amp; data rates may apply. Reply STOP to opt out. <a href="/privacy.html" style="color:rgba(74,158,255,0.6)">Privacy</a> · <a href="/terms.html" style="color:rgba(74,158,255,0.6)">Terms</a></p>
-          <p style="font-size:0.68rem;color:rgba(240,237,232,0.3);margin-top:0.5rem">US numbers only. You'll receive a confirmation SMS within seconds.</p>
-        </div>
+        <!-- Demo SMS Field (only shown in ?demo=true mode) --><p style="font-size:0.78rem;color:rgba(240,237,232,0.6);margin-bottom:0.75rem;line-height:1.6">Enter your phone number to receive real SMS automations as they fire.</p>
+          </div>
         <button class="btn-next" onclick="submitBooking()">Confirm Appointment →</button>
       </div>
       <p class="form-note">No payment required. You'll receive a confirmation text immediately after booking.</p>
@@ -1054,27 +1048,14 @@ function submitBooking() {
     business: 'bella-beauty',
     read: false
   };
-  // ── Read phone from form field ──
-  var phoneVal = document.getElementById('phone') ? document.getElementById('phone').value.trim() : '';
-  if (phoneVal) demoPhone = phoneVal;
-
   try {
     var existing = JSON.parse(localStorage.getItem('cs_demo_bookings') || '[]');
     existing.push(booking);
     localStorage.setItem('cs_demo_bookings', JSON.stringify(existing));
     localStorage.setItem('cs_demo_latest', JSON.stringify(booking));
-    console.log('[ClientSteady Demo] Booking saved:', booking.id);
   } catch(e) { console.warn('localStorage not available'); }
 
-  // ── Send real SMS confirmation ──
-  sendRealSMS('confirmation', {
-    firstName: fname,
-    service: state.service,
-    date: dateStr,
-    time: state.time
-  });
-
-  document.getElementById('clientFirstName').textContent = fname;
+    document.getElementById('clientFirstName').textContent = fname;
   document.getElementById('smsName').textContent = fname;
   document.getElementById('smsService').textContent = state.service;
   document.getElementById('smsDate').textContent = dateStr;
@@ -1111,64 +1092,11 @@ document.addEventListener('click',function(e){
   }
 });
 
-// ── Real SMS via Netlify Function ──
-var SMS_ENDPOINT = '/api/send-sms';
-var demoPhone = '';
-
-function sendRealSMS(type, data) {
-  var params = new URLSearchParams(window.location.search);
-  if (params.get('demo') !== 'true') return; // Only fire in demo mode
-  if (!demoPhone) return; // No phone number entered — skip
-  var phone = demoPhone.replace(/\D/g,'');
-  if (phone.length < 10) return;
-
-  var payload = Object.assign({ to: phone, type: type }, data);
-
-  fetch(SMS_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(res){
-    if (res.success) {
-      console.log('[ClientSteady] SMS sent:', type, res.sid);
-      showSMSToast('\u2705 Real SMS sent to ' + formatPhone(demoPhone));
-    } else {
-      console.warn('[ClientSteady] SMS failed:', res.error);
-      showSMSToast('\u26a0\ufe0f SMS: ' + (res.error || 'Failed'), true);
-    }
   })
   .catch(function(e){
     console.warn('[ClientSteady] SMS error:', e);
   });
 }
-
-function formatPhone(p) {
-  var d = p.replace(/\D/g,'');
-  if (d.length === 10) return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
-  return p;
-}
-
-function showSMSToast(msg, isError) {
-  var t = document.createElement('div');
-  t.style.cssText = [
-    'position:fixed','top:80px','left:50%','transform:translateX(-50%) translateY(-10px)',
-    'background:' + (isError ? '#1a0a0a' : '#0a1a0a'),
-    'border:1px solid ' + (isError ? '#B91C1C' : '#4CAF72'),
-    'border-radius:8px','padding:0.75rem 1.25rem',
-    'font-family:Inter,sans-serif','font-size:0.82rem',
-    'color:' + (isError ? '#B91C1C' : '#4CAF72'),
-    'z-index:10000','box-shadow:0 8px 32px rgba(0,0,0,0.5)',
-    'opacity:0','transition:all 0.3s','white-space:nowrap'
-  ].join(';');
-  t.textContent = msg;
-  document.body.appendChild(t);
-  setTimeout(function(){ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; }, 10);
-  setTimeout(function(){ t.style.opacity='0'; }, 4000);
-  setTimeout(function(){ t.parentNode && t.parentNode.removeChild(t); }, 4400);
-}
-
 
 // ── Demo mode — only activate if ?demo=true in URL ──
 (function() {
