@@ -40,7 +40,7 @@ jobs:
       - name: Browser booking QA
         shell: bash
         run: |
-          cat > /tmp/qa.js <<'NODE'
+          cat > /tmp/qa.cjs <<'NODE'
           const { chromium } = require('playwright');
 
           const sites = [
@@ -55,13 +55,10 @@ jobs:
           async function testBooking(page, name, mode, url) {
             await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
             await page.locator('#booking').scrollIntoViewIfNeeded();
-            const service = page.locator('.service-pill').first();
-            await service.click();
+            await page.locator('.service-pill').first().click();
             await page.locator('#nextToStep2').click();
-            const date = page.locator('.cal-day.available').first();
-            await date.click();
-            const time = page.locator('.time-slot:not(.taken)').first();
-            await time.click();
+            await page.locator('.cal-day.available').first().click();
+            await page.locator('.time-slot:not(.taken)').first().click();
             await page.locator('#nextToStep3').click();
             await page.locator('#fname').fill('QA');
             await page.locator('#lname').fill('Tester');
@@ -71,25 +68,27 @@ jobs:
             console.log(`${name} ${mode}: booking flow PASS`);
           }
 
-          const browser = await chromium.launch({ headless: true });
-          try {
-            for (const [mode, viewport] of viewports) {
-              const context = await browser.newContext({ viewport });
-              for (const [name, url] of sites) {
-                const page = await context.newPage();
-                const errors = [];
-                page.on('pageerror', e => errors.push(e.message));
-                await testBooking(page, name, mode, url);
-                if (errors.length) throw new Error(`${name} ${mode} page errors: ${errors.join(' | ')}`);
-                await page.close();
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            try {
+              for (const [mode, viewport] of viewports) {
+                const context = await browser.newContext({ viewport });
+                for (const [name, url] of sites) {
+                  const page = await context.newPage();
+                  const errors = [];
+                  page.on('pageerror', e => errors.push(e.message));
+                  await testBooking(page, name, mode, url);
+                  if (errors.length) throw new Error(`${name} ${mode} page errors: ${errors.join(' | ')}`);
+                  await page.close();
+                }
+                await context.close();
               }
-              await context.close();
+            } finally {
+              await browser.close();
             }
-          } finally {
-            await browser.close();
-          }
+          })().catch(err => { console.error(err); process.exit(1); });
           NODE
-          node /tmp/qa.js
+          node /tmp/qa.cjs
 
       - name: Static content assertions
         shell: python
@@ -98,7 +97,6 @@ jobs:
           index = Path('index.html').read_text()
           bella = Path('bella-beauty-medspa.html').read_text()
           luxe = Path('luxe-cuts-salon.html').read_text()
-          owners = Path('bella-beauty-owner-demo.html').read_text() + '\n' + Path('luxe-cuts-owner-demo.html').read_text()
           sms = Path('netlify/send-sms.js').read_text()
 
           assert "var targets={};" in index
