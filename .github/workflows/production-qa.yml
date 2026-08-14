@@ -40,7 +40,7 @@ jobs:
       - name: Browser booking QA
         shell: bash
         run: |
-          cat > /tmp/qa.cjs <<'NODE'
+          cat > qa.cjs <<'NODE'
           const { chromium } = require('playwright');
 
           const sites = [
@@ -88,7 +88,7 @@ jobs:
             }
           })().catch(err => { console.error(err); process.exit(1); });
           NODE
-          node /tmp/qa.cjs
+          node qa.cjs
 
       - name: Static content assertions
         shell: python
