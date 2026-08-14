@@ -687,7 +687,7 @@ input[type=range]::-webkit-slider-thumb{
       <div class="scen-desc-inner">
         <span class="scen-desc-name" id="sdName">Booking &amp; Confirmation</span>
         <span class="scen-desc-text" id="sdText">Fires the moment a client books. Confirms the appointment, collects a reply, and sets up the reminder chain.</span>
-        <span class="scen-desc-value" id="sdValue">Protects existing revenue · avg 18% no-show reduction</span>
+        <span class="scen-desc-value" id="sdValue">Protects existing revenue · illustrative avg 18% no-show reduction</span>
       </div>
     </div>
     <div class="sms-controls">
@@ -897,7 +897,7 @@ var scenarios = [
   {
     name:'Booking & Confirmation',
     text:'Fires the moment a client books. Confirms the appointment and sets up the full reminder chain.',
-    value:'Avg 18% reduction in no-shows from day one',
+    value:'Illustrative benchmark: ~18% reduction in no-shows',
     steps:[
       {left:{label:'Trigger · Instant',title:'Sarah books online',body:'She selects Hydrafacial, picks June 24 at 2:00 PM, and submits the booking form.'},
        right:{label:'Automation fires',bubble:'outbound',msg:'Hi Sarah! Thanks for booking with Bella Beauty Med Spa. We are excited to see you for your Hydrafacial on June 24 at 2:00 PM. Reply C to confirm your spot.',meta:'Sent instantly · Automated'}},
@@ -929,7 +929,7 @@ var scenarios = [
   {
     name:'No-Show Recovery',
     text:'Client misses their appointment without canceling. A gentle re-engagement fires 2 hours later.',
-    value:'Recovers ~20% of no-shows · keeps client relationship intact',
+    value:'Illustrative benchmark: ~20% of no-shows recovered · keeps client relationship intact',
     steps:[
       {left:{label:'Appointment time passes',title:'Marcus does not show',body:'No call, no text. The appointment window closes. The system flags it as a no-show automatically.'},
        right:{system:'No-show flagged\nMarcus W. · Jun 18 3:00 PM · Chemical Peel\n\nNo-show reactivation flow triggered.'}},
