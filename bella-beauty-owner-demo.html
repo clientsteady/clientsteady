@@ -519,8 +519,10 @@ input[type=range]::-webkit-slider-thumb{
   gtag('config', 'G-48BKH9YFZB');
 </script>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzVBNzA1OSIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjEzIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5CQjwvdGV4dD4KPC9zdmc+">
+<meta name="robots" content="noindex,nofollow">
 </head>
 <body>
+<div style="background:#4A9EFF;color:#06101c;text-align:center;padding:8px 16px;font-family:Inter,Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.02em">Interactive ClientSteady Demo · Sample business and sample data</div>
 
 <nav>
   <div class="nav-logo">Bella <em>Beauty</em> · <span style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:rgba(255,255,255,0.3);letter-spacing:0.15em;text-transform:uppercase">Owner Portal</span></div>
@@ -539,11 +541,10 @@ input[type=range]::-webkit-slider-thumb{
 
 <!-- MOBILE MENU DRAWER -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#how" onclick="closeMenu()">How It Works</a>
-  <a href="#automations" onclick="closeMenu()">Automations</a>
-  <a href="#pricing" onclick="closeMenu()">Pricing</a>
-  <a href="#demo" onclick="closeMenu()">Demo</a>
-  <a href="#" class="mob-cta" onclick="closeMenu();openModal(event)">Book a Demo →</a>
+  <a href="#" onclick="closeMenu();showPage('pain', document.querySelectorAll('.nav-tab')[0]);return false">Revenue Problem</a>
+  <a href="#" onclick="closeMenu();showPage('dashboard', document.querySelectorAll('.nav-tab')[1]);return false">Dashboard</a>
+  <a href="#" onclick="closeMenu();showPage('smsflow', document.querySelectorAll('.nav-tab')[2]);return false">Automations</a>
+  <a href="index.html#demo" class="mob-cta">Back to ClientSteady →</a>
 </div>
 
 <!-- ══ PAGE 1: PAIN ══ -->
