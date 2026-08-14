@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFBM0E1QyIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjEzIiBmaWxsPSIjNEE5RUZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5DUzwvdGV4dD48L3N2Zz4=">
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luxe Cuts & Color Studio — Owner Demo · Revenue Recovery System</title>
@@ -20,19 +21,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--white);f
 
 /* ── NAV ── */
 nav{
-  display:flex;align-items:center;justify-content:space-between;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   padding:0 3rem;height:64px;
   background:rgba(26,24,20,0.95);border-bottom:0.5px solid rgba(255,255,255,0.08);
   position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);
 }
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream);justify-self:start}
 .nav-logo em{font-style:italic;color:var(--gold)}
-.nav-tabs{display:flex;gap:0}
+.nav-tabs{display:flex;gap:0;justify-self:center}
+.nav-right{display:flex;align-items:center;gap:0.75rem;justify-self:end}
 .nav-tab{
   padding:0 1.25rem;height:64px;display:flex;align-items:center;
   font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
   color:rgba(255,255,255,0.4);cursor:pointer;border-bottom:2px solid transparent;
   transition:all 0.2s;text-decoration:none;
+  background:transparent;border-top:none;border-left:none;border-right:none;
+  font-family:'DM Sans',sans-serif;-webkit-appearance:none;appearance:none;
 }
 .nav-tab:hover{color:rgba(255,255,255,0.75)}
 .nav-tab.active{color:var(--cream);border-bottom-color:var(--gold)}
@@ -456,17 +460,19 @@ input[type=range]::-webkit-slider-thumb{
 
 <nav>
   <div class="nav-logo">Luxe Cuts <em>&amp; Color Studio</em></div>
-  <div class="nav-links">
-    <a href="#" onclick="showPage('pain',this.closest('nav').querySelectorAll('.nav-tab')[0])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">The Problem</a>
-    <a href="#" onclick="showPage('dashboard',this.closest('nav').querySelectorAll('.nav-tab')[1])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">Dashboard</a>
-    <a href="#" onclick="showPage('smsflow',this.closest('nav').querySelectorAll('.nav-tab')[2])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">Automations</a>
-    <a href="#" onclick="showPage('roi',this.closest('nav').querySelectorAll('.nav-tab')[3])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">ROI Calculator</a>
-    <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge" style="text-decoration:none">Get Started →</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('pain',this)">The Problem</button>
+    <button class="nav-tab" onclick="showPage('dashboard',this)">Dashboard</button>
+    <button class="nav-tab" onclick="showPage('smsflow',this)">Automations</button>
+    <button class="nav-tab" onclick="showPage('roi',this)">ROI Calculator</button>
+    <button class="nav-tab" onclick="showPage('close',this)">Pricing</button>
   </div>
-  <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge" style="text-decoration:none">Get Started →</a>
-<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge">Get Started →</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- MOBILE MENU DRAWER -->
@@ -506,7 +512,7 @@ input[type=range]::-webkit-slider-thumb{
     <div class="pain-cta">
       <button class="btn-gold" onclick="showPage('dashboard', document.querySelectorAll('.nav-tab')[1])">See What You're Recovering →</button>
     </div>
-    <div class="scroll-hint">or scroll</div>
+    
   </div>
 
   <!-- Pain detail cards -->
