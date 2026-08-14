@@ -342,7 +342,7 @@ footer a:hover{color:var(--text2)}
         <li>Client-facing booking link</li>
         <li>30-day support for booking questions</li>
       </ul>
-      <a href="index.html#demo" class="bundle-btn">Get Started</a>
+      <a href="index.html#get-started" class="bundle-btn">Get Started</a>
     </div>
 
     <!-- Most Popular -->
@@ -361,7 +361,7 @@ footer a:hover{color:var(--text2)}
         <li>Mobile-optimized</li>
         <li>30-day support</li>
       </ul>
-      <a href="index.html#demo" class="bundle-btn">Get Started →</a>
+      <a href="index.html#get-started" class="bundle-btn">Get Started →</a>
     </div>
 
     <!-- Full Setup -->
@@ -378,7 +378,7 @@ footer a:hover{color:var(--text2)}
         <li>Social media profile setup</li>
         <li>60-day priority support</li>
       </ul>
-      <a href="index.html#demo" class="bundle-btn">Get Started</a>
+      <a href="index.html#get-started" class="bundle-btn">Get Started</a>
     </div>
   </div>
 </section>
@@ -487,25 +487,4 @@ footer a:hover{color:var(--text2)}
 
 </body>
 </html>
-// ── Mobile menu ──
-function toggleMenu(){
-  var btn=document.getElementById('hamburger');
-  var menu=document.getElementById('mobileMenu');
-  btn.classList.toggle('open');
-  menu.classList.toggle('open');
-  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
-}
-function closeMenu(){
-  document.getElementById('hamburger').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.body.style.overflow='';
-}
-// Close menu on outside click
-document.addEventListener('click',function(e){
-  var menu=document.getElementById('mobileMenu');
-  var btn=document.getElementById('hamburger');
-  if(menu&&menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){
-    closeMenu();
-  }
-});
 

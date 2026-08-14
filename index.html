@@ -874,6 +874,11 @@ document.addEventListener('click',function(e){
   }
 });
 
+// Auto-open intake modal when arriving via #get-started (used by cross-page CTAs)
+if(window.location.hash==='#get-started'){
+  openModal();
+}
+
 </script>
 
 <!-- INTAKE MODAL -->
