@@ -1,0 +1,113 @@
+name: Production QA
+
+on:
+  push:
+    branches:
+      - agent/site-review-fixes
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: HTTP production checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://clientsteady.com/privacy.html -o /tmp/privacy.html
+          curl -fsSL https://clientsteady.com/terms.html -o /tmp/terms.html
+          grep -q "Privacy Policy" /tmp/privacy.html
+          grep -q "Terms of Service" /tmp/terms.html
+
+          status=$(curl -sS -o /tmp/origin.json -w '%{http_code}' \
+            -X POST https://clientsteady.com/api/send-sms \
+            -H 'Origin: https://unauthorized.example' \
+            -H 'Content-Type: application/json' \
+            --data '{"to":"8175550123","type":"confirmation","firstName":"QA","service":"Test","date":"Aug 14","time":"10:00 AM"}')
+          test "$status" = "403"
+          grep -q "Origin not allowed" /tmp/origin.json
+
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+
+      - name: Browser booking QA
+        shell: bash
+        run: |
+          cat > /tmp/qa.js <<'NODE'
+          const { chromium } = require('playwright');
+
+          const sites = [
+            ['Bella', 'https://clientsteady.com/bella-beauty-medspa.html'],
+            ['Luxe', 'https://clientsteady.com/luxe-cuts-salon.html'],
+          ];
+          const viewports = [
+            ['desktop', { width: 1366, height: 900 }],
+            ['mobile', { width: 390, height: 844 }],
+          ];
+
+          async function testBooking(page, name, mode, url) {
+            await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+            await page.locator('#booking').scrollIntoViewIfNeeded();
+            const service = page.locator('.service-pill').first();
+            await service.click();
+            await page.locator('#nextToStep2').click();
+            const date = page.locator('.cal-day.available').first();
+            await date.click();
+            const time = page.locator('.time-slot:not(.taken)').first();
+            await time.click();
+            await page.locator('#nextToStep3').click();
+            await page.locator('#fname').fill('QA');
+            await page.locator('#lname').fill('Tester');
+            await page.locator('#email').fill('qa@example.com');
+            await page.getByRole('button', { name: /Confirm Appointment/i }).click();
+            await page.locator('#successModal.active').waitFor({ state: 'visible', timeout: 5000 });
+            console.log(`${name} ${mode}: booking flow PASS`);
+          }
+
+          const browser = await chromium.launch({ headless: true });
+          try {
+            for (const [mode, viewport] of viewports) {
+              const context = await browser.newContext({ viewport });
+              for (const [name, url] of sites) {
+                const page = await context.newPage();
+                const errors = [];
+                page.on('pageerror', e => errors.push(e.message));
+                await testBooking(page, name, mode, url);
+                if (errors.length) throw new Error(`${name} ${mode} page errors: ${errors.join(' | ')}`);
+                await page.close();
+              }
+              await context.close();
+            }
+          } finally {
+            await browser.close();
+          }
+          NODE
+          node /tmp/qa.js
+
+      - name: Static content assertions
+        shell: python
+        run: |
+          from pathlib import Path
+          index = Path('index.html').read_text()
+          bella = Path('bella-beauty-medspa.html').read_text()
+          luxe = Path('luxe-cuts-salon.html').read_text()
+          owners = Path('bella-beauty-owner-demo.html').read_text() + '\n' + Path('luxe-cuts-owner-demo.html').read_text()
+          sms = Path('netlify/send-sms.js').read_text()
+
+          assert "var targets={};" in index
+          assert "Top 1% nationally" not in luxe
+          assert "Reply STOP to opt out" in bella
+          assert "Reply STOP to opt out" in luxe
+          assert "origin && origin !== ALLOWED_ORIGIN" in sms
+          assert "Origin not allowed" in sms
+          assert 'style="display:none!important" style=' not in bella
+          assert 'style="display:none!important" style=' not in luxe
+          assert "Industry benchmark: ~35%" in index
+          print('Static assertions PASS')
