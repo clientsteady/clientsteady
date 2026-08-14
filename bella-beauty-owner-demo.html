@@ -452,8 +452,17 @@ input[type=range]::-webkit-slider-thumb{
   .nav-links{display:none}
   .hamburger{display:flex}
 }
+</style>
 
-/* ── SMS Trigger Panel ── */
+<nav>
+  <div class="nav-logo">Bella Beauty <em>MedSpa</em></div>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('pain',this.closest('nav').querySelectorAll('.nav-tab')[0])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">The Problem</a>
+    <a href="#" onclick="showPage('dashboard',this.closest('nav').querySelectorAll('.nav-tab')[1])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">Dashboard</a>
+    <a href="#" onclick="showPage('smsflow',this.closest('nav').querySelectorAll('.nav-tab')[2])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">Automations</a>
+    <a href="#" onclick="showPage('roi',this.closest('nav').querySelectorAll('.nav-tab')[3])" style="font-size:0.78rem;color:rgba(240,237,232,0.6);text-decoration:none">ROI Calculator</a>
+    <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge" style="text-decoration:none">Get Started →</a>
+  </div>
   <a href="https://clientsteady.com/#pricing" target="_blank" class="nav-badge" style="text-decoration:none">Get Started →</a>
 <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
