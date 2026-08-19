@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Intelligence Audit â€” ClientSteady</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;
+  --navy-mid:#1A2E42;
+  --navy-lt:#243347;
+  --amber:#F5A623;
+  --amber-lt:#FEF3DC;
+  --red:#D94F3D;
+  --red-lt:#FDECEA;
+  --green:#2A9D5C;
+  --green-lt:#E8F7EF;
+  --yellow:#E8B84B;
+  --yellow-lt:#FDF6E3;
+  --grey:#8892A0;
+  --grey-lt:#F0F2F5;
+  --border:#E2E6EA;
+  --text:#1A2232;
+  --text2:#4A5568;
+  --white:#FFFFFF;
+  --page:#F8F9FA;
+}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--page);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* â”€â”€ COVER â”€â”€ */
+.cover{
+  background:var(--navy);
+  padding:60px 64px 56px;
+  position:relative;
+  overflow:hidden;
+  page-break-after:always;
+}
+.cover::before{
+  content:'';
+  position:absolute;
+  top:-120px;right:-120px;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(245,166,35,0.12) 0%,transparent 70%);
+}
+.cover-eyebrow{
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--amber);
+  font-weight:600;
+  margin-bottom:32px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.cover-eyebrow::before{
+  content:'';
+  display:block;
+  width:24px;height:1px;
+  background:var(--amber);
+}
+.cover h1{
+  font-family:'DM Serif Display',serif;
+  font-size:42px;
+  font-weight:400;
+  color:var(--white);
+  line-height:1.15;
+  letter-spacing:-0.5px;
+  margin-bottom:8px;
+  max-width:540px;
+}
+.cover h1 em{
+  color:var(--amber);
+  font-style:italic;
+}
+.cover-client{
+  font-size:13px;
+  color:rgba(255,255,255,0.45);
+  margin-bottom:48px;
+  letter-spacing:0.04em;
+}
+.cover-meta{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  max-width:540px;
+  padding-top:48px;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+.cover-meta-item{}
+.cover-meta-label{
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.3);
+  margin-bottom:4px;
+}
+.cover-meta-value{
+  font-size:13px;
+  color:rgba(255,255,255,0.85);
+  font-weight:500;
+}
+
+/* â”€â”€ SIGNAL SUMMARY BAR â”€â”€ */
+.signal-bar{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:24px 64px;
+  display:flex;
+  gap:0;
+  align-items:stretch;
+}
+.signal-item{
+  flex:1;
+  padding:0 24px 0 0;
+  margin-right:24px;
+  border-right:1px solid var(--border);
+}
+.signal-item:last-child{border-right:none;margin-right:0;padding-right:0}
+.signal-label{
+  font-size:9px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--grey);
+  margin-bottom:6px;
+  font-weight:600;
+}
+.signal-value{
+  font-family:'DM Serif Display',serif;
+  font-size:26px;
+  line-height:1;
+  margin-bottom:2px;
+}
+.signal-desc{
+  font-size:11px;
+  color:var(--text2);
+}
+.red{color:var(--red)}
+.amber{color:var(--amber)}
+.green{color:var(--green)}
+
+/* â”€â”€ MAIN LAYOUT â”€â”€ */
+.doc{
+  max-width:820px;
+  margin:0 auto;
+  padding:48px 64px 80px;
+}
+
+/* â”€â”€ SECTION â”€â”€ */
+.section{
+  margin-bottom:48px;
+}
+.section-header{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:24px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+}
+.section-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:500;
+  color:var(--amber);
+  background:var(--amber-lt);
+  padding:3px 8px;
+  border-radius:3px;
+  margin-top:4px;
+  flex-shrink:0;
+  letter-spacing:0.04em;
+}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;
+  font-weight:400;
+  color:var(--navy);
+  line-height:1.2;
+}
+.section-sub{
+  font-size:12px;
+  color:var(--text2);
+  margin-top:2px;
+}
+
+/* â”€â”€ FINDING CARD â”€â”€ */
+.finding{
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:16px;
+  background:var(--white);
+}
+.finding-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 20px;
+  border-bottom:1px solid var(--border);
+  background:var(--grey-lt);
+}
+.finding-severity{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:3px 10px;
+  border-radius:20px;
+  flex-shrink:0;
+}
+.sev-critical{background:var(--red-lt);color:var(--red)}
+.sev-warning{background:var(--yellow-lt);color:#B07D1A}
+.sev-monitor{background:var(--green-lt);color:var(--green)}
+.finding-title{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  flex:1;
+}
+.finding-metric{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--grey);
+  flex-shrink:0;
+}
+.finding-body{
+  padding:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.finding-body.full{grid-template-columns:1fr}
+.finding-col-label{
+  font-size:9px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--grey);
+  font-weight:600;
+  margin-bottom:8px;
+}
+.finding-text{
+  font-size:13px;
+  color:var(--text2);
+  line-height:1.7;
+}
+.finding-text strong{color:var(--text);font-weight:600}
+
+/* â”€â”€ DATA TABLE â”€â”€ */
+.data-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12.5px;
+  margin-bottom:16px;
+}
+.data-table th{
+  background:var(--grey-lt);
+  text-align:left;
+  padding:9px 14px;
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--text2);
+  border-bottom:1px solid var(--border);
+}
+.data-table td{
+  padding:10px 14px;
+  border-bottom:1px solid var(--border);
+  color:var(--text2);
+  vertical-align:top;
+}
+.data-table tr:last-child td{border-bottom:none}
+.data-table .num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+}
+.data-table .change-neg{color:var(--red);font-weight:600}
+.data-table .change-pos{color:var(--green);font-weight:600}
+
+/* â”€â”€ CALLOUT â”€â”€ */
+.callout{
+  border-radius:6px;
+  padding:16px 20px;
+  margin-bottom:16px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+}
+.callout-red{background:var(--red-lt);border-left:3px solid var(--red)}
+.callout-amber{background:var(--amber-lt);border-left:3px solid var(--amber)}
+.callout-green{background:var(--green-lt);border-left:3px solid var(--green)}
+.callout-navy{background:#EEF2F7;border-left:3px solid var(--navy)}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.callout-body{}
+.callout-label{
+  font-size:9px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  font-weight:700;
+  margin-bottom:4px;
+  color:var(--text2);
+}
+.callout-text{
+  font-size:13px;
+  color:var(--text);
+  line-height:1.65;
+}
+.callout-text strong{font-weight:600}
+
+/* â”€â”€ RECOMMENDATION LIST â”€â”€ */
+.rec-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.rec-item{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:14px 16px;
+}
+.rec-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:700;
+  color:var(--white);
+  background:var(--navy);
+  width:22px;height:22px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.rec-content{}
+.rec-action{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.rec-detail{font-size:12px;color:var(--text2);line-height:1.6}
+.rec-owner{
+  font-size:10px;
+  letter-spacing:0.08em;
+  color:var(--grey);
+  text-transform:uppercase;
+  margin-top:4px;
+  font-weight:600;
+}
+
+/* â”€â”€ Q&A BLOCK â”€â”€ */
+.qa-block{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.qa-q{
+  background:var(--grey-lt);
+  padding:12px 20px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--navy);
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+}
+.qa-q-label{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--amber);
+  background:var(--amber-lt);
+  padding:2px 7px;
+  border-radius:2px;
+  flex-shrink:0;
+  margin-top:2px;
+}
+.qa-a{
+  padding:12px 20px;
+  font-size:13px;
+  color:var(--text2);
+  line-height:1.7;
+  border-top:1px solid var(--border);
+}
+.qa-a strong{color:var(--text);font-weight:600}
+
+/* â”€â”€ RISK METER â”€â”€ */
+.risk-block{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:20px;
+}
+.risk-label{
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--grey);
+  margin-bottom:12px;
+}
+.risk-score{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:16px;
+}
+.risk-num{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;
+  line-height:1;
+  color:var(--red);
+}
+.risk-desc{
+  font-size:13px;
+  color:var(--text2);
+  line-height:1.65;
+  max-width:420px;
+}
+.risk-desc strong{color:var(--text);font-weight:600}
+.risk-bar-wrap{
+  background:var(--grey-lt);
+  border-radius:4px;
+  height:8px;
+  overflow:hidden;
+}
+.risk-bar-fill{
+  height:100%;
+  border-radius:4px;
+  background:linear-gradient(to right,var(--green),var(--yellow),var(--red));
+  width:72%;
+}
+
+/* â”€â”€ FOOTER â”€â”€ */
+.audit-footer{
+  background:var(--navy);
+  padding:24px 64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.footer-brand{
+  font-size:13px;
+  font-weight:700;
+  color:var(--white);
+  letter-spacing:-0.02em;
+}
+.footer-brand span{color:var(--amber)}
+.footer-note{
+  font-size:11px;
+  color:rgba(255,255,255,0.35);
+}
+
+/* â”€â”€ UTIL â”€â”€ */
+.divider{height:1px;background:var(--border);margin:32px 0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.tag{
+  display:inline-block;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:3px;
+  margin-right:4px;
+}
+.tag-red{background:var(--red-lt);color:var(--red)}
+.tag-amber{background:var(--yellow-lt);color:#8B6014}
+.tag-navy{background:#EEF2F7;color:var(--navy)}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">Client Intelligence Audit</div>
+  <h1>Performance declined.<br>Here's <em>why</em> â€” and<br>what to tell the client.</h1>
+  <div class="cover-client">Prepared for: Apex Digital Partners Â· Account: Ironclad Supply Co.</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Period</div>
+      <div class="cover-meta-value">Jul 1 â€“ Jul 31, 2026</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Channels</div>
+      <div class="cover-meta-value">Google Ads Â· Meta</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Account Risk</div>
+      <div class="cover-meta-value" style="color:#F5A623">Elevated</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL BAR -->
+<div class="signal-bar">
+  <div class="signal-item">
+    <div class="signal-label">Blended ROAS</div>
+    <div class="signal-value red">2.1Ã—</div>
+    <div class="signal-desc">vs 3.4Ã— prior month (â€“38%)</div>
+  </div>
+  <div class="signal-item">
+    <div class="signal-label">CVR â€” All Paid</div>
+    <div class="signal-value red">1.4%</div>
+    <div class="signal-desc">vs 2.8% prior month (â€“50%)</div>
+  </div>
+  <div class="signal-item">
+    <div class="signal-label">Spend</div>
+    <div class="signal-value amber">$41,200</div>
+    <div class="signal-desc">vs $38,800 prior month (+6.2%)</div>
+  </div>
+  <div class="signal-item">
+    <div class="signal-label">Revenue</div>
+    <div class="signal-value red">$86,500</div>
+    <div class="signal-desc">vs $131,900 prior month (â€“34.4%)</div>
+  </div>
+  <div class="signal-item">
+    <div class="signal-label">Findings</div>
+    <div class="signal-value" style="color:var(--navy)">4</div>
+    <div class="signal-desc">2 critical Â· 1 warning Â· 1 monitor</div>
+  </div>
+</div>
+
+<!-- DOCUMENT -->
+<div class="doc">
+
+  <!-- SECTION 1: WHAT HAPPENED -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">What Happened</div>
+        <div class="section-sub">The 4 developments that matter this period</div>
+      </div>
+    </div>
+
+    <!-- Finding A -->
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-severity sev-critical">Critical</span>
+        <span class="finding-title">Conversion rate collapsed across all paid channels mid-month</span>
+        <span class="finding-metric">CVR: 2.8% â†’ 1.4%</span>
+      </div>
+      <div class="finding-body">
+        <div>
+          <div class="finding-col-label">What the data shows</div>
+          <div class="finding-text">Conversion rate dropped from <strong>2.8% to 1.4%</strong> between June 30 and July 9 â€” a 50% decline that held flat for the rest of the month. The drop was simultaneous across Google Search, Performance Max, and Meta, which rules out platform-specific causes. Click volume was stable. The problem is between the click and the purchase.</div>
+        </div>
+        <div>
+          <div class="finding-col-label">What changed on July 9</div>
+          <div class="finding-text">A <strong>website update was pushed</strong> on July 8 (confirmed in Shopify changelog). Checkout flow was modified â€” the shipping estimate step was moved from cart to post-email-entry. Session recordings show a sharp increase in cart abandonments at the shipping reveal step, consistent with sticker shock on delivery costs. This is the most likely primary cause.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finding B -->
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-severity sev-critical">Critical</span>
+        <span class="finding-title">Performance Max cannibalized branded search â€” budget wasted on lowest-funnel traffic</span>
+        <span class="finding-metric">Brand CPC +84%</span>
+      </div>
+      <div class="finding-body">
+        <div>
+          <div class="finding-col-label">What the data shows</div>
+          <div class="finding-text">Branded keyword CPC increased from <strong>$0.62 to $1.14</strong> while branded impression share dropped 22 points. PMax campaign is competing for the same branded queries with no exclusions in place. Estimated wasted budget: <strong>$3,200â€“4,100</strong> on traffic the client would have received organically.</div>
+        </div>
+        <div>
+          <div class="finding-col-label">Why this matters now</div>
+          <div class="finding-text">With ROAS already compressed by the CVR issue, paying a premium for branded clicks that convert at lower rates (because PMax sends them to category pages, not product pages) is compounding the problem. The client is spending more to acquire customers it would have acquired for free â€” and those customers are still hitting a broken checkout.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finding C -->
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-severity sev-warning">Warning</span>
+        <span class="finding-title">Top 3 Meta creatives reached frequency threshold â€” CTR declining</span>
+        <span class="finding-metric">Freq: 4.8 Â· CTR â€“31%</span>
+      </div>
+      <div class="finding-body">
+        <div>
+          <div class="finding-col-label">What the data shows</div>
+          <div class="finding-text">The three ads driving 71% of Meta spend have average frequency of <strong>4.8</strong> in the last 21 days. CTR on these creatives dropped from 1.9% to 1.3%. CPM has risen 18% as Meta's algorithm signals audience exhaustion. New creative assets were not introduced in July.</div>
+        </div>
+        <div>
+          <div class="finding-col-label">Urgency</div>
+          <div class="finding-text">This issue is secondary to the CVR problem â€” fixing creative before fixing checkout will not recover ROAS. However, creative fatigue will become the primary issue within 2â€“3 weeks if new assets are not launched. <strong>Flag this for the next 30 days</strong> once the CVR situation is resolved.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finding D -->
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-severity sev-monitor">Monitor</span>
+        <span class="finding-title">Google Shopping impression share recovered â€” no action needed</span>
+        <span class="finding-metric">IS: 38% â†’ 52%</span>
+      </div>
+      <div class="finding-body full">
+        <div>
+          <div class="finding-col-label">Context</div>
+          <div class="finding-text">Shopping impression share recovered from a brief dip in late June. Likely caused by a temporary competitor budget increase that has since normalized. No structural issue â€” this should hold through August at current bid levels. Worth noting positively to the client as evidence of competitive positioning improvement.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: WHY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">Root Cause Analysis</div>
+        <div class="section-sub">What is verified, what is inferred, what is still unknown</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Factor</th>
+          <th>Status</th>
+          <th>Evidence</th>
+          <th>Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Checkout flow change (July 8)</strong></td>
+          <td><span class="tag tag-red">Verified</span></td>
+          <td>Shopify changelog + session recording cart abandonment spike at shipping step</td>
+          <td class="num change-neg">Primary â€” ~70% of CVR loss</td>
+        </tr>
+        <tr>
+          <td><strong>PMax brand cannibalization</strong></td>
+          <td><span class="tag tag-red">Verified</span></td>
+          <td>Branded IS drop + CPC increase correlating with PMax launch date (June 22)</td>
+          <td class="num change-neg">~$3,500 wasted spend</td>
+        </tr>
+        <tr>
+          <td><strong>Meta creative fatigue</strong></td>
+          <td><span class="tag tag-amber">Inferred</span></td>
+          <td>Frequency 4.8x + CTR decline pattern consistent with fatigue signals</td>
+          <td class="num">Emerging â€” not yet primary</td>
+        </tr>
+        <tr>
+          <td><strong>Seasonal demand shift</strong></td>
+          <td><span class="tag tag-navy">Unconfirmed</span></td>
+          <td>July historically softer for B2B supply â€” need YoY data to confirm</td>
+          <td class="num">Unknown â€” needs client data</td>
+        </tr>
+        <tr>
+          <td><strong>Competitor price action</strong></td>
+          <td><span class="tag tag-navy">Unconfirmed</span></td>
+          <td>No auction insight data available for this period</td>
+          <td class="num">Unlikely primary cause</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-navy">
+      <div class="callout-icon">ğŸ”</div>
+      <div class="callout-body">
+        <div class="callout-label">Analytical Confidence</div>
+        <div class="callout-text">The checkout change explanation accounts for the timing, the cross-channel nature of the drop, and the session behavior pattern. We are <strong>high confidence</strong> this is the primary driver. The PMax brand issue is confirmed but additive, not causal to the CVR decline. We cannot rule out a seasonal component without prior-year data â€” worth requesting from the client.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: WHAT MATTERS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-title">What This Means Commercially</div>
+        <div class="section-sub">Separating signal from noise â€” what is actually at risk</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="callout callout-red">
+          <div class="callout-icon">âš ï¸</div>
+          <div class="callout-body">
+            <div class="callout-label">Revenue at Risk (This Month)</div>
+            <div class="callout-text">The CVR decline from 2.8% to 1.4% on $41,200 spend cost approximately <strong>$45,400 in lost revenue</strong> relative to June performance. At current trajectory, August will produce a similar shortfall unless checkout is restored. This is not a media efficiency problem â€” it is a website problem presenting as a campaign problem.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-amber">
+          <div class="callout-icon">ğŸ’¡</div>
+          <div class="callout-body">
+            <div class="callout-label">What Can Be Fixed Immediately</div>
+            <div class="callout-text">Two issues are <strong>entirely fixable this week</strong> without additional spend: (1) revert or optimize the checkout flow to restore shipping transparency earlier in the flow, and (2) add branded keyword exclusions to PMax. Together these two changes should recover the majority of the ROAS gap within 2 weeks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-navy">
+      <div class="callout-icon">ğŸ“Š</div>
+      <div class="callout-body">
+        <div class="callout-label">What is Noise</div>
+        <div class="callout-text">The CPM increases, the Shopping IS fluctuation, and the minor CPC changes are <strong>not the story this month</strong>. These are normal market movements. Do not let the client focus the conversation on bid strategy or audience targeting â€” the issue is upstream of campaign optimization.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: RECOMMENDATIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-title">Recommended Actions</div>
+        <div class="section-sub">Prioritized by expected impact and urgency</div>
+      </div>
+    </div>
+
+    <ul class="rec-list">
+      <li class="rec-item">
+        <div class="rec-num">1</div>
+        <div class="rec-content">
+          <div class="rec-action">Audit checkout flow â€” restore shipping cost visibility to pre-July 8 state</div>
+          <div class="rec-detail">Contact the client's development team immediately. Request a comparison of the July 8 checkout change. Specifically test the shipping estimate reveal point. If A/B testing is available, test early vs. late shipping reveal. This single fix is likely worth $30â€“40K in recovered monthly revenue.</div>
+          <div class="rec-owner">Owner: Client dev team Â· Timeline: This week Â· Priority: Highest</div>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">2</div>
+        <div class="rec-content">
+          <div class="rec-action">Add branded keyword exclusions to all PMax campaigns</div>
+          <div class="rec-detail">Exclude all branded terms (Ironclad, Ironclad Supply, brand + product variations) from PMax asset groups. Create a separate Branded Search campaign with manual CPC bidding at lower bids. Estimated monthly savings: $3,200â€“4,100 on budget currently spent competing against own organic results.</div>
+          <div class="rec-owner">Owner: Agency media team Â· Timeline: This week Â· Priority: High</div>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">3</div>
+        <div class="rec-content">
+          <div class="rec-action">Request prior-year July data from client to confirm/rule out seasonal baseline</div>
+          <div class="rec-detail">Before the client call, request July 2024 revenue and conversion data. If July is seasonally soft for Ironclad's category, this context changes the narrative â€” the CVR issue would still be the primary cause, but the severity of the "gap to expectation" changes. Prevents the client from holding the agency to unrealistic recovery targets.</div>
+          <div class="rec-owner">Owner: Account manager Â· Timeline: Before client call Â· Priority: Medium</div>
+        </div>
+      </li>
+      <li class="rec-item">
+        <div class="rec-num">4</div>
+        <div class="rec-content">
+          <div class="rec-action">Plan creative refresh for Meta â€” œšYYˆÈ™]ÈÛÛ˜Ù\È›Üˆ]Yİ\İ][˜ÚÙ]‚ˆ]ˆÛ\ÜÏHœ™XËY]Z[‘È›İš[Üš]^™H\È™Y›Ü™HÚXÚÛİ]\Èš^Y8 %™]ÈÜ™X]]™H][™ÈHœ›ÚÙ[ˆ[›™[Ú[›İ™XÛİ™\ˆ“ĞTËˆİÙ]™\‹œšYYˆ™]ÈÛÛ˜Ù\È›İÈÛÈ^H\™H™XYHÈ][˜ÚÚ][ˆˆÙYZÜÈÙˆHÚXÚÛİ]š^ˆ›Øİ\È™]ÈÜ™X]]™HÛˆÚ\[™ËÙ[]™\H˜[œÜ\™[˜ŞHÈY™\ÜÈH™]™X[YÛÛœİ[Y\ˆÛÛ˜Ù\›ˆ\™XİKÙ]‚ˆ]ˆÛ\ÜÏHœ™XË[İÛ™\ˆ“İÛ™\ˆÜ™X]]™HX[H0­È[Y[[™NˆœšYYˆ\ÈÙYZË][˜Ú[ˆˆÙYZÜÈ0­Èš[Üš]NˆYY][OÙ]‚ˆÙ]‚ˆÛO‚ˆİ[‚ˆÙ]‚‚ˆKKHÑPÕSÓˆNˆÓQS•ÓÓ•‘T”ĞUSÓˆKO‚ˆ]ˆÛ\ÜÏHœÙXİ[Ûˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹ZXY\ˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹[[HŒOÙ]‚ˆ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹]]H•HÛY[ÛÛ™\œØ][ÛÙ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹\İXˆ•Ú]\›Û˜ÛYÚ[\ÚÈ8 %[™İÈÈ[œİÙ\Ù]‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚHY“ĞTÈ›ÜÛÈÚYÛšYšXØ[OÈ\ÈHYÙ[˜ŞH[™\œ\™›Ü›Z[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ•H“ĞTÈXÛ[™H\È›İHYYXH\™›Ü›X[˜ÙH\ÜİYH8 %]	ÜÈHÛÛ™\œÚ[Ûˆ˜]H\ÜİYKˆÛXÚÜË[\™\ÜÚ[ÛœË[™ÕˆÙ\™H[İX›HÜˆ[\›İš[™È\È[ÛˆH›Ü\[™Y™XØ]\ÙHÛÛ™\œÚ[Ûˆ˜]H™[HL	Hİ\[™È[HKÚXÚ\ÈH^HY\ˆHÚ[™ÙHØ\ÈXYHÈHÚXÚÛİ]›İÈÛˆ[İ\ˆÚ]KˆÙHY[YšYYHZÙ[HØ]\ÙH8 %Ú\[™ÈÛÜİÈ\™H›İÈ™]™X[Y]\ˆ[ˆHÚXÚÛİ]›ØÙ\ÜË[™Ù\ÜÚ[Ûˆ]HÚİÜÈİ\İÛY\œÈX˜[™Ûš[™È]]Ú[ˆÙHØ[ÈÛÜšÈÚ][İ\ˆX[HÈ\İ™]™\[™È]Ú[™ÙH\ÈÙYZË[™ÙH^XİÈ™XÛİ™\ˆHXZ›Üš]HÙˆHØ\Ú][ˆÛÈÙYZÜÈÙˆÚ[™ÈÛËˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚHY[İHÙY\Ü[™[™ÈYˆ\™›Ü›X[˜ÙHØ\ÈXÛ[š[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ•HXÛ[™HX]\šX[^™Yİ™\ˆHš\œİÛÈÙYZÜÈÙˆH[Û[™İ\ˆ[Ûš]Üš[™È›YÙÙY]\È[ˆ[Y\™Ú[™È\ÜİYHÛˆÙ]WKˆÙH™YØ[ˆ[™\İYØ][™ÈHØ]\ÙH[[YYX][H8 %Y[YZ[™È]]Ø\ÈHÚ]K\ÚYH\ÜİYH˜]\ˆ[ˆHØ[\ZYÛˆ\ÜİYHØ\È[\Ü[™XØ]\ÙHHš^\ÈY™™\™[ˆ]\Ú[™ÈÜ[™Ûİ[‰İ]™H™XÛİ™\™Y™]™[YNÈš^[™ÈHÚXÚÛİ]Ú[ˆÙIİ™H›İÈ\ÛÛ]YH›ÛİØ]\ÙH[™]™HÜXÚYšXÈXİ[ÛœÈ™XYHÈ[\[Y[\ÈÙYZËˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚ]	ÜÈ[İ\ˆ›Ü™XØ\İ›Üˆ]Yİ\İYˆÙHš^\ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ’YˆÚXÚÛİ]\È™\İÜ™YÈ™KR[H™Z]š[Üˆ[™œ˜[™Y^Û\Ú[ÛœÈ\™HYYÈ\™›Ü›X[˜ÙHX^ÙIÙ^XİÕ”ˆÈ™]\›ˆİØ\™H‹x $Ì‹	H˜[™ÙHÚ][ˆL8 $ÌM^\Ëˆ]İ\œ™[Ü[™]™[È][\Y\ÈH™]\›ˆİØ\™	LŒ8 $ÌLÌÈ[ˆ[ÛH™]™[YKˆÙIÙØ[ÈÙYH]X\İÈ^\ÈÙˆÜİYš^]H™Y›Ü™HÛÛ[Z][™ÈÈH›Ü›X[]Yİ\İ›Ü™XØ\İˆÙIÙ[ÛÈ™XÛÛ[Y[™™]šY]Ú[™Èš[Ü‹^YX\ˆ[H]HÙÙ]\ˆ8 %Yˆ[H\ÈÙX\ÛÛ˜[ÛÙ™\ÜÈ[ˆ[İ\ˆØ]YÛÜKÙHÚİ[Ø[Xœ˜]H^Xİ][ÛœÈXØÛÜ™[™ÛKˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚİ[ÙH™YXÙHÜ[™Ú[H\È\È\[š[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ’]\[™ÈÛˆØ\Ú›İÈ[Z[™ËˆHÚXÚÛİ]š^\ÈHYÚ\‹[]™\˜YÙH[İ™H8 %	HÙˆ]ˆ[YHÈš^H[›™[\ÈÛÜ[Ü™H[ˆ	L[ˆÜ[™Y\İY[ÈšYÚ›İËˆYˆØ\Ú›İÈ\ÈHÛÛ˜Ù\›‹H[Ù\İ[\Ü˜\H™YXİ[Ûˆ
+Mx $ÌŒ	JHÚ[HHš^\È˜[Y]Y\È™X\ÛÛ˜X›KˆİÙ]™\‹™YXÚ[™ÈÜ[™ÚYÛšYšXØ[H\š[™È\È\š[Ùš\ÚÜÈÜÚ[™È]Xİ[ÛˆÜÚ][Ûˆ]Ú[™H^[œÚ]™HÈ™XZ[ˆİ\ˆ™XÛÛ[Y[™][Ûˆ\ÈÈš[Üš]^™HHÚXÚÛİ]š^[™XZ[Z[ˆÜ[™Ú[H]	ÜÈ™Z[™È\İYˆ‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆKKHÑPÕSÓˆˆPĞÓÕS•’TÒÈKO‚ˆ]ˆÛ\ÜÏHœÙXİ[Ûˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹ZXY\ˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹[[HŒÙ]‚ˆ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹]]HXØÛİ[™][[Ûˆš\ÚÏÙ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹\İXˆ“İ\ˆ\ÜÙ\ÜÛY[ÙˆÛY[\™[][ÛœÚ\š\ÚÈ\È\š[ÙÙ]‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœš\ÚËX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœš\ÚË[X™[”š\ÚÈØÛÜ™H\È\š[ÙÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚË\ØÛÜ™H‚ˆ]ˆÛ\ÜÏHœš\ÚË[[HÌÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚËY\ØÈ‚ˆİ›Û™Ï‘[]˜]YÜİ›Û™ÏˆHÍ	H™]™[YHXÛ[™H[ˆHÚ[™ÛH[Û\ÈX]\šX[[›İYÚÈšYÙÙ\ˆ^Xİ]]™H][[Ûˆ][ÜİÛY[ËˆHš\ÚÈ\ÈX[˜YÙXX›H™XØ]\ÙHHØ]\ÙH\ÈY[YšXX›KHš^\ÈXİ[Û˜X›K[™H™XÛİ™\H[Y[[™H\ÈÚÜ8 %]HÛÛ™\œØ][Ûˆ]\İ™H›ØXİ]™KˆYˆHÛY[\ØÛİ™\œÈHÚXÚÛİ]\ÜİYH[™\[™[H™Y›Ü™H\ÈØ[HYÙ[˜ŞIÜÈ[˜[]XØ[Ü™YXš[]H\È[XYÙYˆİ›Û™Ï”™XÛÛ[Y[™ØÚY[[™ÈHÛY[Ø[™Y›Ü™H[™ÙˆÙYZËÜİ›Û™Ï‚ˆÙ]‚ˆÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚËX˜\‹]Ü˜\‚ˆ]ˆÛ\ÜÏHœš\ÚËX˜\‹Yš[Ù]‚ˆÙ]‚ˆ]ˆİ[OH™\Ü^N™›^Ú\İYKXÛÛ[œÜXÙKX™]ÙY[Ù›Û\Ú^™NŒLØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]ÜœÛ]\‹\ÜXÚ[™ÎŒŒY[H‚ˆÜ[“İÈš\ÚÈ
+
+OÜÜ[‚ˆÜ[’YÚš\ÚÈ
+L
+OÜÜ[‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆİ[OH›X\™Ú[‹]ÜŒMœ‚ˆ]ˆÛ\ÜÏH˜Ø[İ]Ø[İ]YÜ™Y[ˆ‚ˆ]ˆÛ\ÜÏH˜Ø[İ]ZXÛÛˆ¸§$ÏÙ]‚ˆ]ˆÛ\ÜÏH˜Ø[İ]X›ÙH‚ˆ]ˆÛ\ÜÏH˜Ø[İ][X™[”š\ÚÈZ]YØ][ÛÙ]‚ˆ]ˆÛ\ÜÏH˜Ø[İ]]^•\ÈÚ]X][Ûˆ\È™XÛİ™\˜X›KˆHYÙ[˜ŞIÜÈÜÚ][Ûˆ\Èİ›Û™Ù\İÚ[ˆ]İ›Û™Ï›XYÈHÛÛ™\œØ][Ûˆ›ØXİ]™[OÜİ›Û™Ï‹™\Ù[ÈHÛX\ˆ›ÛİXØ]\ÙH[˜[\Ú\Ë[™œ˜[Y\ÈHÚXÚÛİ]\ÜİYH\ÈÛÛY][™È™Z[™ÈÛÛ™Y[ˆ\™\œÚ\Ú]HÛY[ˆYÙ[˜ÚY\È]İ\™˜XÙH›Ø›[\È™Y›Ü™HÛY[ÈÈ™]Z[ˆXØÛİ[ËˆYÙ[˜ÚY\È]ØZ]›ÜˆÛY[ÈÈİ\™˜XÙH[HÜÙH[KÙ]‚ˆÙ]‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆKKHU’QTˆKO‚ˆ]ˆÛ\ÜÏH™]šY\ˆÙ]‚‚ˆKKH‘TT‘Q–HKO‚ˆ]ˆİ[OH^X[YÛ˜Ù[\ÜY[™ÎŒMœ‚ˆ]ˆİ[OH™›Û\Ú^™NŒL\ØÛÛÜ˜\ŠKYÜ™^JNÛ]\‹\ÜXÚ[™ÎŒŒY[Nİ^]˜[œÙ›Ü›N\\˜Ø\ÙNÛX\™Ú[‹X›İÛN”™\\™YOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒMÙ›Û]ÙZYÚŒØÛÛÜ˜\ŠK[˜]JHÛY[İXYOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒLœØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]ÜŒœ”\™›Ü›X[˜ÙH[[YÙ[˜ÙH›ÜˆZYYYXHYÙ[˜ÚY\ÏÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒL\ØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]Üš[ĞÛY[İXYK˜ÛÛH0­ÈÛY[İXYK˜ÛÛOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒLØÛÛÜ˜\ŠKX›Ü™\ŠNÛX\™Ú[‹]ÜŒMœÛ]\‹\ÜXÚ[™ÎŒŒ[H•\È]Y]\È˜\ÙYÛˆ]˜Z[X›H]H[™[˜[]XØ[[™™\™[˜ÙKˆÛÛ˜Û\Ú[ÛœÈX\šÙY•[˜ÛÛ™š\›YYˆ™\]Z\™HY][Û˜[ÛY[]HÈ˜[Y]KÙ]‚ˆÙ]‚‚Ù]‚‚KKH“ÓÕTˆKO‚]ˆÛ\ÜÏH˜]Y]Y›Ûİ\ˆ‚ˆ]ˆÛ\ÜÏH™›Ûİ\‹Xœ˜[™ÛY[Ü[”İXYOÜÜ[Ù]‚ˆ]ˆÛ\ÜÏH™›Ûİ\‹[›İHÛÛ™šY[X[0­È™\\™Y›Üˆ\^YÚ][\™\œÈ0­È]Yİ\İŒÙ]‚Ù]‚‚Ø›ÙO‚Ú[‚

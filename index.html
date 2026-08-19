@@ -2,972 +2,250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="ClientSteady automates SMS client retention for service businesses — booking confirmations, cancellation recovery, review requests, and win-back sequences. 14-day free trial.">
-<meta property="og:title" content="ClientSteady — Keep Every Client. Protect Every Dollar.">
-<meta property="og:description" content="Automated SMS client retention for med spas, salons, and service businesses. 14 automations. No contracts.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClientSteady — Boutique Marketing Analytics for Growing Agencies</title>
+<meta name="description" content="ClientSteady is a boutique marketing analytics practice for independent and growing agencies that need senior analytical judgment without adding full-time headcount.">
+<meta property="og:title" content="ClientSteady — Boutique Marketing Analytics for Growing Agencies">
+<meta property="og:description" content="Senior analytical judgment for independent and growing agencies. Independent performance review, campaign analytics, measurement systems.">
 <meta property="og:url" content="https://clientsteady.com">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://clientsteady.com">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ClientSteady — Keep Every Client. Protect Every Dollar.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#07090D;
-  --bg2:#0D1118;
-  --bg3:#0A0D12;
-  --surface:#111820;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
-  --text:#F0EDE8;
-  --text2:rgba(240,237,232,0.72);
-  --text3:rgba(240,237,232,0.62);
-  --blue:#4A9EFF;
-  --blue2:#72B4FF;
-  --blue-dim:rgba(74,158,255,0.1);
-  --blue-border:rgba(74,158,255,0.2);
-  --green:#4CAF72;
-  --green-dim:rgba(76,175,114,0.08);
-  --green-border:rgba(76,175,114,0.2);
-  --purple:#AFA9EC;
-  --purple-dim:rgba(127,119,221,0.08);
-  --purple-border:rgba(127,119,221,0.2);
-}
+:root{--navy:#0D1B2A;--navy-2:#152233;--navy-3:#1E3048;--amber:#F5A623;--amber-dim:rgba(245,166,35,0.12);--amber-border:rgba(245,166,35,0.25);--red:#C94A3A;--green:#2A9D5C;--border-dark:rgba(255,255,255,0.07);--page:#F8F9FA;--white:#FFFFFF;}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-/* ── NAV ── */
-nav{
-  position:sticky;top:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;height:60px;
-  background:rgba(7,9,13,0.95);
-  border-bottom:0.5px solid var(--border);
-  backdrop-filter:blur(16px);
-}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{display:flex;gap:3px;align-items:flex-end}
-.logo-bar{width:4px;border-radius:2px;background:var(--blue)}
-.logo-word{font-size:1.05rem;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
-.logo-word span{color:var(--blue)}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-links a{font-size:0.78rem;color:var(--text2);text-decoration:none;font-weight:400;transition:color 0.18s;letter-spacing:0.01em}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:#4A9EFF !important;color:#000000 !important;padding:0.6rem 1.4rem;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;border:none;cursor:pointer;border-radius:5px;text-decoration:none;display:inline-block;transition:background 0.18s;letter-spacing:0.01em;-webkit-font-smoothing:auto}
-.nav-cta:hover{background:#72B4FF !important;color:#000000 !important}
-/* ── HAMBURGER ── */
-.hamburger{
-  display:none;flex-direction:column;justify-content:center;gap:5px;
-  background:none;border:none;cursor:pointer;padding:4px;
-  width:36px;height:36px;flex-shrink:0;
-}
-.hamburger span{
-  display:block;width:22px;height:2px;
-  background:var(--text2);border-radius:2px;
-  transition:all 0.25s;transform-origin:center;
-}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-/* ── MOBILE DRAWER ── */
-.mobile-menu{
-  display:none;
-  position:fixed;top:60px;left:0;right:0;
-  background:rgba(7,9,13,0.98);
-  border-bottom:0.5px solid var(--border);
-  backdrop-filter:blur(20px);
-  z-index:99;
-  padding:1.25rem 1.5rem 1.5rem;
-  flex-direction:column;gap:0;
-}
-.mobile-menu.open{display:flex}
-.mobile-menu a{
-  display:block;font-size:1rem;font-weight:500;
-  color:var(--text2);text-decoration:none;
-  padding:0.85rem 0;
-  border-bottom:0.5px solid var(--border);
-  transition:color 0.18s;
-}
-.mobile-menu a:hover{color:var(--text)}
-.mobile-menu .mob-cta{
-  display:block;margin-top:1rem;
-  background:#4A9EFF;color:#000 !important;
-  text-align:center;padding:0.85rem;
-  font-size:0.88rem;font-weight:700;
-  border-radius:5px;font-family:'Inter',sans-serif;
-  border-bottom:none !important;
-}
-
-
-/* ── HERO ── */
-.hero{
-  min-height:92vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:5rem 3rem 4rem;text-align:center;
-  position:relative;overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;
-  width:600px;height:400px;
-  background:radial-gradient(ellipse,rgba(74,158,255,0.07) 0%,transparent 70%);
-  top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  background:var(--blue-dim);border:0.5px solid var(--blue-border);
-  padding:0.3rem 1rem;border-radius:100px;
-  font-size:0.68rem;color:var(--blue);letter-spacing:0.08em;
-  text-transform:uppercase;font-weight:600;margin-bottom:1.75rem;
-}
-.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-h1{
-  font-size:clamp(2.6rem,5vw,4.2rem);font-weight:800;
-  letter-spacing:-0.04em;line-height:1.04;
-  max-width:780px;margin:0 auto 1.25rem;
-}
-h1 .blue{color:var(--blue)}
-h1 .dim{color:var(--text3)}
-.hero-sub{
-  font-size:1rem;color:var(--text2);max-width:480px;
-  margin:0 auto 2.5rem;line-height:1.8;font-weight:300;
-}
-.hero-btns{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem}
-.btn-primary{
-  background:#4A9EFF;color:#000000;
-  padding:0.85rem 2rem;font-size:0.85rem;font-weight:700;
-  border:none;cursor:pointer;border-radius:5px;
-  font-family:'Inter',sans-serif;text-decoration:none;
-  display:inline-block;transition:background 0.18s;
-}
-.btn-primary:hover{background:#72B4FF;color:#000000}
-.btn-ghost{
-  background:transparent;color:var(--text);
-  padding:0.85rem 2rem;font-size:0.85rem;font-weight:500;
-  border:0.5px solid var(--border2);cursor:pointer;border-radius:5px;
-  font-family:'Inter',sans-serif;text-decoration:none;
-  display:inline-block;transition:all 0.18s;
-}
-.btn-ghost:hover{border-color:rgba(255,255,255,0.3);background:var(--surface)}
-
-/* ── TICKER ── */
-.ticker{
-  display:flex;gap:1px;background:rgba(255,255,255,0.05);
-  max-width:660px;width:100%;
-  border:0.5px solid var(--border);border-radius:8px;overflow:hidden;
-}
-.tick-item{flex:1;background:var(--bg2);padding:1.1rem 1rem;text-align:center}
-.tick-num{
-  font-size:1.5rem;font-weight:800;color:var(--blue);
-  letter-spacing:-0.03em;line-height:1;
-}
-.tick-label{font-size:0.58rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:3px}
-
-/* ── PROOF BAR ── */
-.proof-bar{
-  display:flex;align-items:center;justify-content:center;gap:2.5rem;
-  padding:1.1rem 3rem;flex-wrap:wrap;
-  background:rgba(74,158,255,0.03);
-  border-top:0.5px solid var(--border);
-  border-bottom:0.5px solid var(--border);
-}
-.proof-item{display:flex;align-items:center;gap:0.5rem;font-size:0.73rem;color:var(--text2)}
-.proof-check{
-  width:16px;height:16px;border-radius:50%;
-  background:var(--blue-dim);display:flex;align-items:center;
-  justify-content:center;font-size:9px;color:var(--blue);flex-shrink:0;
-}
-
-/* ── SECTIONS ── */
-.section{padding:6rem 3rem}
-.section-eye{font-size:0.67rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:0.6rem}
-h2{font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
-h2 .blue{color:var(--blue)}
-.section-sub{font-size:0.9rem;color:var(--text2);max-width:460px;line-height:1.8;font-weight:300}
-
-/* ── HOW IT WORKS ── */
-.how-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:1px;background:var(--border);
-  margin-top:3rem;border:0.5px solid var(--border);border-radius:8px;overflow:hidden;
-}
-.how-card{background:var(--bg2);padding:2.25rem;transition:background 0.18s}
-.how-card:hover{background:var(--surface)}
-.how-num{font-size:2.2rem;font-weight:800;color:rgba(74,158,255,0.55);letter-spacing:-0.04em;line-height:1;margin-bottom:0.75rem;transition:color 0.2s}
-.how-card:hover .how-num{color:#4A9EFF}
-.how-title{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:0.35rem}
-.how-body{font-size:0.8rem;color:var(--text2);line-height:1.75}
-
-/* ── AUTOMATIONS ── */
-.autos-section{padding:6rem 3rem;background:var(--bg3)}
-.tier-block{margin-bottom:1.5rem}
-.tier-header{display:flex;align-items:center;gap:0.75rem;padding:0.65rem 1.25rem}
-.tier-badge{font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px}
-.tier-count{font-size:0.72rem;font-weight:700}
-.tier-desc{font-size:0.72rem;color:var(--text3)}
-.tier-starter .tier-header{background:var(--green-dim);border:0.5px solid var(--green-border)}
-.tier-starter .tier-badge{background:rgba(76,175,114,0.15);color:var(--green)}
-.tier-starter .tier-count{color:var(--green)}
-.tier-growth .tier-header{background:var(--blue-dim);border:0.5px solid var(--blue-border)}
-.tier-growth .tier-badge{background:rgba(74,158,255,0.15);color:var(--blue)}
-.tier-growth .tier-count{color:var(--blue)}
-.tier-enterprise .tier-header{background:var(--purple-dim);border:0.5px solid var(--purple-border)}
-.tier-enterprise .tier-badge{background:rgba(127,119,221,0.15);color:var(--purple)}
-.tier-enterprise .tier-count{color:var(--purple)}
-.auto-grid{display:grid;gap:1px;background:rgba(255,255,255,0.04)}
-.auto-card{background:var(--bg2);padding:1.25rem;transition:background 0.18s}
-.auto-card:hover{background:var(--surface)}
-.auto-card.carried{background:#0A0C10;opacity:0.45}
-.auto-icon{font-size:1.1rem;margin-bottom:0.5rem}
-.auto-title{font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:0.25rem}
-.auto-body{font-size:0.7rem;color:var(--text2);line-height:1.65}
-
-/* ── VERTICALS ── */
-.verticals-section{padding:6rem 3rem;background:var(--bg2)}
-.verticals-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
-.vert-card{background:var(--surface);border:0.5px solid var(--border);padding:1.5rem;border-radius:6px;transition:border-color 0.18s}
-.vert-card:hover{border-color:var(--blue-border)}
-.vert-icon{font-size:1.5rem;margin-bottom:0.75rem}
-.vert-name{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.3rem}
-.vert-body{font-size:0.75rem;color:var(--text2);line-height:1.65}
-.vert-tag{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.75rem;display:block}
-.vert-tag.live{color:var(--green)}
-.vert-tag.soon{color:var(--blue);opacity:0.6}
-
-/* ── DEMO ── */
-.demo-section{padding:6rem 3rem;background:var(--bg3);text-align:center}
-.demo-box{
-  max-width:640px;margin:0 auto;
-  background:var(--bg2);border:0.5px solid var(--border);
-  padding:3rem;border-radius:10px;
-}
-.demo-box h2{margin-bottom:0.75rem}
-.demo-box p{font-size:0.88rem;color:var(--text2);line-height:1.8;margin-bottom:2rem;max-width:460px;margin-left:auto;margin-right:auto}
-.demo-links{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.75rem}
-.demo-link{
-  display:flex;align-items:center;gap:0.5rem;
-  background:var(--surface);border:0.5px solid var(--border2);
-  padding:0.65rem 1.25rem;border-radius:5px;
-  font-size:0.78rem;color:var(--text2);text-decoration:none;
-  transition:all 0.18s;
-}
-.demo-link:hover{border-color:var(--blue-border);color:var(--text)}
-.demo-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.demo-note{font-size:0.72rem;color:var(--text3);margin-top:1.25rem;line-height:1.7}
-
-/* ── PRICING ── */
-.pricing-section{padding:6rem 3rem;background:var(--bg)}
-.pricing-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1px;background:var(--border);
-  max-width:880px;margin:3.5rem auto 0;
-  border:0.5px solid var(--border);border-radius:8px;overflow:hidden;
-}
-.price-card{background:var(--bg2);padding:2.25rem;display:flex;flex-direction:column}
-.price-card.featured{background:var(--surface);border-top:2px solid var(--blue)}
-.price-tier{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.6rem;font-weight:500}
-.price-tier.blue{color:var(--blue)}
-.price-amt{font-size:2.6rem;font-weight:800;letter-spacing:-0.03em;color:var(--text);line-height:1;margin-bottom:0.2rem}
-.price-amt span{font-size:0.9rem;color:var(--text3);font-weight:400}
-.price-desc{font-size:0.78rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:0.5px solid var(--border)}
-.price-feats{list-style:none;flex:1;margin-bottom:1.75rem}
-.price-feats li{font-size:0.78rem;color:var(--text2);padding:0.38rem 0;display:flex;align-items:flex-start;gap:0.6rem;border-bottom:0.5px solid var(--border);line-height:1.5}
-.price-feats li::before{content:'→';color:var(--text3);flex-shrink:0;font-size:0.65rem;margin-top:2px}
-.price-feats li.hi{color:var(--text)}
-.price-feats li.hi::before{color:var(--blue)}
-.price-feats li.ent{color:rgba(240,237,232,0.7)}
-.price-feats li.ent::before{color:var(--purple)}
-.price-feats li.divider{color:var(--text3);font-size:0.63rem;letter-spacing:0.08em;text-transform:uppercase;border-bottom:none;padding-top:0.65rem}
-.price-feats li.divider::before{display:none}
-.price-btn{
-  width:100%;padding:0.8rem;font-size:0.75rem;font-weight:600;
-  letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;
-  font-family:'Inter',sans-serif;border-radius:4px;
-  background:transparent;color:var(--text2);
-  border:0.5px solid var(--border2);transition:all 0.18s;margin-top:auto;
-}
-.price-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--text)}
-.price-card.featured .price-btn{background:#4A9EFF;color:#000000;border-color:#4A9EFF;font-weight:700}
-.price-card.featured .price-btn:hover{background:#72B4FF}
-.guarantee{
-  max-width:880px;margin:1rem auto 0;
-  background:var(--green-dim);border:0.5px solid var(--green-border);
-  padding:1.25rem 2rem;display:flex;align-items:center;gap:1.25rem;border-radius:6px;
-}
-.guarantee h4{font-size:0.85rem;font-weight:600;color:var(--green);margin-bottom:0.2rem}
-.guarantee p{font-size:0.78rem;color:var(--text2);line-height:1.7}
-
-/* ── FAQ ── */
-.faq-section{padding:6rem 3rem;background:var(--bg2)}
-.faq-inner{max-width:720px;margin:0 auto}
-.faq-item{border-bottom:0.5px solid var(--border);padding:1.5rem 0;cursor:pointer}
-.faq-q{font-size:0.92rem;font-weight:500;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.faq-q::after{content:'+';font-size:1.2rem;color:var(--text3);flex-shrink:0;transition:transform 0.2s}
-.faq-item.open .faq-q::after{transform:rotate(45deg)}
-.faq-a{font-size:0.83rem;color:var(--text2);line-height:1.8;max-height:0;overflow:hidden;transition:max-height 0.3s ease,padding 0.3s;padding-top:0}
-.faq-item.open .faq-a{max-height:200px;padding-top:0.75rem}
-
-/* ── FOOTER ── */
-footer{
-  background:var(--bg);border-top:0.5px solid var(--border);
-  padding:4rem 3rem 2rem;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;
-}
-.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:0.65rem}
-.footer-logo-word{font-size:1.05rem;font-weight:800;letter-spacing:-0.02em;color:var(--text)}
-.footer-logo-word span{color:var(--blue)}
-.footer-tagline{font-size:0.78rem;color:var(--text3);line-height:1.7;max-width:220px}
-.footer-col-title{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:1rem;font-weight:500}
-.footer-col a{display:block;font-size:0.8rem;color:var(--text2);text-decoration:none;margin-bottom:0.5rem;transition:color 0.18s}
-.footer-col a:hover{color:var(--text)}
-.footer-bottom{
-  grid-column:1/-1;padding-top:1.75rem;border-top:0.5px solid var(--border);
-  display:flex;justify-content:space-between;font-size:0.7rem;color:var(--text3);
-}
-.footer-bottom a{color:var(--text3);text-decoration:none}
-.footer-bottom a:hover{color:var(--text2)}
-
-
-/* ── INTAKE MODAL ── */
-.modal-overlay{
-  display:none;position:fixed;inset:0;z-index:500;
-  background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;padding:1.5rem;
-}
-.modal-overlay.active{display:flex}
-.modal-box{
-  background:#0D1118;border:0.5px solid rgba(74,158,255,0.2);
-  border-radius:10px;padding:2.5rem;width:100%;max-width:480px;
-  position:relative;max-height:90vh;overflow-y:auto;
-}
-.modal-close-btn{
-  position:absolute;top:1rem;right:1.25rem;
-  background:none;border:none;color:rgba(240,237,232,0.3);
-  font-size:1.4rem;cursor:pointer;line-height:1;padding:0;
-  transition:color 0.18s;
-}
-.modal-close-btn:hover{color:rgba(240,237,232,0.8)}
-.modal-eye{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:#4A9EFF;font-weight:600;margin-bottom:0.5rem}
-.modal-title{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;color:#F0EDE8;margin-bottom:0.25rem}
-.modal-sub{font-size:0.8rem;color:rgba(240,237,232,0.62);margin-bottom:1.75rem;line-height:1.6}
-.modal-form-row{margin-bottom:1rem}
-.modal-form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1rem}
-.modal-label{display:block;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(240,237,232,0.52);margin-bottom:0.4rem;font-weight:500}
-.modal-input,.modal-select{
-  width:100%;padding:0.7rem 0.85rem;
-  background:#111820;border:0.5px solid rgba(255,255,255,0.1);
-  color:#F0EDE8;font-family:'Inter',sans-serif;font-size:0.85rem;
-  border-radius:5px;outline:none;transition:border-color 0.18s;
-  appearance:none;
-}
-.modal-input:focus,.modal-select:focus{border-color:#4A9EFF}
-.modal-input::placeholder{color:rgba(240,237,232,0.2)}
-.modal-submit{
-  width:100%;background:#4A9EFF;color:#000000;
-  padding:0.85rem;font-size:0.82rem;font-weight:700;
-  border:none;cursor:pointer;border-radius:5px;
-  font-family:'Inter',sans-serif;margin-top:0.5rem;
-  transition:background 0.18s;letter-spacing:0.02em;
-}
-.modal-submit:hover{background:#72B4FF}
-.modal-note{font-size:0.7rem;color:rgba(240,237,232,0.42);text-align:center;margin-top:0.75rem;line-height:1.6}
-.modal-success{display:none;text-align:center;padding:1rem 0}
-.modal-success-icon{font-size:2.5rem;margin-bottom:1rem}
-.modal-success-title{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem;color:#F0EDE8}
-.modal-success-body{font-size:0.85rem;color:rgba(240,237,232,0.72);line-height:1.8}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  nav{padding:0 1.25rem}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .hero{padding:4rem 1.5rem 3rem;min-height:auto;padding-top:5rem}
-  h1{font-size:2.2rem}
-  .ticker{flex-direction:column;max-width:100%}
-  .how-grid{grid-template-columns:1fr}
-  .auto-grid{grid-template-columns:1fr 1fr !important}
-  .verticals-grid{grid-template-columns:1fr 1fr}
-  .pricing-grid{grid-template-columns:1fr}
-  .section,.autos-section,.verticals-section,.demo-section,.pricing-section,.faq-section{padding:4rem 1.5rem}
-  footer{grid-template-columns:1fr 1fr;gap:2rem;padding:3rem 1.5rem 1.5rem}
-  .proof-bar{padding:1rem 1.5rem;gap:1.25rem}
-}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.7}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;padding:0 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,27,42,0.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-dark)}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--white);letter-spacing:-0.02em;text-decoration:none}
+.nav-logo em{color:var(--amber);font-style:italic}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:0.78rem;color:rgba(255,255,255,0.5);text-decoration:none;letter-spacing:0.01em;transition:color 0.18s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{background:var(--amber)!important;color:var(--navy)!important;padding:7px 16px;border-radius:3px;font-weight:600;font-size:0.75rem!important;letter-spacing:0.05em;text-transform:uppercase}
+.eyebrow{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';display:block;width:18px;height:1px;background:var(--amber)}
+section{padding:88px 48px;border-bottom:1px solid var(--border-dark)}
+.inner{max-width:880px;margin:0 auto}
+.section-headline{font-family:'DM Serif Display',serif;font-size:clamp(1.7rem,3.2vw,2.4rem);line-height:1.15;letter-spacing:-0.02em;color:var(--white);margin-bottom:14px}
+.section-sub{font-size:0.92rem;color:rgba(255,255,255,0.5);max-width:540px;line-height:1.8;margin-bottom:36px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 72px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-160px;right:-160px;width:600px;height:600px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(245,166,35,0.06) 0%,transparent 68%)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:20px;padding:5px 14px;margin-bottom:32px;width:fit-content}
+.hero-badge-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.35}}
+.hero-badge-text{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);font-weight:600}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:400;line-height:1.07;letter-spacing:-0.025em;color:var(--white);margin-bottom:22px;max-width:760px}
+.hero h1 em{color:var(--amber);font-style:italic}
+.hero-sub{font-size:1.02rem;color:rgba(255,255,255,0.55);max-width:520px;line-height:1.8;margin-bottom:40px}
+.hero-sub strong{color:rgba(255,255,255,0.85);font-weight:500}
+.hero-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.btn-primary{background:var(--amber);color:var(--navy);padding:12px 26px;border-radius:3px;font-weight:600;font-size:0.85rem;text-decoration:none;letter-spacing:0.02em;transition:opacity 0.18s;display:inline-block}
+.btn-primary:hover{opacity:0.87}
+.btn-ghost{color:rgba(255,255,255,0.5);font-size:0.83rem;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color 0.18s}
+.btn-ghost:hover{color:var(--white)}
+.btn-ghost svg{transition:transform 0.18s}
+.btn-ghost:hover svg{transform:translateX(3px)}
+.problem-section{background:var(--navy-2)}
+.problem-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dark);border:1px solid var(--border-dark);border-radius:6px;overflow:hidden;margin-top:36px}
+.problem-cell{background:var(--navy);padding:28px 26px}
+.problem-cell-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--amber);letter-spacing:0.1em;margin-bottom:14px;display:block}
+.problem-cell-title{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--white);line-height:1.3;margin-bottom:10px}
+.problem-cell-body{font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.7}
+.problem-cell-body strong{color:rgba(255,255,255,0.75);font-weight:500}
+.stat-callout{margin-top:28px;padding:18px 22px;background:var(--amber-dim);border:1px solid var(--amber-border);border-radius:4px;font-size:0.85rem;color:rgba(255,255,255,0.55);line-height:1.7}
+.stat-callout strong{color:var(--amber);font-weight:600}
+.proof-section{background:var(--navy)}
+.proof-card{border:1px solid var(--border-dark);border-radius:6px;overflow:hidden;margin-top:36px}
+.proof-split{display:grid;grid-template-columns:1fr 56px 1fr}
+.proof-col{padding:28px 26px}
+.proof-col-tag{font-size:0.63rem;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;margin-bottom:12px}
+.proof-col-tag.before{color:var(--red)}
+.proof-col-tag.after{color:var(--green)}
+.proof-col-headline{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--white);line-height:1.3;margin-bottom:10px}
+.proof-col-body{font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.7}
+.proof-col.before-col{background:rgba(201,74,58,0.04);border-right:1px solid var(--border-dark)}
+.proof-col.after-col{background:rgba(42,157,92,0.04)}
+.proof-arrow-col{display:flex;align-items:center;justify-content:center;background:var(--navy-2);border-left:1px solid var(--border-dark);border-right:1px solid var(--border-dark);color:var(--amber);font-size:1.1rem}
+.proof-data{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border-dark)}
+.proof-data-col{padding:20px 26px;border-right:1px solid var(--border-dark)}
+.proof-data-col:last-child{border-right:none}
+.proof-data-label{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.25);font-weight:600;margin-bottom:10px}
+.proof-stat{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+.proof-stat-val{font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:500}
+.proof-stat-val.neg{color:var(--red)}
+.proof-stat-val.neu{color:rgba(255,255,255,0.3)}
+.proof-elim{font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.75}
+.proof-elim span{color:var(--amber);font-weight:500}
+.proof-footer{padding:16px 26px;border-top:1px solid var(--border-dark);display:flex;align-items:center;justify-content:space-between;background:var(--navy-2)}
+.proof-footer-note{font-size:0.78rem;color:rgba(255,255,0.3)}
+.proof-footer-link{font-size:0.78rem;color:var(--amber);text-decoration:none;display:flex;align-items:center;gap:5px;transition:opacity 0.18s}
+.proof-footer-link:hover{opacity:0.75}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dark);border:1px solid var(--border-dark);border-radius:6px;overflow:hidden;margin-top:36px}
+.pillar{background:var(--navy-2)}
+.pillar-badge{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--amber);background:var(--amber-dim);padding:3px 9px;border-radius:2px;display:inline-block;margin-bottom:16px}
+.pillar-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--white);line-height:1.25;margin-bottom:10px}
+.pillar-body{font-size:0.82rem;color:rgba(255,255,255,0.45);line-height:1.75}
+.pillar-body strong{color:rgba(255,255,255,0.72);font-weight:500}
+.pillar-examples{margin-top:14px;display:flex;flex-direction:column;gap:5px}
+.pillar-example{font-size:0.75rem;color:rgba(255,255,0.28);display:flex;align-items:flex-start;gap:7px;line-height:1.5}
+.pillar-example::before{content:'→';color:var(--amber);flex-shrink:0;margin-top:1px}
+.not-this{margin-top:24px;padding:16px 20px;background:rgba(255,255,0.02);border:1px solid var(--border-dark);border-radius:4px;font-size:0.8rem;color:rgba(255,255,0.3);line-height:1.7}
+.not-this strong{color:rgba(255,255,255,0.55);font-weight:500}
+.how-section{background:var(--navy-2)}
+.engagement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-dark);border:1px solid var(--border-dark);border-radius:6px;overflow:hidden;margin-top:36px}
+.engagement{background:var(--navy);padding:28px 24px}
+.engagement-type{font-size:0.63rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:rgba(255,255,0.3);margin-bottom:10px}
+.engagement-title{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--white);line-height:1.3;margin-bottom:10px}
+.engagement-body{font-size:0.82rem;color:rgba(255,255,0.42);line-height:1.7}
+.engagement-body strong{color:rgba(255,255,0.72);font-weight:500}
+.engagement-price{margin-top:14px;padding-top:14px;border-top:1px solid var(--border-dark);font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--amber);}
+.about-section{background:var(--navy)}
+.about-body{font-size:0.9rem;color:rgba(255,255,0.5);line-height:1.85;max-width:640px}
+.about-body strong{color:rgba(255,255,255,0.8);font-weight:500}
+.about-body p+pmargin-top:14px}
+.contact-section{background:var(--navy-2)}
+.contact-inner{max-width:560px;margin:0 auto;text-align:center}
+.contact-inner h2{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:400;line-height:1.15;margin-bottom:14px;color:var(--white)}
+.contact-inner h2 em{color:var(--amber);font-style:italic}
+.contact-sub{font-size:0.88rem;color:rgba(255,255,255,0.45);line-height:1.8;margin-bottom:32px}
+.contact-btn-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.contact-alt{font-size:0.78rem;color:rgba(255,255,0.3)}
+.contact-alt a{color:rgba(255,255,255,0.45);text-decoration:none}
+.contact-alt a:hover{color:var(--white)}
+footer{padding:22px 48px;display:flex;align-items:center;justify-content:space-between}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:0.95rem;color:rgba(255,255,0.3)}
+.footer-logo em{color:rgba(245,166,35,0.4);font-style:italic}
+.footer-links{display:flex;gap:20px;align-items:center}
+.footer-links a{font-size:0.72rem;color:rgba(255,255,0.2);text-decoration:none;letter-spacing:0.02em}
+.footer-links a:hover{color:rgba(255,255,0.45)}
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}.hero{padding:96px 20px 56px}section{padding:64px 20px}.problem-trio,.pillars-grid,.engagement-grid{grid-template-columns:1fr}.proof-split{grid-template-columns:1fr}.proof-arrow-col{display:none}.proof-data{grid-template-columns:1fr}.proof-data-col{border-right:none;border-bottom:1px solid var(--border-dark)}footer{flex-direction:column;gap:10px;padding:20px;text-align:center}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-48BKH9YFZB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-48BKH9YFZB');
-</script>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzI1NjNBOCIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9IjEzIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5DUzwvdGV4dD4KPC9zdmc+">
 </head>
 <body>
-
-<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">
-    <div class="logo-mark">
-      <div class="logo-bar" style="height:10px;opacity:0.35"></div>
-      <div class="logo-bar" style="height:14px;opacity:0.6"></div>
-      <div class="logo-bar" style="height:18px"></div>
-      <div class="logo-bar" style="height:14px;opacity:0.6"></div>
-      <div class="logo-bar" style="height:10px;opacity:0.35"></div>
-    </div>
-    <div class="logo-word">Client<span>Steady</span></div>
-  </a>
+  <a href="#" class="nav-logo">Client<em>Steady</em></a>
   <div class="nav-links">
-    <a href="#how">How It Works</a>
-    <a href="#automations">Automations</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#demo">Demo</a>
-    <a href="#" class="nav-cta" onclick="openModal(event)">Book a Demo</a>
+    <a href="#proof">See an Example</a>
+    <a href="#services">Services</a>
+    <a href="#how">How We Work</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Start a Conversation</a>
   </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
-
-<!-- MOBILE MENU DRAWER -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#how" onclick="closeMenu()">How It Works</a>
-  <a href="#automations" onclick="closeMenu()">Automations</a>
-  <a href="#pricing" onclick="closeMenu()">Pricing</a>
-  <a href="#demo" onclick="closeMenu()">Demo</a>
-  <a href="#" class="mob-cta" onclick="closeMenu();openModal(event)">Book a Demo →</a>
-</div>
-
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-badge"><div class="badge-dot"></div>Automated Client Retention · 14 Flows</div>
-  <h1>Your clients stay.<br><span class="blue">Your revenue grows.</span><br><span class="dim">Nothing falls through.</span></h1>
-  <p class="hero-sub">ClientSteady automates every client touchpoint — from booking confirmation to win-back — so your schedule stays full and your revenue stays steady.</p>
-  <div class="hero-btns">
-    <a href="#demo" class="btn-primary">See a Live Demo →</a>
-    <a href="#pricing" class="btn-ghost">View Pricing</a>
-  </div>
-
-</section>
-
-<!-- PROOF BAR -->
-<div class="proof-bar">
-  <div class="proof-item"><div class="proof-check">✓</div>Works with Vagaro, Mindbody, Boulevard, Jane &amp; more</div>
-  <div class="proof-item"><div class="proof-check">✓</div>No contracts — cancel anytime</div>
-  <div class="proof-item"><div class="proof-check">✓</div><a href="clientsteady-addons.html" style="color:inherit;text-decoration:underline;text-underline-offset:3px">Need a booking system or website? We do that too →</a></div>
-  <div class="proof-item"><div class="proof-check">✓</div>Live in 5 business days</div>
-  <div class="proof-item"><div class="proof-check">✓</div>30-day money-back guarantee</div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how">
-  <div class="section-eye">How It Works</div>
-  <h2>Set it up once.<br>Clients stay <span class="blue">steady forever.</span></h2>
-  <p class="section-sub">ClientSteady connects to your scheduling system and handles every client interaction automatically — from the moment they book to the moment they refer a friend.</p>
-  <div class="how-grid">
-    <div class="how-card">
-      <div class="how-num">01</div>
-      <div class="how-title">Connect your calendar</div>
-      <p class="how-body">Integrates with your existing booking software — or we set one up for you. Simple onboarding, no technical work required on your end.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">02</div>
-      <div class="how-title">14 automations run silently</div>
-      <p class="how-body">Every booking, cancellation, no-show, and completed visit triggers the right message at exactly the right moment — automatically.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">03</div>
-      <div class="how-title">Lost revenue gets recovered</div>
-      <p class="how-body">Cancelled? Three alternate times go out in 60 seconds. No-show? A gentle re-engagement fires 2 hours later. Every lost slot gets a second chance.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">04</div>
-      <div class="how-title">Weekly report lands Monday</div>
-      <p class="how-body">Appointments confirmed, cancellations recovered, reviews generated, and total revenue recovered — net of subscription cost. Every Monday morning.</p>
+  <div class="inner">
+    <div class="hero-badge"><div class="hero-badge-dot"></div><span class="hero-badge-text">Boutique Analytics Practice — Agencies</span></div>
+    <h1>Senior analytical judgment<br>for agencies that can't afford<br>to get the <em>diagnosis wrong.</em></h1>
+    <p class="hero-sub">ClientSteady is a boutique marketing analytics practice for independent and growing agencies. <strong>We provide the senior analytical thinking</strong> most agencies need but can't justify hiring full-time — performance diagnosis, measurement infrastructure, and an independent second opinion before important decisions reach the client.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Start a Conversation</a>
+      <a href="#proof" class="btn-ghost">See an example <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5h8M6.5 2.5l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </div>
 </section>
-
-<!-- AUTOMATIONS -->
-<section class="autos-section" id="automations">
-  <div style="text-align:center;margin-bottom:3rem">
-    <div class="section-eye">The Automation Library</div>
-    <h2>14 automations. Every one <span class="blue">earns its keep.</span></h2>
-    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">Each targets a specific moment in the client journey. Together they make sure nothing falls through.</p>
-  </div>
-
-  <!-- STARTER -->
-  <div class="tier-block tier-starter">
-    <div class="tier-header">
-      <span class="tier-badge">Starter — $199/mo</span>
-      <span class="tier-count">4 automations</span>
-      <span class="tier-desc">· The essentials. Included in every plan.</span>
+<section class="problem-section">
+  <div class="inner">
+    <div class="eyebrow">The Problem</div>
+    <h2 class="section-headline">A bad diagnosis creates a bad recommendation — even when the reporting is accurate.</h2>
+    <p class="section-sub">When performance moves, agencies form a diagnosis and send a recommendation. The quality of that diagnosis — and the explanation behind it — determines whether the client stays or escalates.</p>
+    <div class="problem-trio">
+      <div class="problem-cell"><span class="problem-cell-num">Failure mode 01</span><div class="problem-cell-title">The wrong diagnosis</div><div class="problem-cell-body">CPL is up, so the media must be inefficient. But sessions were up too, and CPCs barely moved. <strong>The break was post-click</strong> — and the team never checked.</div></div>
+      <div class="problem-cell"><span class="problem-cell-num">Failure mode 02</span><div class="problem-cell-title">The wrong recommendation</div><div class="problem-cell-body">Cut spend and tighten targeting. Logical, defensible, <strong>and exactly wrong</strong> — because it treats the symptom while the actual cause continues untouched.</div></div>
+      <div class="problem-cell"><span class="problem-cell-num">Failure mode 03</span><div class="problem-cell-title">The client conversation</div><div class="problem-cell-body">The account manager goes in with a metric summary instead of a diagnosis. The client pushes back. The founder <strong>has to step in again</strong> — or doesn't, and loses the account.</div></div>
     </div>
-    <div class="auto-grid" style="grid-template-columns:repeat(4,1fr)">
-      <div class="auto-card"><div class="auto-icon">📅</div><div class="auto-title">Booking Confirmation</div><p class="auto-body">Instant SMS the moment a client books. Collects a reply to confirm. Fewer no-shows, full schedule.</p></div>
-      <div class="auto-card"><div class="auto-icon">⏰</div><div class="auto-title">24-Hour Reminder</div><p class="auto-body">Automated reminder the day before. Reply YES to confirm or CANCEL to reschedule. Zero staff time.</p></div>
-      <div class="auto-card"><div class="auto-icon">⭐</div><div class="auto-title">Google Review Request</div><p class="auto-body">Sent 2 hours after a visit while the experience is still fresh. More reviews, automatically.</p></div>
-      <div class="auto-card"><div class="auto-icon">📊</div><div class="auto-title">Weekly Owner Report</div><p class="auto-body">Every Monday: confirmed, recovered, reviews generated, and net revenue gain — all in one digest.</p></div>
-    </div>
-  </div>
-
-  <!-- GROWTH -->
-  <div class="tier-block tier-growth">
-    <div class="tier-header">
-      <span class="tier-badge">Growth — $399/mo</span>
-      <span class="tier-count">9 automations</span>
-      <span class="tier-desc">· Everything in Starter plus 5 revenue recovery flows.</span>
-    </div>
-    <div class="auto-grid" style="grid-template-columns:repeat(4,1fr)">
-      <div class="auto-card carried"><div class="auto-icon">📅</div><div class="auto-title">Booking Confirmation</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">⏰</div><div class="auto-title">24-Hour Reminder</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">⭐</div><div class="auto-title">Google Review Request</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">📊</div><div class="auto-title">Weekly Owner Report</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card"><div class="auto-icon">❌</div><div class="auto-title">Cancellation Rebook</div><p class="auto-body">3 alternate times sent in 60 seconds. Illustrative benchmark: ~35% of cancellations recovered before the slot goes cold.</p></div>
-      <div class="auto-card"><div class="auto-icon">👻</div><div class="auto-title">No-Show Recovery</div><p class="auto-body">Gentle re-engagement 2 hours after a missed visit. Warm tone. Illustrative benchmark: ~20% of no-shows recovered.</p></div>
-      <div class="auto-card"><div class="auto-icon">⏳</div><div class="auto-title">Waitlist Auto-Fill</div><p class="auto-body">Cancellation opens a slot — waitlist notified instantly. First reply claims it. Illustrative benchmark: ~60% of waitlist gaps filled.</p></div>
-      <div class="auto-card"><div class="auto-icon">💅</div><div class="auto-title">Pre-Appt Upsell</div><p class="auto-body">AI suggests a paired add-on 48 hrs before. Illustrative benchmark: ~22% upsell acceptance rate. Pure margin, zero labor.</p></div>
-      <div class="auto-card"><div class="auto-icon">🔄</div><div class="auto-title">Post-Visit Rebooking</div><p class="auto-body">Timed to when results peak. Catches clients at the right moment to book their next visit.</p></div>
-    </div>
-  </div>
-
-  <!-- ENTERPRISE -->
-  <div class="tier-block tier-enterprise">
-    <div class="tier-header">
-      <span class="tier-badge">Enterprise — $599/mo</span>
-      <span class="tier-count">All 14 automations</span>
-      <span class="tier-desc">· Every flow. Every touchpoint. Every dollar protected.</span>
-    </div>
-    <div class="auto-grid" style="grid-template-columns:repeat(5,1fr)">
-      <div class="auto-card carried"><div class="auto-icon">📅</div><div class="auto-title">Booking Confirmation</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">⏰</div><div class="auto-title">24-Hour Reminder</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">⭐</div><div class="auto-title">Google Review Request</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">📊</div><div class="auto-title">Weekly Owner Report</div><p class="auto-body">From Starter</p></div>
-      <div class="auto-card carried"><div class="auto-icon">❌</div><div class="auto-title">Cancellation Rebook</div><p class="auto-body">From Growth</p></div>
-      <div class="auto-card carried"><div class="auto-icon">👻</div><div class="auto-title">No-Show Recovery</div><p class="auto-body">From Growth</p></div>
-      <div class="auto-card carried"><div class="auto-icon">⏳</div><div class="auto-title">Waitlist Auto-Fill</div><p class="auto-body">From Growth</p></div>
-      <div class="auto-card carried"><div class="auto-icon">💅</div><div class="auto-title">Pre-Appt Upsell</div><p class="auto-body">From Growth</p></div>
-      <div class="auto-card carried"><div class="auto-icon">🔄</div><div class="auto-title">Post-Visit Rebooking</div><p class="auto-body">From Growth</p></div>
-      <div class="auto-card"><div class="auto-icon">💤</div><div class="auto-title">Win-Back Sequence</div><p class="auto-body">60/90/120-day reactivation messages for lapsed clients. Illustrative benchmark: ~15% of dormant clients reactivated.</p></div>
-      <div class="auto-card"><div class="auto-icon">🎂</div><div class="auto-title">Birthday Offer</div><p class="auto-body">Pulls birth month from intake. Sends a personalized offer during birthday week. Highest conversion rate.</p></div>
-      <div class="auto-card"><div class="auto-icon">👯</div><div class="auto-title">Referral Trigger</div><p class="auto-body">After a 5-star review, a referral offer fires automatically. Turns happy clients into your sales team.</p></div>
-      <div class="auto-card"><div class="auto-icon">📢</div><div class="auto-title">Slow Day Fill</div><p class="auto-body">Owner triggers a targeted broadcast. Fills 3–5 slots with a time-limited incentive.</p></div>
-      <div class="auto-card"><div class="auto-icon">📦</div><div class="auto-title">Package Expiry</div><p class="auto-body">Reminds clients 2 weeks before a package expires. Drives urgency and prevents churn.</p></div>
-    </div>
+    <div class="stat-callout"><strong>The risk is not just a bad metric. It is acting on the wrong explanation.</strong> When the diagnosis is weak, the recommendation can be perfectly logical and still move the account in the wrong direction — and the client conversation becomes one the agency cannot win.</div>
   </div>
 </section>
-
-<!-- VERTICALS -->
-<section class="section verticals-section" id="verticals">
-  <div class="section-eye">Built For</div>
-  <h2>Any service business where<br><span class="blue">clients come back.</span></h2>
-  <p class="section-sub">ClientSteady works for any business where the client relationship doesn't end when they walk out the door.</p>
-  <div class="verticals-grid">
-    <div class="vert-card"><div class="vert-icon">💆</div><div class="vert-name">Med Spas &amp; Aesthetics</div><p class="vert-body">High-value services, loyal clients, predictable no-show problem. Our first vertical.</p><span class="vert-tag live">● Live now</span></div>
-    <div class="vert-card"><div class="vert-icon">✂️</div><div class="vert-name">Salons &amp; Barbershops</div><p class="vert-body">High volume, weekly clients, mostly on basic platforms with zero recovery flows.</p><span class="vert-tag live">● Live now</span></div>
-    <div class="vert-card"><div class="vert-icon">🦷</div><div class="vert-name">Dental Offices</div><p class="vert-body">$300–800 per missed appointment. Most practices on outdated systems with no SMS automation.</p><span class="vert-tag soon">Coming soon</span></div>
-    <div class="vert-card"><div class="vert-icon">🦴</div><div class="vert-name">Chiropractors</div><p class="vert-body">Recurring treatment plans make win-back and rebooking sequences extremely high value.</p><span class="vert-tag soon">Coming soon</span></div>
-    <div class="vert-card"><div class="vert-icon">🔧</div><div class="vert-name">HVAC &amp; Plumbers</div><p class="vert-body">Job confirmations, post-service reviews, slow-day fill broadcasts. $400–900 ticket size.</p><span class="vert-tag soon">Coming soon</span></div>
-    <div class="vert-card"><div class="vert-icon">🐛</div><div class="vert-name">Pest Control</div><p class="vert-body">Seasonal reactivation, quarterly service reminders, win-back for annual clients.</p><span class="vert-tag soon">Coming soon</span></div>
-    <div class="vert-card"><div class="vert-icon">🚗</div><div class="vert-name">Auto Detailing</div><p class="vert-body">High no-show rate, package upsells, referral triggers. Strong recurring revenue potential.</p><span class="vert-tag soon">Coming soon</span></div>
-    <div class="vert-card"><div class="vert-icon">🐾</div><div class="vert-name">Pet Grooming &amp; Vets</div><p class="vert-body">Appointment-dependent, emotionally loyal clients, high lifetime value, underserved by automation.</p><span class="vert-tag soon">Coming soon</span></div>
-  </div>
-</section>
-
-<!-- DEMO -->
-<section class="demo-section" id="demo">
-  <div style="max-width:860px;margin:0 auto">
-    <div class="section-eye" style="text-align:center;margin-bottom:0.75rem">Live Demos</div>
-    <h2 style="text-align:center;margin-bottom:0.75rem">See it working in<br><span class="blue">your industry.</span></h2>
-    <p style="text-align:center;font-size:0.88rem;color:rgba(240,237,232,0.62);line-height:1.8;margin-bottom:2.5rem">We've built complete demos for two industries — a real client-facing booking site and a live owner dashboard with all 14 automations for each. No form required.</p>
-
-    <!-- Med Spa Demo -->
-    <div style="margin-bottom:1.5rem">
-      <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(240,237,232,0.3);font-weight:500;margin-bottom:0.75rem;padding-left:0.25rem">💆 Med Spa &amp; Aesthetics</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
-        <a href="bella-beauty-medspa.html" target="_blank" style="display:block;background:#111820;border:0.5px solid rgba(212,168,71,0.3);border-radius:8px;padding:1.5rem;text-decoration:none;transition:border-color 0.18s" onmouseover="this.style.borderColor='rgba(212,168,71,0.7)'" onmouseout="this.style.borderColor='rgba(212,168,71,0.3)'">
-          <div style="font-size:1.2rem;margin-bottom:0.6rem">🌸</div>
-          <div style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#D4A847;font-weight:600;margin-bottom:0.35rem">Client View</div>
-          <div style="font-size:0.92rem;font-weight:700;color:#F0EDE8;margin-bottom:0.35rem">Bella Beauty Med Spa</div>
-          <div style="font-size:0.72rem;color:rgba(240,237,232,0.4);line-height:1.6;margin-bottom:0.75rem">Booking site with services, scheduling, and real-time availability.</div>
-          <div style="font-size:0.72rem;color:#D4A847;font-weight:600">View booking site →</div>
-        </a>
-        <a href="bella-beauty-owner-demo.html" target="_blank" style="display:block;background:#111820;border:0.5px solid rgba(74,158,255,0.3);border-radius:8px;padding:1.5rem;text-decoration:none;transition:border-color 0.18s" onmouseover="this.style.borderColor='rgba(74,158,255,0.7)'" onmouseout="this.style.borderColor='rgba(74,158,255,0.3)'">
-          <div style="font-size:1.2rem;margin-bottom:0.6rem">📊</div>
-          <div style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#4A9EFF;font-weight:600;margin-bottom:0.35rem">Owner View</div>
-          <div style="font-size:0.92rem;font-weight:700;color:#F0EDE8;margin-bottom:0.35rem">Owner Dashboard &amp; Automations</div>
-          <div style="font-size:0.72rem;color:rgba(240,237,232,0.4);line-height:1.6;margin-bottom:0.75rem">Live dashboard, all 14 automation flows, and ROI calculator.</div>
-          <div style="font-size:0.72rem;color:#4A9EFF;font-weight:600">View owner demo →</div>
-        </a>
+<section class="proof-section" id="proof">
+  <div class="inner">
+    <div class="eyebrow">Decision Proof</div>
+    <h2 class="section-headline">Not what changed. What your team should have done differently.</h2>
+    <p class="section-sub">Every ClientSteady engagement leads with a decision — the action the team was about to take, what the evidence actually supports, and the cost of getting it wrong.</p>
+    <div class="proof-card">
+      <div class="proof-split">
+        <div class="proof-col before-col"><div class="proof-col-tag before">Without ClientSteady</div><div class="proof-col-headline">Cut spend 20%. Tighten targeting. Optimize bids.</div><div class="proof-col-body">The instinctive response to a CPL increase. Spend falls $11K/month. Lead volume falls further. The root cause goes untouched and the client sees the decline continue.</div></div>
+        <div class="proof-arrow-col">→</div>
+        <div class="proof-col after-col"><div class="proof-col-tag after">With ClientSteady</div><div class="proof-col-headline">Hold broad changes. Diagnose the post-click break first.</div><div class="proof-col-body">Sessions were up. CPCs were flat. The largest break is landing-page CVR — not media acquisition. Fixing the right thing recovers lead volume without touching spend.</div></div>
+      </div>
+      <div class="proof-data">
+        <div class="proof-data-col">
+          <div class="proof-data-label">Evidence that changed the call</div>
+          <div class="proof-stat"><span class="proof-stat-val neg">–20.9%</span><span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">Landing CVR — the primary break</span></div>
+          <div class="proof-stat"><span class="proof-stat-val neu">+3.5%</span><span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">Sessions — traffic did not collapse</span></div>
+          <div class="proof-stat"><span class="proof-stat-val neu">+2.1%</span><span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">Google CPC — immaterial</span></div>
+          <div class="proof-stat"><span class="proof-stat-val neu">–2.0%</span><span style="font-size:0.78rem;color:rgba(255,255,255,0.35)">Meta CPC — improved</span></div>
+        </div>
+        <div class="proof-data-col">
+          <div class="proof-data-label">What was eliminated</div>
+          <div class="proof-elim"><span Traffic collapse</span> — weakened. Sessions up 3.5%.<br><br><span>CPC inflation</span> — weakened. Movements far smaller than CPL change.<br><br><span>Broad media failure</span> — not supported. Break concentrated post-click.<br><br><span>Website causality</span> — leading hypothesis, not yet confirmed without change log.</div>
+        </div>
+      </div>
+      <div class="proof-footer">
+        <span class="proof-footer-note">Synthetic data — illustrative example only</span>
+        <a href="clientsteady-intelligence-audit-sample.html" target="_blank" class="proof-footer-link">View the full synthetic review →</a>
       </div>
     </div>
-
-    <!-- Salon Demo -->
-    <div style="margin-bottom:2rem">
-      <div style="font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(240,237,232,0.3);font-weight:500;margin-bottom:0.75rem;padding-left:0.25rem">✂️ Salon &amp; Barbershop</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
-        <a href="luxe-cuts-salon.html" target="_blank" style="display:block;background:#111820;border:0.5px solid rgba(175,169,236,0.3);border-radius:8px;padding:1.5rem;text-decoration:none;transition:border-color 0.18s" onmouseover="this.style.borderColor='rgba(175,169,236,0.7)'" onmouseout="this.style.borderColor='rgba(175,169,236,0.3)'">
-          <div style="font-size:1.2rem;margin-bottom:0.6rem">✨</div>
-          <div style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#AFA9EC;font-weight:600;margin-bottom:0.35rem">Client View</div>
-          <div style="font-size:0.92rem;font-weight:700;color:#F0EDE8;margin-bottom:0.35rem">Luxe Cuts &amp; Color Studio</div>
-          <div style="font-size:0.72rem;color:rgba(240,237,232,0.4);line-height:1.6;margin-bottom:0.75rem">Booking site with salon services, scheduling, and live availability.</div>
-          <div style="font-size:0.72rem;color:#AFA9EC;font-weight:600">View booking site →</div>
-        </a>
-        <a href="luxe-cuts-owner-demo.html" target="_blank" style="display:block;background:#111820;border:0.5px solid rgba(76,175,114,0.3);border-radius:8px;padding:1.5rem;text-decoration:none;transition:border-color 0.18s" onmouseover="this.style.borderColor='rgba(76,175,114,0.7)'" onmouseout="this.style.borderColor='rgba(76,175,114,0.3)'">
-          <div style="font-size:1.2rem;margin-bottom:0.6rem">📊</div>
-          <div style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#4CAF72;font-weight:600;margin-bottom:0.35rem">Owner View</div>
-          <div style="font-size:0.92rem;font-weight:700;color:#F0EDE8;margin-bottom:0.35rem">Owner Dashboard &amp; Automations</div>
-          <div style="font-size:0.72rem;color:rgba(240,237,232,0.4);line-height:1.6;margin-bottom:0.75rem">Live dashboard, all 14 automation flows, and ROI calculator.</div>
-          <div style="font-size:0.72rem;color:#4CAF72;font-weight:600">View owner demo →</div>
-        </a>
+  </div>
+</section>
+<section id="services">
+  <div class="inner">
+    <div class="eyebrow">Services</div>
+    <h2 class="section-headline">A focused storefront. A broader analytical toolkit behind it.</h2>
+    <p class="section-sub">Three public service areas. Each engagement can draw on deeper capabilities — creative analysis, segmentation, experimentation, statistical testing, cohort work — when the problem requires it.</p>
+    <div class="pillars-grid">
+      <div class="pillar"><span class="pillar-badge">01 · Featured</span><div class="pillar-title">Independent Performance Review</div><div class="pillar-body">An independent senior challenge to the team's diagnosis and recommendation <strong>before an important client decision</strong>. What changed, what caused it, what was ruled out, what not to do, how to handle the conversation.</div><div class="pillar-examples"><div class="pillar-example">Root-cause diagnosis with hypothesis elimination</div><div class="pillar-example">Decision recommendation with cost of wrong action</div><div class="pillar-example">Client call preparation — scripted answers</div><div class="pillar-example">Monthly continuity — did last month's recommendation hold?</div></div></div>
+      <div class="pillar"><span class="pillar-badge">02</span><div class="pillar-title">Performance &amp; Campaign Analytics</div><div class="pillar-body">Deep analysis when a platform report or standard dashboard doesn't explain what happened. <strong>Executive-ready narrative</strong> your team can act on and your clients can understand.</div><div class="pillar-examples"><div class="pillar-example">Campaign and channel diagnostics</div><div class="pillar-example">Cross-channel performance analysis</div><div class="pillar-example">Creative and audience analysis</div><div class="pillar-example">Recurring performance analysis</div></div></div>
+      <div class="pillar"><span class="pillar-badge">03</span><div class="pillar-title">Measurement &amp; Reporting Systems</div><div class="pillar-body">Reporting and measurement infrastructure <strong>built around decisions</strong>, not data availability. For agencies managing multiple clients and channels without a dedicated analytics function.</div><div class="pillar-examples"><div class="pillar-example">Dashboards and KPI frameworks</div><div class="pillar-example">Reporting automation and delivery</div><div class="pillar-example">Experiment planning and design</div><div class="pillar-example">A/B, geo, and incrementality support</div></div></div>
+    </div>
+    <div class="not-this"><strong>What ClientSteady is not:</strong> a reporting platform, an AI analytics tool, an anomaly detection system, a dashboard vendor, or a generic analytics subscription. We apply senior marketing analytics judgment to the decisions that affect whether agencies keep clients and grow.</div>
+  </div>
+</section>
+<section class="how-section" id="how">
+  <div class="inner">
+    <div class="eyebrow">How We Work</div>
+    <h2 class="section-headline">One decision, one project, or ongoing analytical capacity.</h2>
+    <p class="section-sub">We work from sanitized data exports agencies already produce. No platform access required. No API integrations. No client data shared beyond what you send directly.</p>
+    <div class="engagement-grid">
+      <div class="engagement"><div class="engagement-type">Packaged diagnostic</div><div class="engagement-title">Independent Performance Review</div><div class="engagement-body">A structured analytical brief covering what changed, what caused it, what was ruled out, what not to do, and how to handle the client conversation. <strong>Available as a monthly recurring review or a one-time diagnostic.</strong></div><div class="engagement-price">$1,500/mo · 2 accounts · 60-day pilot<br><span style="color:rgba(245,166,35,0.5);font-size:0.72rem">One-time diagnostic — test pricing ~$2,500, scoped before work begins</span></div></div>
+      <div class="engagement"><div class="engagement-type">Scoped project</div><div class="engagement-title">Campaign Analysis &amp; Measurement Build</div><div class="engagement-body">A defined project with a clear scope, deliverable, and timeline. Campaign deep dives, dashboard builds, KPI framework development, creative analysis, or measurement strategy — <strong>scoped and priced per engagement.</strong></div><div class="engagement-price">Scoped and priced per project</div></div>
+      <div class="engagement"><div class="engagement-type">Recurring partnership</div><div class="engagement-title">Ongoing Analytics Support</div><div class="engagement-body">Monthly analytics capacity — performance monitoring, reporting, ongoing campaign analysis, and measurement support — embedded in the agency's workflow <strong>without adding headcount.</strong></div><div class="engagement-price">Monthly retainer · scoped per engagement</div></div>
+    </div>
+  </div>
+</section>
+<section class="about-section" id="about">
+  <div class="inner">
+    <div class="eyebrow">About ClientSteady</div>
+    <h2 class="section-headline">Built for the gap between reporting and decision-making.</h2>
+    <div class="about-body">
+      <p>ClientSteady is a <strong>boutique marketing analytics practice</strong> supporting independent and growing agencies across performance analysis, measurement, experimentation, dashboards, and reporting.</p>
+      <p>We bring <strong>senior-level analytical experience</strong> to difficult marketing questions while keeping the delivery model lean and focused. The goal is straightforward: turn marketing data into decisions that teams can explain, defend, and act on.</p>
+      <p>Our capabilities span campaign diagnostics, measurement strategy, testing, reporting systems, creative and audience analysis, and independent performance review — <strong>without the overhead of adding another full-time analytics layer.</strong></p>
+    </div>
+  </div>
+</section>
+<section class="contact-section" id="contact">
+  <div class="inner">
+    <div class="contact-inner">
+      <div class="eyebrow" style="justify-content:center">Get in Touch</div>
+      <h2>Tell us about a current<br>analytics <em>challenge.</em></h2>
+      <p class="contact-sub">No demo. No pitch. A direct conversation about whether ClientSteady can help with a specific analytics or measurement problem your agency is facing.</p>
+      <div class="contact-btn-wrap">
+        <a href="mailto:hello@clientsteady.com?subject=Analytics%20challenge" class="btn-primary">Start a Conversation</a>
+        <p class="contact-alt">Or email directly: <a href="mailto:hello@clientsteady.com">hello@clientsteady.com</a></p>
       </div>
     </div>
-
-    <!-- Salon vertical badge update -->
-    <!-- Smaller CTA -->
-    <div style="text-align:center;padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.07)">
-      <p style="font-size:0.82rem;color:rgba(240,237,232,0.4);margin-bottom:1rem">Don't see your industry? We build custom demos before every call.</p>
-      <a href="#" onclick="openModal(event)" style="display:inline-block;background:#4A9EFF;color:#000000;padding:0.65rem 1.75rem;font-size:0.78rem;font-weight:700;border-radius:5px;text-decoration:none;font-family:Inter,sans-serif;transition:background 0.18s" onmouseover="this.style.background='#72B4FF'" onmouseout="this.style.background='#4A9EFF'">Get on the Call List →</a>
-      <p style="font-size:0.7rem;color:rgba(240,237,232,0.42);margin-top:0.75rem">We'll have a demo built around your business before the call.</p>
-    </div>
   </div>
 </section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div style="text-align:center">
-    <div class="section-eye">Pricing</div>
-    <h2>Simple pricing.<br><span class="blue">Serious returns.</span></h2>
-    <p class="section-sub" style="margin:0.75rem auto 0;text-align:center">Most businesses recover their subscription cost in the first week. No contracts. Cancel anytime.</p>
-  </div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div>
-      <div class="price-amt">$199<span>/mo</span></div>
-      <p class="price-desc">4 automations. Stop no-shows, start collecting reviews, and get a weekly revenue report every Monday — all running automatically from day one.</p>
-      <ul class="price-feats">
-        <li class="divider">4 automations included</li>
-        <li>📅 Booking confirmation SMS</li>
-        <li>⏰ 24-hour appointment reminder</li>
-        <li>⭐ Google review request</li>
-        <li>📊 Weekly owner revenue report</li>
-        <li class="divider">Plan details</li>
-        <li>Up to 80 appointments/mo</li>
-        <li>Dedicated business SMS number</li>
-      </ul>
-      <button class="price-btn" onclick="openModal()">Get Started Free →</button>
-    </div>
-    <div class="price-card featured">
-      <div class="price-tier blue">Growth — Most Popular</div>
-      <div class="price-amt">$399<span>/mo</span></div>
-      <p class="price-desc">9 automations. Everything in Starter plus 5 revenue recovery flows that turn cancellations and no-shows into booked revenue.</p>
-      <ul class="price-feats">
-        <li class="divider">Everything in Starter, plus</li>
-        <li class="hi">❌ Cancellation rebook flow</li>
-        <li class="hi">👻 No-show reactivation</li>
-        <li class="hi">⏳ Waitlist auto-fill</li>
-        <li class="hi">💅 Pre-appointment upsell</li>
-        <li class="hi">🔄 Post-visit rebooking</li>
-        <li class="divider">Also included</li>
-        <li class="hi">🤖 AI-personalized messaging</li>
-        <li class="hi">📈 Live owner dashboard</li>
-        <li>Unlimited appointments/mo</li>
-        <li>Monthly strategy call</li>
-      </ul>
-      <button class="price-btn" onclick="openModal()">Get Started Free →</button>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Enterprise</div>
-      <div class="price-amt">$599<span>/mo</span></div>
-      <p class="price-desc">All 14 automations. Everything in Growth plus 5 relationship flows that turn clients into loyal regulars and referral machines.</p>
-      <ul class="price-feats">
-        <li class="divider">Everything in Growth, plus</li>
-        <li class="ent">💤 Win-back sequences (60/90/120 day)</li>
-        <li class="ent">🎂 Birthday offer automation</li>
-        <li class="ent">👯 Referral trigger flow</li>
-        <li class="ent">📢 Slow-day fill broadcast</li>
-        <li class="ent">📦 Package expiry reminders</li>
-        <li class="divider">Also included</li>
-        <li>Multi-location support</li>
-        <li>Custom message flows</li>
-        <li>Dedicated account manager</li>
-      </ul>
-      <button class="price-btn" onclick="openModal()">Get Started Free →</button>
-    </div>
-  </div>
-  <p style="text-align:center;font-size:0.82rem;color:rgba(240,237,232,0.52);margin-bottom:1.5rem">
-  Don't have a booking system, website, or Google Business Profile yet?
-  <a href="clientsteady-addons.html" style="color:#4A9EFF;text-decoration:none;font-weight:500">See our setup add-ons →</a>
-</p>
-<div class="guarantee">
-    <span style="font-size:1.5rem;flex-shrink:0">🛡️</span>
-    <div>
-      <h4>30-day money-back guarantee</h4>
-      <p>If ClientSteady doesn't recover more than its subscription cost in your first 30 days, we'll refund you in full. No questions asked.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section" id="faq">
-  <div class="faq-inner">
-    <div class="section-eye">FAQ</div>
-    <h2 style="margin-bottom:2rem">Common questions.</h2>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Do I need to replace my existing booking software?</div>
-      <div class="faq-a">No — ClientSteady layers on top of whatever you're already using. We connect to your calendar via integration or a simple data sync. If you don't have a booking system yet, we can set one up for you as part of onboarding.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How does the SMS actually get sent? Do I need a phone number?</div>
-      <div class="faq-a">We provision a dedicated business number for your account during setup. All messages come from that number — your personal number is never exposed. Clients can reply and the system handles responses automatically.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">How long does setup take?</div>
-      <div class="faq-a">Most businesses are live within 5 business days. We handle all the technical setup — you answer a few questions about your services and message tone, we build the flows, and you review and approve every message before anything goes live.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">What if my clients don't respond to texts?</div>
-      <div class="faq-a">SMS is widely reported to have much higher open rates than email, so it typically sees significantly higher engagement for appointment confirmations. The system also works via email as a fallback for clients who opt out of SMS.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">Can I customize the messages to match my brand voice?</div>
-      <div class="faq-a">Yes — every message template is customizable during onboarding. On Growth and Enterprise plans, AI personalizes each message based on the client's name, service, and history. You set the tone; the AI handles the variation.</div>
-    </div>
-    <div class="faq-item" onclick="toggleFaq(this)">
-      <div class="faq-q">What industries do you support right now?</div>
-      <div class="faq-a">We're live with med spas and aesthetic practices. Salons, dental offices, chiropractors, and home services are in active development. If your business runs on appointments and repeat clients, reach out — we onboard new verticals regularly.</div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <div>
-    <div class="footer-logo">
-      <div class="logo-mark" style="transform:scale(0.85);transform-origin:left">
-        <div class="logo-bar" style="height:8px;opacity:0.35"></div>
-        <div class="logo-bar" style="height:11px;opacity:0.6"></div>
-        <div class="logo-bar" style="height:14px"></div>
-        <div class="logo-bar" style="height:11px;opacity:0.6"></div>
-        <div class="logo-bar" style="height:8px;opacity:0.35"></div>
-      </div>
-      <div class="footer-logo-word">Client<span>Steady</span></div>
-    </div>
-    <p class="footer-tagline">The client retention system for service businesses. Every touchpoint handled. Every dollar protected.</p>
-  </div>
-  <div class="footer-col">
-    <div class="footer-col-title">Product</div>
-    <a href="#how">How It Works</a>
-    <a href="#automations">Automations</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#demo">Live Demo</a>
-  </div>
-  <div class="footer-col">
-    <div class="footer-col-title">Industries</div>
-    <a href="#verticals">Med Spas</a>
-    <a href="#verticals">Salons</a>
-    <a href="#verticals">Dental</a>
-    <a href="#verticals">Home Services</a>
-  </div>
-  <div class="footer-col">
-    <div class="footer-col-title">Company</div>
-    <a href="#demo">Book a Demo</a>
-    <a href="#faq">FAQ</a>
-    <a href="mailto:hello@clientsteady.com">hello@clientsteady.com</a>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 ClientSteady. All rights reserved.</span>
-    <span><a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a></span>
+  <div class="footer-logo">Client<em>Steady</em></div>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <span style="font-size:0.72rem;color:rgba(255,255,255,0.15)">hello@clientsteady.com · Dallas–Fort Worth, TX</span>
   </div>
 </footer>
-
-<script>
-var targets={}; var current={};
-var started=false;
-function animateTicker(){
-  var done=true;
-  Object.keys(targets).forEach(function(id){
-    if(current[id]<targets[id]){
-      done=false;
-      var step=Math.max(1,Math.ceil((targets[id]-current[id])/20));
-      current[id]=Math.min(targets[id],current[id]+step);
-      var el=document.getElementById(id);
-      if(el) el.textContent=id==='t1'?'$'+current[id].toLocaleString():current[id];
-    }
-  });
-  if(!done) requestAnimationFrame(animateTicker);
-}
-var obs=new IntersectionObserver(function(e){
-  if(e[0].isIntersecting&&!started){started=true;setTimeout(animateTicker,400);}
-},{threshold:0.3});
-var tk=document.querySelector('.ticker');
-if(tk) obs.observe(tk);
-
-function toggleFaq(el){
-  var open=el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
-  if(!open) el.classList.add('open');
-}
-
-// ── Modal ──
-function openModal(e){
-  if(e) e.preventDefault();
-  document.getElementById('intakeModal').classList.add('active');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){
-  document.getElementById('intakeModal').classList.remove('active');
-  document.body.style.overflow='';
-}
-function handleOverlayClick(e){
-  if(e.target===document.getElementById('intakeModal')) closeModal();
-}
-function handleFormSubmit(e){
-  e.preventDefault();
-  var fname=document.getElementById('m-fname').value.trim();
-  var email=document.getElementById('m-email').value.trim();
-  var biz=document.getElementById('m-biz').value.trim();
-  if(!fname||!email){
-    if(!fname) document.getElementById('m-fname').style.borderColor='#4A9EFF';
-    if(!email) document.getElementById('m-email').style.borderColor='#4A9EFF';
-    return;
-  }
-  // Submit to Netlify
-  var form=e.target;
-  var data=new FormData(form);
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:new URLSearchParams(data).toString()
-  }).then(function(){
-    document.getElementById('successName').textContent=fname+(biz?' from '+biz:'');
-    document.getElementById('modalForm').style.display='none';
-    document.getElementById('modalSuccess').style.display='block';
-  }).catch(function(err){
-    console.error(err);
-    alert('Something went wrong. Please email us at hello@clientsteady.com');
-  });
-}
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
-
-
-// ── Mobile menu ──
-function toggleMenu(){
-  var btn=document.getElementById('hamburger');
-  var menu=document.getElementById('mobileMenu');
-  btn.classList.toggle('open');
-  menu.classList.toggle('open');
-  document.body.style.overflow=menu.classList.contains('open')?'hidden':'';
-}
-function closeMenu(){
-  document.getElementById('hamburger').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.body.style.overflow='';
-}
-// Close menu on outside click
-document.addEventListener('click',function(e){
-  var menu=document.getElementById('mobileMenu');
-  var btn=document.getElementById('hamburger');
-  if(menu&&menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){
-    closeMenu();
-  }
-});
-
-// Auto-open intake modal when arriving via #get-started (used by cross-page CTAs)
-document.addEventListener('DOMContentLoaded',function(){
-  if(window.location.hash==='#get-started'){
-    openModal();
-  }
-});
-
-</script>
-
-<!-- INTAKE MODAL -->
-<div class="modal-overlay" id="intakeModal" onclick="handleOverlayClick(event)">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal()">×</button>
-
-    <div id="modalForm">
-      <div class="modal-eye">Get Started</div>
-      <div class="modal-title">Let's talk about your business.</div>
-      <p class="modal-sub">Fill this out and we'll reach out within 24 hours to walk you through a live demo built around your specific services and pricing.</p>
-
-      <form name="intake" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="handleFormSubmit(event)">
-        <input type="hidden" name="form-name" value="intake" />
-        <p style="display:none"><input name="bot-field" /></p>
-
-        <div class="modal-form-row-2">
-          <div>
-            <label class="modal-label" for="m-fname">First Name</label>
-            <input class="modal-input" type="text" id="m-fname" name="first-name" placeholder="Sarah" required />
-          </div>
-          <div>
-            <label class="modal-label" for="m-lname">Last Name</label>
-            <input class="modal-input" type="text" id="m-lname" name="last-name" placeholder="Mitchell" />
-          </div>
-        </div>
-        <div class="modal-form-row">
-          <label class="modal-label" for="m-biz">Business Name</label>
-          <input class="modal-input" type="text" id="m-biz" name="business-name" placeholder="Bella Beauty Med Spa" />
-        </div>
-        <div class="modal-form-row">
-          <label class="modal-label" for="m-type">Business Type</label>
-          <select class="modal-select" id="m-type" name="business-type">
-            <option value="">Select your industry…</option>
-            <option>Med Spa / Aesthetics</option>
-            <option>Salon / Barbershop</option>
-            <option>Dental Office</option>
-            <option>Chiropractor</option>
-            <option>HVAC / Plumbing</option>
-            <option>Pest Control</option>
-            <option>Auto Detailing</option>
-            <option>Pet Grooming / Vet</option>
-            <option>Other service business</option>
-          </select>
-        </div>
-        <div class="modal-form-row-2">
-          <div>
-            <label class="modal-label" for="m-phone">Phone Number</label>
-            <input class="modal-input" type="tel" id="m-phone" name="phone" placeholder="(817) 555-0000" />
-          </div>
-          <div>
-            <label class="modal-label" for="m-appts">Monthly Appointments</label>
-            <select class="modal-select" id="m-appts" name="monthly-appointments">
-              <option value="">Approx. volume…</option>
-              <option>Under 50</option>
-              <option>50 – 100</option>
-              <option>100 – 200</option>
-              <option>200 – 400</option>
-              <option>400+</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-form-row">
-          <label class="modal-label" for="m-email">Email Address</label>
-          <input class="modal-input" type="email" id="m-email" name="email" placeholder="hello@yourbusiness.com" required />
-        </div>
-        <div class="modal-form-row">
-          <label class="modal-label" for="m-plan">Plan of Interest</label>
-          <select class="modal-select" id="m-plan" name="plan-interest">
-            <option value="">Not sure yet — just exploring</option>
-            <option>Starter — $199/mo</option>
-            <option>Growth — $399/mo</option>
-            <option>Enterprise — $599/mo</option>
-          </select>
-        </div>
-        <button type="submit" class="modal-submit">Get on the Call List →</button>
-        <p class="modal-note">No payment required. We'll reach out within 24 hours to schedule a free demo call.</p>
-      </form>
-    </div>
-
-    <div class="modal-success" id="modalSuccess">
-      <div class="modal-success-icon">✅</div>
-      <div class="modal-success-title">You're on the list!</div>
-      <p class="modal-success-body">We'll reach out to <span id="successName">you</span> within 24 hours to schedule your free demo call.<br><br>In the meantime, browse the live demo below — it's built around a real med spa so you can see exactly what your clients and dashboard would look like.</p>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
