@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Client Intelligence Audit â€” ClientSteady</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -109,6 +113,29 @@ body{
   font-size:13px;
   color:rgba(255,255,255,0.85);
   font-weight:500;
+}
+
+/* â”€â”€ SYNTHETIC DATA BANNER â”€â”€ */
+.synthetic-banner{
+  background:var(--amber-lt);
+  border-bottom:1px solid var(--amber);
+  padding:14px 64px;
+  text-align:center;
+}
+.synthetic-banner-label{
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:#8B6014;
+  margin-bottom:4px;
+}
+.synthetic-banner-text{
+  font-size:12.5px;
+  color:var(--text2);
+  max-width:720px;
+  margin:0 auto;
+  line-height:1.5;
 }
 
 /* â”€â”€ SIGNAL SUMMARY BAR â”€â”€ */
@@ -396,52 +423,35 @@ body{
 }
 .qa-a strong{color:var(--text);font-weight:600}
 
-/* â”€â”€ RISK METER â”€â”€ */
-.risk-block{
+/* â”€â”€ DECISION STATUS â”€â”€ */
+.decision-block{
   background:var(--white);
   border:1px solid var(--border);
+  border-left:4px solid var(--amber);
   border-radius:6px;
   padding:20px;
 }
-.risk-label{
+.decision-label{
   font-size:10px;
   letter-spacing:0.14em;
   text-transform:uppercase;
   font-weight:600;
   color:var(--grey);
+  margin-bottom:8px;
+}
+.decision-status{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;
+  line-height:1.2;
+  color:var(--navy);
   margin-bottom:12px;
 }
-.risk-score{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  margin-bottom:16px;
-}
-.risk-num{
-  font-family:'DM Serif Display',serif;
-  font-size:48px;
-  line-height:1;
-  color:var(--red);
-}
-.risk-desc{
+.decision-desc{
   font-size:13px;
   color:var(--text2);
   line-height:1.65;
-  max-width:420px;
 }
-.risk-desc strong{color:var(--text);font-weight:600}
-.risk-bar-wrap{
-  background:var(--grey-lt);
-  border-radius:4px;
-  height:8px;
-  overflow:hidden;
-}
-.risk-bar-fill{
-  height:100%;
-  border-radius:4px;
-  background:linear-gradient(to right,var(--green),var(--yellow),var(--red));
-  width:72%;
-}
+.decision-desc strong{color:var(--text);font-weight:600}
 
 /* â”€â”€ FOOTER â”€â”€ */
 .audit-footer{
@@ -479,6 +489,58 @@ body{
 .tag-red{background:var(--red-lt);color:var(--red)}
 .tag-amber{background:var(--yellow-lt);color:#8B6014}
 .tag-navy{background:#EEF2F7;color:var(--navy)}
+
+/* â”€â”€ MOBILE RESPONSIVE â”€â”€ */
+@media (max-width: 700px){
+  .cover{padding:40px 20px 32px}
+  .cover h1{font-size:28px}
+  .cover-meta{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .synthetic-banner{padding:12px 20px}
+  .signal-bar{
+    padding:18px 20px;
+    flex-direction:column;
+    gap:14px;
+  }
+  .signal-item{
+    padding:0 0 14px 0;
+    margin-right:0;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+  .signal-item:last-child{border-bottom:none;padding-bottom:0}
+  .doc{padding:32px 20px 56px}
+  .finding-body{
+    grid-template-columns:1fr;
+    gap:16px;
+    padding:16px;
+  }
+  .finding-header{
+    flex-wrap:wrap;
+    padding:12px 16px;
+  }
+  .two-col{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  .data-table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+    -webkit-overflow-scrolling:touch;
+  }
+  .data-table td, .data-table th{white-space:normal;min-width:130px}
+  .section-title{font-size:19px}
+  .audit-footer{
+    padding:20px;
+    flex-direction:column;
+    gap:10px;
+    text-align:center;
+  }
+  .decision-status{font-size:20px}
+}
 </style>
 </head>
 <body>
@@ -498,10 +560,16 @@ body{
       <div class="cover-meta-value">Google Ads Â· Meta</div>
     </div>
     <div class="cover-meta-item">
-      <div class="cover-meta-label">Account Risk</div>
-      <div class="cover-meta-value" style="color:#F5A623">Elevated</div>
+      <div class="cover-meta-label">Review Focus</div>
+      <div class="cover-meta-value" style="color:#F5A623">Conversion-rate decline</div>
     </div>
   </div>
+</div>
+
+<!-- SYNTHETIC DATA DISCLOSURE -->
+<div class="synthetic-banner">
+  <div class="synthetic-banner-label">Illustrative Sample â€” Synthetic Data</div>
+  <div class="synthetic-banner-text">This review uses a fictional agency, fictional client, and synthetic performance data to demonstrate ClientSteady's analytical approach. It is not a real client engagement or case study.</div>
 </div>
 
 <!-- SIGNAL BAR -->
@@ -598,7 +666,7 @@ body{
         </div>
         <div>
           <div class="finding-col-label">Urgency</div>
-          <div class="finding-text">This issue is secondary to the CVR problem â€” fixing creative before fixing checkout will not recover ROAS. However, creative fatigue will become the primary issue within 2â€“3 weeks if new assets are not launched. <strong>Flag this for the next 30 days</strong> once the CVR situation is resolved.</div>
+          <div class="finding-text">This issue is secondary to the CVR problem â€” fixing creative before fixing checkout will not recover ROAS. However, creative fatigue will become the primary issue within a few weeks if new assets are not launched. <strong>Flag this for the next 30 days</strong> once the CVR situation is resolved.</div>
         </div>
       </div>
     </div>
@@ -643,7 +711,7 @@ body{
           <td><strong>Checkout flow change (July 8)</strong></td>
           <td><span class="tag tag-red">Verified</span></td>
           <td>Shopify changelog + session recording cart abandonment spike at shipping step</td>
-          <td class="num change-neg">Primary â€” ~70% of CVR loss</td>
+          <td class="num change-neg">Likely primary contributor (share not yet quantified)</td>
         </tr>
         <tr>
           <td><strong>PMax brand cannibalization</strong></td>
@@ -676,7 +744,7 @@ body{
       <div class="callout-icon">ğŸ”</div>
       <div class="callout-body">
         <div class="callout-label">Analytical Confidence</div>
-        <div class="callout-text">The checkout change explanation accounts for the timing, the cross-channel nature of the drop, and the session behavior pattern. We are <strong>high confidence</strong> this is the primary driver. The PMax brand issue is confirmed but additive, not causal to the CVR decline. We cannot rule out a seasonal component without prior-year data â€” worth requesting from the client.</div>
+        <div class="callout-text">The checkout change explanation accounts for the timing, the cross-channel nature of the drop, and the session behavior pattern. This is the <strong>leading hypothesis</strong> and the best-supported explanation given the available data, but it is not yet confirmed â€” a controlled revert or A/B test would confirm it. The PMax brand issue is confirmed but additive, not causal to the CVR decline. We cannot rule out a seasonal component without prior-year data â€” worth requesting from the client.</div>
       </div>
     </div>
   </div>
@@ -697,7 +765,7 @@ body{
           <div class="callout-icon">âš ï¸</div>
           <div class="callout-body">
             <div class="callout-label">Revenue at Risk (This Month)</div>
-            <div class="callout-text">The CVR decline from 2.8% to 1.4% on $41,200 spend cost approximately <strong>$45,400 in lost revenue</strong> relative to June performance. At current trajectory, August will produce a similar shortfall unless checkout is restored. This is not a media efficiency problem â€” it is a website problem presenting as a campaign problem.</div>
+            <div class="callout-text">The CVR decline from 2.8% to 1.4% on $41,200 spend is associated with approximately <strong>$45,400 in lower revenue</strong> relative to June performance (a simple comparison, not a causal estimate). If the decline persists, August would be expected to show a similar shortfall. This is not a media efficiency problem â€” it is a website problem presenting as a campaign problem.</div>
           </div>
         </div>
       </div>
@@ -706,7 +774,7 @@ body{
           <div class="callout-icon">ğŸ’¡</div>
           <div class="callout-body">
             <div class="callout-label">What Can Be Fixed Immediately</div>
-            <div class="callout-text">Two issues are <strong>entirely fixable this week</strong> without additional spend: (1) revert or optimize the checkout flow to restore shipping transparency earlier in the flow, and (2) add branded keyword exclusions to PMax. Together these two changes should recover the majority of the ROAS gap within 2 weeks.</div>
+            <div class="callout-text">Two issues are <strong>entirely fixable this week</strong> without additional spend: (1) revert or optimize the checkout flow to restore shipping transparency earlier in the flow, and (2) add branded keyword exclusions to PMax. If the leading hypothesis holds, these two changes address the main identified issues; we would size the recovery only after seeing post-fix data.</div>
           </div>
         </div>
       </div>
@@ -736,7 +804,7 @@ body{
         <div class="rec-num">1</div>
         <div class="rec-content">
           <div class="rec-action">Audit checkout flow â€” restore shipping cost visibility to pre-July 8 state</div>
-          <div class="rec-detail">Contact the client's development team immediately. Request a comparison of the July 8 checkout change. Specifically test the shipping estimate reveal point. If A/B testing is available, test early vs. late shipping reveal. This single fix is likely worth $30â€“40K in recovered monthly revenue.</div>
+          <div class="rec-detail">Contact the client's development team immediately. Request a comparison of the July 8 checkout change. Specifically test the shipping estimate reveal point. If A/B testing is available, test early vs. late shipping reveal. If the hypothesis holds, this is the highest-impact fix; recovery should be sized only after post-fix data is in.</div>
           <div class="rec-owner">Owner: Client dev team Â· Timeline: This week Â· Priority: Highest</div>
         </div>
       </li>
@@ -744,7 +812,7 @@ body{
         <div class="rec-num">2</div>
         <div class="rec-content">
           <div class="rec-action">Add branded keyword exclusions to all PMax campaigns</div>
-          <div class="rec-detail">Exclude all branded terms (Ironclad, Ironclad Supply, brand + product variations) from PMax asset groups. Create a separate Branded Search campaign with manual CPC bidding at lower bids. Estimated monthly savings: $3,200â€“4,100 on budget currently spent competing against own organic results.</div>
+          <div class="rec-detail">Exclude all branded terms (Ironclad, Ironclad Supply, brand + product variations) from PMax asset groups. Create a separate Branded Search campaign with manual CPC bidding at lower bids. Indicative monthly savings: roughly $3,200â€“4,100 on budget currently spent competing against own organic results.</div>
           <div class="rec-owner">Owner: Agency media team Â· Timeline: This week Â· Priority: High</div>
         </div>
       </li>
@@ -759,9 +827,132 @@ body{
       <li class="rec-item">
         <div class="rec-num">4</div>
         <div class="rec-content">
-          <div class="rec-action">Plan creative refresh for Meta â€” œšYYˆÈ™]ÈÛÛ˜Ù\È›Üˆ]Yİ\İ][˜ÚÙ]‚ˆ]ˆÛ\ÜÏHœ™XËY]Z[‘È›İš[Üš]^™H\È™Y›Ü™HÚXÚÛİ]\Èš^Y8 %™]ÈÜ™X]]™H][™ÈHœ›ÚÙ[ˆ[›™[Ú[›İ™XÛİ™\ˆ“ĞTËˆİÙ]™\‹œšYYˆ™]ÈÛÛ˜Ù\È›İÈÛÈ^H\™H™XYHÈ][˜ÚÚ][ˆˆÙYZÜÈÙˆHÚXÚÛİ]š^ˆ›Øİ\È™]ÈÜ™X]]™HÛˆÚ\[™ËÙ[]™\H˜[œÜ\™[˜ŞHÈY™\ÜÈH™]™X[YÛÛœİ[Y\ˆÛÛ˜Ù\›ˆ\™XİKÙ]‚ˆ]ˆÛ\ÜÏHœ™XË[İÛ™\ˆ“İÛ™\ˆÜ™X]]™HX[H0­È[Y[[™NˆœšYYˆ\ÈÙYZË][˜Ú[ˆˆÙYZÜÈ0­Èš[Üš]NˆYY][OÙ]‚ˆÙ]‚ˆÛO‚ˆİ[‚ˆÙ]‚‚ˆKKHÑPÕSÓˆNˆÓQS•ÓÓ•‘T”ĞUSÓˆKO‚ˆ]ˆÛ\ÜÏHœÙXİ[Ûˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹ZXY\ˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹[[HŒOÙ]‚ˆ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹]]H•HÛY[ÛÛ™\œØ][ÛÙ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹\İXˆ•Ú]\›Û˜ÛYÚ[\ÚÈ8 %[™İÈÈ[œİÙ\Ù]‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚHY“ĞTÈ›ÜÛÈÚYÛšYšXØ[OÈ\ÈHYÙ[˜ŞH[™\œ\™›Ü›Z[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ•H“ĞTÈXÛ[™H\È›İHYYXH\™›Ü›X[˜ÙH\ÜİYH8 %]	ÜÈHÛÛ™\œÚ[Ûˆ˜]H\ÜİYKˆÛXÚÜË[\™\ÜÚ[ÛœË[™ÕˆÙ\™H[İX›HÜˆ[\›İš[™È\È[ÛˆH›Ü\[™Y™XØ]\ÙHÛÛ™\œÚ[Ûˆ˜]H™[HL	Hİ\[™È[HKÚXÚ\ÈH^HY\ˆHÚ[™ÙHØ\ÈXYHÈHÚXÚÛİ]›İÈÛˆ[İ\ˆÚ]KˆÙHY[YšYYHZÙ[HØ]\ÙH8 %Ú\[™ÈÛÜİÈ\™H›İÈ™]™X[Y]\ˆ[ˆHÚXÚÛİ]›ØÙ\ÜË[™Ù\ÜÚ[Ûˆ]HÚİÜÈİ\İÛY\œÈX˜[™Ûš[™È]]Ú[ˆÙHØ[ÈÛÜšÈÚ][İ\ˆX[HÈ\İ™]™\[™È]Ú[™ÙH\ÈÙYZË[™ÙH^XİÈ™XÛİ™\ˆHXZ›Üš]HÙˆHØ\Ú][ˆÛÈÙYZÜÈÙˆÚ[™ÈÛËˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚHY[İHÙY\Ü[™[™ÈYˆ\™›Ü›X[˜ÙHØ\ÈXÛ[š[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ•HXÛ[™HX]\šX[^™Yİ™\ˆHš\œİÛÈÙYZÜÈÙˆH[Û[™İ\ˆ[Ûš]Üš[™È›YÙÙY]\È[ˆ[Y\™Ú[™È\ÜİYHÛˆÙ]WKˆÙH™YØ[ˆ[™\İYØ][™ÈHØ]\ÙH[[YYX][H8 %Y[YZ[™È]]Ø\ÈHÚ]K\ÚYH\ÜİYH˜]\ˆ[ˆHØ[\ZYÛˆ\ÜİYHØ\È[\Ü[™XØ]\ÙHHš^\ÈY™™\™[ˆ]\Ú[™ÈÜ[™Ûİ[‰İ]™H™XÛİ™\™Y™]™[YNÈš^[™ÈHÚXÚÛİ]Ú[ˆÙIİ™H›İÈ\ÛÛ]YH›ÛİØ]\ÙH[™]™HÜXÚYšXÈXİ[ÛœÈ™XYHÈ[\[Y[\ÈÙYZËˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚ]	ÜÈ[İ\ˆ›Ü™XØ\İ›Üˆ]Yİ\İYˆÙHš^\ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ’YˆÚXÚÛİ]\È™\İÜ™YÈ™KR[H™Z]š[Üˆ[™œ˜[™Y^Û\Ú[ÛœÈ\™HYYÈ\™›Ü›X[˜ÙHX^ÙIÙ^XİÕ”ˆÈ™]\›ˆİØ\™H‹x $Ì‹	H˜[™ÙHÚ][ˆL8 $ÌM^\Ëˆ]İ\œ™[Ü[™]™[È][\Y\ÈH™]\›ˆİØ\™	LŒ8 $ÌLÌÈ[ˆ[ÛH™]™[YKˆÙIÙØ[ÈÙYH]X\İÈ^\ÈÙˆÜİYš^]H™Y›Ü™HÛÛ[Z][™ÈÈH›Ü›X[]Yİ\İ›Ü™XØ\İˆÙIÙ[ÛÈ™XÛÛ[Y[™™]šY]Ú[™Èš[Ü‹^YX\ˆ[H]HÙÙ]\ˆ8 %Yˆ[H\ÈÙX\ÛÛ˜[ÛÙ™\ÜÈ[ˆ[İ\ˆØ]YÛÜKÙHÚİ[Ø[Xœ˜]H^Xİ][ÛœÈXØÛÜ™[™ÛKˆ‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœXKX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœXK\H‚ˆÜ[ˆÛ\ÜÏHœXK\K[X™[•^IÛ\ÚÏÜÜ[‚ˆÚİ[ÙH™YXÙHÜ[™Ú[H\È\È\[š[™ÏÂˆÙ]‚ˆ]ˆÛ\ÜÏHœXKXH‚ˆİ›Û™Ï’İÈÈ[œİÙ\Üİ›Û™Ïˆ’]\[™ÈÛˆØ\Ú›İÈ[Z[™ËˆHÚXÚÛİ]š^\ÈHYÚ\‹[]™\˜YÙH[İ™H8 %	HÙˆ]ˆ[YHÈš^H[›™[\ÈÛÜ[Ü™H[ˆ	L[ˆÜ[™Y\İY[ÈšYÚ›İËˆYˆØ\Ú›İÈ\ÈHÛÛ˜Ù\›‹H[Ù\İ[\Ü˜\H™YXİ[Ûˆ
-Mx $ÌŒ	JHÚ[HHš^\È˜[Y]Y\È™X\ÛÛ˜X›KˆİÙ]™\‹™YXÚ[™ÈÜ[™ÚYÛšYšXØ[H\š[™È\È\š[Ùš\ÚÜÈÜÚ[™È]Xİ[ÛˆÜÚ][Ûˆ]Ú[™H^[œÚ]™HÈ™XZ[ˆİ\ˆ™XÛÛ[Y[™][Ûˆ\ÈÈš[Üš]^™HHÚXÚÛİ]š^[™XZ[Z[ˆÜ[™Ú[H]	ÜÈ™Z[™È\İYˆ‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆKKHÑPÕSÓˆˆPĞÓÕS•’TÒÈKO‚ˆ]ˆÛ\ÜÏHœÙXİ[Ûˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹ZXY\ˆ‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹[[HŒÙ]‚ˆ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹]]HXØÛİ[™][[Ûˆš\ÚÏÙ]‚ˆ]ˆÛ\ÜÏHœÙXİ[Û‹\İXˆ“İ\ˆ\ÜÙ\ÜÛY[ÙˆÛY[\™[][ÛœÚ\š\ÚÈ\È\š[ÙÙ]‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆÛ\ÜÏHœš\ÚËX›ØÚÈ‚ˆ]ˆÛ\ÜÏHœš\ÚË[X™[”š\ÚÈØÛÜ™H\È\š[ÙÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚË\ØÛÜ™H‚ˆ]ˆÛ\ÜÏHœš\ÚË[[HÌÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚËY\ØÈ‚ˆİ›Û™Ï‘[]˜]YÜİ›Û™ÏˆHÍ	H™]™[YHXÛ[™H[ˆHÚ[™ÛH[Û\ÈX]\šX[[›İYÚÈšYÙÙ\ˆ^Xİ]]™H][[Ûˆ][ÜİÛY[ËˆHš\ÚÈ\ÈX[˜YÙXX›H™XØ]\ÙHHØ]\ÙH\ÈY[YšXX›KHš^\ÈXİ[Û˜X›K[™H™XÛİ™\H[Y[[™H\ÈÚÜ8 %]HÛÛ™\œØ][Ûˆ]\İ™H›ØXİ]™KˆYˆHÛY[\ØÛİ™\œÈHÚXÚÛİ]\ÜİYH[™\[™[H™Y›Ü™H\ÈØ[HYÙ[˜ŞIÜÈ[˜[]XØ[Ü™YXš[]H\È[XYÙYˆİ›Û™Ï”™XÛÛ[Y[™ØÚY[[™ÈHÛY[Ø[™Y›Ü™H[™ÙˆÙYZËÜİ›Û™Ï‚ˆÙ]‚ˆÙ]‚ˆ]ˆÛ\ÜÏHœš\ÚËX˜\‹]Ü˜\‚ˆ]ˆÛ\ÜÏHœš\ÚËX˜\‹Yš[Ù]‚ˆÙ]‚ˆ]ˆİ[OH™\Ü^N™›^Ú\İYKXÛÛ[œÜXÙKX™]ÙY[Ù›Û\Ú^™NŒLØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]ÜœÛ]\‹\ÜXÚ[™ÎŒŒY[H‚ˆÜ[“İÈš\ÚÈ
-
-OÜÜ[‚ˆÜ[’YÚš\ÚÈ
-L
-OÜÜ[‚ˆÙ]‚ˆÙ]‚‚ˆ]ˆİ[OH›X\™Ú[‹]ÜŒMœ‚ˆ]ˆÛ\ÜÏH˜Ø[İ]Ø[İ]YÜ™Y[ˆ‚ˆ]ˆÛ\ÜÏH˜Ø[İ]ZXÛÛˆ¸§$ÏÙ]‚ˆ]ˆÛ\ÜÏH˜Ø[İ]X›ÙH‚ˆ]ˆÛ\ÜÏH˜Ø[İ][X™[”š\ÚÈZ]YØ][ÛÙ]‚ˆ]ˆÛ\ÜÏH˜Ø[İ]]^•\ÈÚ]X][Ûˆ\È™XÛİ™\˜X›KˆHYÙ[˜ŞIÜÈÜÚ][Ûˆ\Èİ›Û™Ù\İÚ[ˆ]İ›Û™Ï›XYÈHÛÛ™\œØ][Ûˆ›ØXİ]™[OÜİ›Û™Ï‹™\Ù[ÈHÛX\ˆ›ÛİXØ]\ÙH[˜[\Ú\Ë[™œ˜[Y\ÈHÚXÚÛİ]\ÜİYH\ÈÛÛY][™È™Z[™ÈÛÛ™Y[ˆ\™\œÚ\Ú]HÛY[ˆYÙ[˜ÚY\È]İ\™˜XÙH›Ø›[\È™Y›Ü™HÛY[ÈÈ™]Z[ˆXØÛİ[ËˆYÙ[˜ÚY\È]ØZ]›ÜˆÛY[ÈÈİ\™˜XÙH[HÜÙH[KÙ]‚ˆÙ]‚ˆÙ]‚ˆÙ]‚ˆÙ]‚‚ˆKKHU’QTˆKO‚ˆ]ˆÛ\ÜÏH™]šY\ˆÙ]‚‚ˆKKH‘TT‘Q–HKO‚ˆ]ˆİ[OH^X[YÛ˜Ù[\ÜY[™ÎŒMœ‚ˆ]ˆİ[OH™›Û\Ú^™NŒL\ØÛÛÜ˜\ŠKYÜ™^JNÛ]\‹\ÜXÚ[™ÎŒŒY[Nİ^]˜[œÙ›Ü›N\\˜Ø\ÙNÛX\™Ú[‹X›İÛN”™\\™YOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒMÙ›Û]ÙZYÚŒØÛÛÜ˜\ŠK[˜]JHÛY[İXYOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒLœØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]ÜŒœ”\™›Ü›X[˜ÙH[[YÙ[˜ÙH›ÜˆZYYYXHYÙ[˜ÚY\ÏÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒL\ØÛÛÜ˜\ŠKYÜ™^JNÛX\™Ú[‹]Üš[ĞÛY[İXYK˜ÛÛH0­ÈÛY[İXYK˜ÛÛOÙ]‚ˆ]ˆİ[OH™›Û\Ú^™NŒLØÛÛÜ˜\ŠKX›Ü™\ŠNÛX\™Ú[‹]ÜŒMœÛ]\‹\ÜXÚ[™ÎŒŒ[H•\È]Y]\È˜\ÙYÛˆ]˜Z[X›H]H[™[˜[]XØ[[™™\™[˜ÙKˆÛÛ˜Û\Ú[ÛœÈX\šÙY•[˜ÛÛ™š\›YYˆ™\]Z\™HY][Û˜[ÛY[]HÈ˜[Y]KÙ]‚ˆÙ]‚‚Ù]‚‚KKH“ÓÕTˆKO‚]ˆÛ\ÜÏH˜]Y]Y›Ûİ\ˆ‚ˆ]ˆÛ\ÜÏH™›Ûİ\‹Xœ˜[™ÛY[Ü[”İXYOÜÜ[Ù]‚ˆ]ˆÛ\ÜÏH™›Ûİ\‹[›İHÛÛ™šY[X[0­È™\\™Y›Üˆ\^YÚ][\™\œÈ0­È]Yİ\İŒÙ]‚Ù]‚‚Ø›ÙO‚Ú[‚
+          <div class="rec-action">Plan creative refresh for Meta â€” brief 3 new concepts for August launch</div>
+          <div class="rec-detail">Do not prioritize this before checkout is fixed â€” new creative hitting a broken funnel will not recover ROAS. However, brief new concepts now so they are ready to launch soon after the checkout fix. Focus new creative on shipping/delivery transparency to address the revealed consumer concern directly.</div>
+          <div class="rec-owner">Owner: Creative team Â· Timeline: Brief this week, launch after checkout fix Â· Priority: Medium</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SECTION 5: CLIENT CONVERSATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-title">The Client Conversation</div>
+        <div class="section-sub">What Ironclad will ask â€” and how to answer</div>
+      </div>
+    </div>
+
+    <div class="qa-block">
+      <div class="qa-q">
+        <span class="qa-q-label">They'll ask</span>
+        Why did ROAS drop so significantly? Is the agency underperforming?
+      </div>
+      <div class="qa-a">
+        <strong>How to answer:</strong> "The ROAS decline is not a media performance issue â€” it's a conversion rate issue. Overall clicks and impressions were stable this month (Meta creative fatigue is a separate, secondary issue we are tracking). The drop happened because conversion rate fell by 50% starting July 9, which is the day after a change was made to the checkout flow on your site. We identified the likely cause â€” shipping costs are now revealed later in the checkout process, and session data shows customers abandoning at that point. We want to work with your team to test reverting that change this week, and if the hypothesis holds we would expect conversion rate to improve; we would want to see post-change data before putting a number or a timeline on the recovery."
+      </div>
+    </div>
+
+    <div class="qa-block">
+      <div class="qa-q">
+        <span class="qa-q-label">They'll ask</span>
+        Why did you keep spending if performance was declining?
+      </div>
+      <div class="qa-a">
+        <strong>How to answer:</strong> "The decline materialized over the first two weeks of the month, and our monitoring flagged it as an emerging issue in the second week of the month. <em>(Fill in the actual alert date from your monitoring log before using this answer with a real client.)</em> We began investigating the cause immediately â€” identifying that it was a site-side issue rather than a campaign issue was important because the fix is different. Pausing spend wouldn't have recovered revenue; fixing the checkout will. We've now isolated the root cause and have specific actions ready to implement this week."
+      </div>
+    </div>
+
+    <div class="qa-block">
+      <div class="qa-q">
+        <span class="qa-q-label">They'll ask</span>
+        What's your forecast for August if we fix this?
+      </div>
+      <div class="qa-a">
+        <strong>How to answer:</strong> "If checkout is restored to pre-July 8 behavior and branded exclusions are added to Performance Max, we would expect CVR to move back toward its pre-change range, but we would not put a number or date on it yet. We'd want to see at least 7 days of post-fix data before committing to any August forecast. We'd also recommend reviewing prior-year July data together â€” if July has seasonal softness in your category, we should calibrate expectations accordingly."
+      </div>
+    </div>
+
+    <div class="qa-block">
+      <div class="qa-q">
+        <span class="qa-q-label">They'll ask</span>
+        Should we reduce spend while this is happening?
+      </div>
+      <div class="qa-a">
+        <strong>How to answer:</strong> "It depends on cash flow timing. The checkout fix is the higher-leverage move â€” fixing the funnel is likely to matter more than any spend adjustment right now. If cash flow is a concern, a modest temporary reduction (15â€“20%) while the fix is validated is reasonable. However, reducing spend significantly during this period risks losing auction position that will be expensive to rebuild. Our recommendation is to prioritize the checkout fix and maintain spend while that's being tested."
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: DECISION STATUS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-title">Decision Status</div>
+        <div class="section-sub">Where this stands and what happens next</div>
+      </div>
+    </div>
+
+    <div class="decision-block">
+      <div class="decision-label">Decision Status</div>
+      <div class="decision-status">Elevated Attention Required</div>
+      <div class="decision-desc">
+        A 34% single-month revenue decline with a well-supported leading hypothesis and an actionable test. This isn't a scoring output â€” it's a judgment call based on the evidence in Sections 1â€“3: the checkout-flow change is documented (Shopify changelog + session recordings), the timing lines up closely, and the test is within the client's control. Its causal role is the leading hypothesis, not a confirmed result. <strong>Recommend raising this with the client proactively, before end of week.</strong>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:16px">
+      <div>
+        <div class="callout callout-green">
+          <div class="callout-icon">âœ“</div>
+          <div class="callout-body">
+            <div class="callout-label">Recommended Action</div>
+            <div class="callout-text">Lead the conversation proactively with a clear root-cause explanation, then propose testing the checkout revert together this week. Framing this as a joint fix â€” not just a report â€” keeps the client oriented toward solving the problem rather than assigning blame.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-amber">
+          <div class="callout-icon">â¸</div>
+          <div class="callout-body">
+            <div class="callout-label">What Not To Do Yet</div>
+            <div class="callout-text">Don't commit to a specific August revenue recovery number before seeing post-fix data, and don't reduce media spend meaningfully â€” that would compound the problem without addressing its cause.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-navy" style="margin-top:16px">
+      <div class="callout-icon">ğŸ”</div>
+      <div class="callout-body">
+        <div class="callout-label">What Would Make This Diagnosis Wrong</div>
+        <div class="callout-text">If prior-year July data shows a comparable seasonal dip independent of any site change, the checkout-flow explanation would need to be revised downward in severity (see Section 2 â€” this factor is currently unconfirmed, not ruled out). If the checkout revert test doesn't recover CVR within 10â€“14 days, that would point to a second, undiagnosed factor.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider"></div>
+
+  <!-- PREPARED BY -->
+  <div style="text-align:center;padding:16px 0 8px">
+    <div style="font-size:11px;color:var(--grey);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">Prepared by</div>
+    <div style="font-size:14px;font-weight:600;color:var(--navy)">ClientSteady</div>
+    <div style="font-size:12px;color:var(--grey);margin-top:2px">Boutique Marketing Analytics for Agencies</div>
+    <div style="font-size:11px;color:var(--grey);margin-top:8px">hello@clientsteady.com Â· clientsteady.com</div>
+    <div style="font-size:10px;color:var(--border);margin-top:16px;letter-spacing:0.08em">This audit is based on available data and analytical inference. Conclusions marked "Unconfirmed" require additional client data to validate.</div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="audit-footer">
+  <div class="footer-brand">Client<span>Steady</span></div>
+  <div class="footer-note">Illustrative sample Â· synthetic data Â· not a real client engagement Â· August 2026</div>
+</div>
+
+</body>
+</html>
